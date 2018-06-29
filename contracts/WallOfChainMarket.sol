@@ -89,14 +89,14 @@ contract WallOfChainMarket {
    * @dev Validation of an incoming purchase. Use require statements to revert state when conditions are not met. Use super to concatenate validations.
    * @param _beneficiary Address performing the token purchase
    */
-  function _preValidatePurchase(
-    address _beneficiary
-  )
-  internal
-  pure
-  {
-    require(_beneficiary != address(0));
-  }
+  //  function _preValidatePurchase(
+  //    address _beneficiary
+  //  )
+  //  internal
+  //  pure
+  //  {
+  //    require(_beneficiary != address(0));
+  //  }
 
   /**
    * @dev Executed when a purchase has been validated and is ready to be executed.
