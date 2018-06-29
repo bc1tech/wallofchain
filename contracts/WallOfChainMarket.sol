@@ -56,7 +56,8 @@ contract WallOfChainMarket {
   {
     uint256 weiAmount = msg.value;
     address beneficiary = msg.sender;
-    _preValidatePurchase(beneficiary);
+    // enable in case you want to pass beneficiary instead of use msg.sender
+    //_preValidatePurchase(beneficiary);
 
     // update state
     weiRaised = weiRaised.add(weiAmount);

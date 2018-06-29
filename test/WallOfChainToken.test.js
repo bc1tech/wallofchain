@@ -96,6 +96,12 @@ contract('WallOfChainToken', function (accounts) {
         const icon = tokenStructure[5];
         icon.should.be.equal(this.structure.icon);
       });
+
+      describe('if token id not exists', function () {
+        it('reverts', async function () {
+          await assertRevert(this.token.getWall(999));
+        });
+      });
     });
 
     describe('progressive id', function () {
