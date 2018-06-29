@@ -1,0 +1,75 @@
+{
+  "name": "wallofchain",
+  "version": "1.0.0",
+  "description": "An ERC721 token...",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "dev": "lite-server",
+    "test": "scripts/test.sh",
+    "lint": "eslint test migrations",
+    "lint:fix": "eslint test migrations --fix",
+    "lint:sol": "solium -d contracts",
+    "lint:sol:fix": "solium -d contracts --fix",
+    "lint:all": "npm run lint && npm run lint:sol",
+    "lint:all:fix": "npm run lint:fix && npm run lint:sol:fix",
+    "console": "truffle console",
+    "coverage": "scripts/coverage.sh",
+    "version": "scripts/version.js"
+  },
+  "keywords": [
+    "solidity",
+    "ethereum",
+    "smart",
+    "contracts",
+    "erc721"
+  ],
+  "author": {
+    "name": "BC1 - Blockchain Pioneers",
+    "email": "hello@bc1.tech",
+    "url": "https://www.bc1.tech"
+  },
+  "contributors": [
+    {
+      "name": "Vittorio Minacori",
+      "url": "https://github.com/vittominacori"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/paneedesign/wallofchain.git"
+  },
+  "homepage": "https://github.com/paneedesign/wallofchain/",
+  "bugs": {
+    "url": "https://github.com/paneedesign/wallofchain/issues"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "coveralls": "^3.0.1",
+    "dotenv": "^5.0.1",
+    "eslint": "^4.19.1",
+    "eslint-config-standard": "^12.0.0-alpha.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "ethjs-abi": "^0.2.1",
+    "ganache-cli": "^6.1.0",
+    "openzeppelin-solidity": "1.10.0",
+    "solium": "^1.1.7",
+    "truffle": "^4.1.13",
+    "truffle-contract": "^3.0.4",
+    "solidity-coverage": "^0.5.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-register": "^6.26.0",
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "chai-bignumber": "^2.0.2",
+    "ethereumjs-util": "^5.1.5",
+    "lite-server": "^2.3.0",
+    "yargs": "^11.0.0"
+  }
+}
