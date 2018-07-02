@@ -46,18 +46,18 @@ contract WallOfChainMarket {
    * @dev low level token purchase ***DO NOT OVERRIDE***
    */
   function buyToken(
-    string _backColor,
-    string _frontColor,
-    string _text,
+    address beneficiary,
+    string _firstName,
+    string _lastName,
+    string _pattern,
     string _icon
   )
   public
   payable
   {
     uint256 weiAmount = msg.value;
-    address beneficiary = msg.sender;
-    // enable in case you want to pass beneficiary instead of use msg.sender
-    //_preValidatePurchase(beneficiary);
+
+    _preValidatePurchase(beneficiary);
 
     // update state
     weiRaised = weiRaised.add(weiAmount);
@@ -65,14 +65,14 @@ contract WallOfChainMarket {
     uint256 lastTokenId = _processPurchase(
       beneficiary,
       weiAmount,
-      _backColor,
-      _frontColor,
-      _text,
+      _firstName,
+      _lastName,
+      _pattern,
       _icon
     );
 
     emit TokenPurchase(
-      beneficiary,
+      msg.sender,
       beneficiary,
       weiAmount,
       lastTokenId
@@ -89,14 +89,14 @@ contract WallOfChainMarket {
    * @dev Validation of an incoming purchase. Use require statements to revert state when conditions are not met. Use super to concatenate validations.
    * @param _beneficiary Address performing the token purchase
    */
-  //  function _preValidatePurchase(
-  //    address _beneficiary
-  //  )
-  //  internal
-  //  pure
-  //  {
-  //    require(_beneficiary != address(0));
-  //  }
+  function _preValidatePurchase(
+    address _beneficiary
+  )
+  internal
+  pure
+  {
+    require(_beneficiary != address(0));
+  }
 
   /**
    * @dev Executed when a purchase has been validated and is ready to be executed.
@@ -104,9 +104,9 @@ contract WallOfChainMarket {
   function _processPurchase(
     address _beneficiary,
     uint256 _weiAmount,
-    string _backColor,
-    string _frontColor,
-    string _text,
+    string _firstName,
+    string _lastName,
+    string _pattern,
     string _icon
   )
   internal
@@ -115,9 +115,9 @@ contract WallOfChainMarket {
     return token.newToken(
       _beneficiary,
       _weiAmount,
-      _backColor,
-      _frontColor,
-      _text,
+      _firstName,
+      _lastName,
+      _pattern,
       _icon
     );
   }

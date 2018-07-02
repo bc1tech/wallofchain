@@ -6,9 +6,9 @@ import "./ERC721RBACMintableToken.sol";
 contract WallOfChainToken is ERC721RBACMintableToken {
   struct WallStructure {
     uint256 value;
-    string backColor;
-    string frontColor;
-    string text;
+    string firstName;
+    string lastName;
+    string pattern;
     string icon;
   }
 
@@ -24,9 +24,9 @@ contract WallOfChainToken is ERC721RBACMintableToken {
   function newToken(
     address _beneficiary,
     uint256 _value,
-    string _backColor,
-    string _frontColor,
-    string _text,
+    string _firstName,
+    string _lastName,
+    string _pattern,
     string _icon
   )
   public
@@ -36,9 +36,9 @@ contract WallOfChainToken is ERC721RBACMintableToken {
     _mint(_beneficiary, tokenId);
     structureIndex[tokenId] = WallStructure(
       _value,
-      _backColor,
-      _frontColor,
-      _text,
+      _firstName,
+      _lastName,
+      _pattern,
       _icon
     );
     progressiveId = tokenId;
@@ -51,9 +51,9 @@ contract WallOfChainToken is ERC721RBACMintableToken {
   returns (
     address tokenOwner,
     uint256 value,
-    string backColor,
-    string frontColor,
-    string text,
+    string firstName,
+    string lastName,
+    string pattern,
     string icon
   )
   {
@@ -64,9 +64,9 @@ contract WallOfChainToken is ERC721RBACMintableToken {
     tokenOwner = ownerOf(tokenId);
 
     value = wall.value;
-    backColor = wall.backColor;
-    frontColor = wall.frontColor;
-    text = wall.text;
+    firstName = wall.firstName;
+    lastName = wall.lastName;
+    pattern = wall.pattern;
     icon = wall.icon;
   }
 

@@ -35,9 +35,9 @@ contract('WallOfChainToken', function (accounts) {
   beforeEach(async function () {
     this.structure = {
       value: ether(0.1),
-      backColor: '#000000',
-      frontColor: '#FFFFFF',
-      text: 'Blockchain Pioneers',
+      firstName: 'Vittorio',
+      lastName: 'Minacori',
+      pattern: 'yellow',
       icon: 'default',
     };
 
@@ -50,9 +50,9 @@ contract('WallOfChainToken', function (accounts) {
       await this.token.newToken(
         beneficiary,
         this.structure.value,
-        this.structure.backColor,
-        this.structure.frontColor,
-        this.structure.text,
+        this.structure.firstName,
+        this.structure.lastName,
+        this.structure.pattern,
         this.structure.icon,
         { from: minter }
       );
@@ -77,19 +77,19 @@ contract('WallOfChainToken', function (accounts) {
         value.should.be.bignumber.equal(this.structure.value);
       });
 
-      it('has a backColor', async function () {
-        const backColor = tokenStructure[2];
-        backColor.should.be.equal(this.structure.backColor);
+      it('has a firstName', async function () {
+        const firstName = tokenStructure[2];
+        firstName.should.be.equal(this.structure.firstName);
       });
 
-      it('has a frontColor', async function () {
-        const frontColor = tokenStructure[3];
-        frontColor.should.be.equal(this.structure.frontColor);
+      it('has a lastName', async function () {
+        const lastName = tokenStructure[3];
+        lastName.should.be.equal(this.structure.lastName);
       });
 
-      it('has a text', async function () {
-        const text = tokenStructure[4];
-        text.should.be.equal(this.structure.text);
+      it('has a pattern', async function () {
+        const pattern = tokenStructure[4];
+        pattern.should.be.equal(this.structure.pattern);
       });
 
       it('has a icon', async function () {
@@ -111,9 +111,9 @@ contract('WallOfChainToken', function (accounts) {
         await this.token.newToken(
           beneficiary,
           this.structure.value,
-          this.structure.backColor,
-          this.structure.frontColor,
-          this.structure.text,
+          this.structure.firstName,
+          this.structure.lastName,
+          this.structure.pattern,
           this.structure.icon,
           { from: minter }
         );
@@ -129,9 +129,9 @@ contract('WallOfChainToken', function (accounts) {
           this.token.newToken(
             ZERO_ADDRESS,
             this.structure.value,
-            this.structure.backColor,
-            this.structure.frontColor,
-            this.structure.text,
+            this.structure.firstName,
+            this.structure.lastName,
+            this.structure.pattern,
             this.structure.icon,
             { from: minter }
           )
@@ -145,9 +145,9 @@ contract('WallOfChainToken', function (accounts) {
           this.token.newToken(
             beneficiary,
             this.structure.value,
-            this.structure.backColor,
-            this.structure.frontColor,
-            this.structure.text,
+            this.structure.firstName,
+            this.structure.lastName,
+            this.structure.pattern,
             this.structure.icon,
             { from: anotherAccount }
           )

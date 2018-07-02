@@ -14,15 +14,15 @@ const WallOfChainToken = artifacts.require('WallOfChainToken.sol');
 const ROLE_MINTER = 'minter';
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
-contract('WallOfChainMarket', function ([_, wallet, purchaser]) {
+contract('WallOfChainMarket', function ([_, wallet, purchaser, beneficiary]) {
   const name = 'WallOfChainToken';
   const symbol = 'WOC';
 
   const tokenDetails = {
     value: ether(0.1),
-    backColor: '#000000',
-    frontColor: '#FFFFFF',
-    text: 'Blockchain Pioneers',
+    firstName: 'Vittorio',
+    lastName: 'Minacori',
+    pattern: 'yellow',
     icon: 'default',
   };
 
@@ -62,12 +62,26 @@ contract('WallOfChainMarket', function ([_, wallet, purchaser]) {
   describe('accepting payments', function () {
     it('should accept payments through buyToken function', async function () {
       await this.crowdsale.buyToken(
-        tokenDetails.backColor,
-        tokenDetails.frontColor,
-        tokenDetails.text,
+        beneficiary,
+        tokenDetails.firstName,
+        tokenDetails.lastName,
+        tokenDetails.pattern,
         tokenDetails.icon,
         { value: value, from: purchaser }
       ).should.be.fulfilled;
+    });
+
+    it('should reject payments if beneficiary is the zero address', async function () {
+      await assertRevert(
+        this.crowdsale.buyToken(
+          ZERO_ADDRESS,
+          tokenDetails.firstName,
+          tokenDetails.lastName,
+          tokenDetails.pattern,
+          tokenDetails.icon,
+          { value: value, from: purchaser }
+        )
+      );
     });
 
     it('should reject payments through default payable function', async function () {
@@ -81,38 +95,41 @@ contract('WallOfChainMarket', function ([_, wallet, purchaser]) {
     it('should log purchase', async function () {
       const tokenId = await this.token.progressiveId();
       const { logs } = await this.crowdsale.buyToken(
-        tokenDetails.backColor,
-        tokenDetails.frontColor,
-        tokenDetails.text,
+        beneficiary,
+        tokenDetails.firstName,
+        tokenDetails.lastName,
+        tokenDetails.pattern,
         tokenDetails.icon,
         { value: value, from: purchaser }
       );
       const event = logs.find(e => e.event === 'TokenPurchase');
       should.exist(event);
       event.args.purchaser.should.equal(purchaser);
-      event.args.beneficiary.should.equal(purchaser);
+      event.args.beneficiary.should.equal(beneficiary);
       event.args.value.should.be.bignumber.equal(value);
       event.args.tokenId.should.be.bignumber.equal(tokenId.add(1));
     });
 
     it('should assign token to beneficiary', async function () {
       await this.crowdsale.buyToken(
-        tokenDetails.backColor,
-        tokenDetails.frontColor,
-        tokenDetails.text,
+        beneficiary,
+        tokenDetails.firstName,
+        tokenDetails.lastName,
+        tokenDetails.pattern,
         tokenDetails.icon,
         { value: value, from: purchaser }
       );
-      const balance = await this.token.balanceOf(purchaser);
+      const balance = await this.token.balanceOf(beneficiary);
       balance.should.be.bignumber.equal(1);
     });
 
     it('should forward funds to wallet', async function () {
       const pre = web3.eth.getBalance(wallet);
       await this.crowdsale.buyToken(
-        tokenDetails.backColor,
-        tokenDetails.frontColor,
-        tokenDetails.text,
+        beneficiary,
+        tokenDetails.firstName,
+        tokenDetails.lastName,
+        tokenDetails.pattern,
         tokenDetails.icon,
         { value: value, from: purchaser }
       );
