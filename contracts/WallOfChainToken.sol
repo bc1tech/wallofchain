@@ -70,6 +70,12 @@ contract WallOfChainToken is ERC721RBACMintableToken {
     icon = wall.icon;
   }
 
+  function getWallValue (uint256 tokenId) public view returns (uint256) {
+    require(exists(tokenId));
+    WallStructure storage wall = structureIndex[tokenId];
+    return wall.value;
+  }
+
   /**
    * @dev Only contract owner or token owner can burn
    */

@@ -1,11 +1,14 @@
 pragma solidity ^0.4.24;
 
 import "openzeppelin-solidity/contracts/math/SafeMath.sol";
-import "./WallOfChainToken.sol";
+import "./libraries/OrderedLinkedList.sol";
 
 
 contract WallOfChainMarket {
   using SafeMath for uint256;
+  using OrderedLinkedListLib for OrderedLinkedListLib.OrderedLinkedList;
+
+  OrderedLinkedListLib.OrderedLinkedList list;
 
   // The token being sold
   WallOfChainToken public token;
@@ -71,6 +74,9 @@ contract WallOfChainMarket {
       _icon
     );
 
+    uint256 position = list.getSortedSpot(token, weiAmount);
+    list.insertAfter(position, lastTokenId);
+
     emit TokenPurchase(
       msg.sender,
       beneficiary,
@@ -79,6 +85,14 @@ contract WallOfChainMarket {
     );
 
     _forwardFunds();
+  }
+
+  function getNextNode(uint256 _tokenId) public view returns (bool, uint256) {
+    return list.getNextNode(_tokenId);
+  }
+
+  function getNode(uint256 _tokenId) public view returns (bool, uint256, uint256) {
+    return list.getNode(_tokenId);
   }
 
   // -----------------------------------------
