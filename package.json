@@ -20,6 +20,11 @@
   },
   "homepage": "https://github.com/pedrodim/wallofchain#readme",
   "devDependencies": {
+    "node-sass": "^4.9.2",
+    "sass-loader": "^7.0.3",
     "vuepress": "^0.11.0"
+  },
+  "dependencies": {
+    "bootstrap": "^4.1.1"
   }
 }
