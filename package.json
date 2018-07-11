@@ -6,7 +6,7 @@
   "scripts": {
     "start-watcher": "vuepress dev",
     "build": "vuepress build",
-    "deploy": "npm run build && sh dev/deploy.sh",
+    "deploy": "vuepress build && sh dev/deploy.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
