@@ -1,0 +1,25 @@
+{
+  "name": "wallofchain",
+  "version": "0.0.1",
+  "description": "Become a star into the blockchain",
+  "main": "index.js",
+  "scripts": {
+    "start-watcher": "vuepress dev",
+    "build": "vuepress build",
+    "deploy": "npm run build && sh dev/deploy.sh",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pedrodim/wallofchain.git"
+  },
+  "author": "Pane&Design <hello@paneedesign.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pedrodim/wallofchain/issues"
+  },
+  "homepage": "https://github.com/pedrodim/wallofchain#readme",
+  "devDependencies": {
+    "vuepress": "^0.11.0"
+  }
+}
