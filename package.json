@@ -25,6 +25,7 @@
     "vuepress": "^0.11.0"
   },
   "dependencies": {
-    "bootstrap": "^4.1.1"
+    "bootstrap": "^4.1.1",
+    "vue-masonry": "^0.11.4"
   }
 }

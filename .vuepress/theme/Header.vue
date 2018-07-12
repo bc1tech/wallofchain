@@ -33,3 +33,8 @@
 <script>
     export default {};
 </script>
+<style lang="scss">
+    .navbar {
+        padding: 2.5rem 0;
+    }
+</style>

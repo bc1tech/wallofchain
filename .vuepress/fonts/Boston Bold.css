@@ -1,0 +1,14 @@
+@font-face {
+    font-family:'Boston';
+    src: url('Boston Bold.eot');
+	src: local('Boston-Bold'), local(Boston Bold),
+		url('Boston Bold.eot?#iefix') format('embedded-opentype'),
+		url('Boston Bold.woff2') format('woff2'),
+		url('Boston Bold.woff') format('woff'),
+		url('Boston Bold.ttf') format('truetype'),
+		url('Boston Bold.svg#Boston Bold') format('svg');
+    font-weight: 700;
+    font-style: normal;
+    font-stretch: normal;
+    unicode-range: U+0020-00FE;
+}

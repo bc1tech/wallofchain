@@ -1,6 +1,46 @@
 html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+}
+
+body {
+    background-image: linear-gradient(143deg, #2D215E, #0A0E2C);
+    min-height: 100vh;
+}
+
+.page-wrapper {
+    min-height: 100vh;
+    background-image: url(../images/bg.png);
+    background-repeat: repeat-y;
+    background-position: center -9em;
+
+    @media
+    (-webkit-min-device-pixel-ratio: 2),
+    (min-resolution: 192dpi) {
+        background-image: url(../images/bg@2x.png);
+        background-size: 189.5em;
+    }
+}
+
+.container-lg {
+    @include make-container();
+
+    @include media-breakpoint-up('lg') {
+        max-width: 1440px;
+    }
+}
+
+.section {
+    &__title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1.25em;
+
+        &--center {
+            text-align: center;
+        }
+    }
 }
 
 // page transitions

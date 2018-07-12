@@ -1,6 +1,6 @@
 <template>
     <main class="container">
-        Become a Star
+        Become a Staru
     </main>
 </template>
 <script>
