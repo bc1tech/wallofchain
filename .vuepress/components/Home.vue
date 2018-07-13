@@ -10,18 +10,31 @@
                     <router-link to="/become-a-star.html" class="btn">Become a star</router-link>
                 </div>
                 <div class="col-lg-6">
-                    <wall :limit="2" :show-title="false" small order="ASC" class="wall-featured" />
+                    <ClientOnly>
+                        <wall :limit="2" small order="ASC" class="wall-featured" />
+                    </ClientOnly>
                 </div>
             </div>
         </div>
-        <wall :limit="10" />
+        <section class="section container-lg">
+            <h2 class="section__title section__title--center">Discover the wall of blockchain</h2>
+            <ClientOnly>
+                <wall :limit="10" />
+            </ClientOnly>
+        </section>
         <div class="text-center">
             <router-link to="/wall.html" class="btn btn--outline">Show other position</router-link>
         </div>
     </main>
 </template>
 <script>
-    export default {};
+    const Wall = () => import('../theme/Wall.vue');
+
+    export default {
+        components: {
+            Wall,
+        },
+    };
 </script>
 <style lang="scss">
     .hero {

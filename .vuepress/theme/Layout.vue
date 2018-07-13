@@ -21,7 +21,7 @@
         },
         computed: {
             page() {
-                return this.$page.frontmatter.home ? 'home' : (this.$page.frontmatter.component || null);
+                return this.$page.frontmatter.home ? 'Home' : (this.$page.frontmatter.component || null);
             },
         },
     };
