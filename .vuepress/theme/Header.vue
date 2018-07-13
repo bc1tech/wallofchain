@@ -34,7 +34,7 @@
 <style lang="scss">
     .navbar {
         display: flex;
-
+        align-items: center;
         padding-top: 3.125em;
         padding-bottom: 5em;
 
@@ -43,6 +43,7 @@
             letter-spacing: 0.15em;
             font-weight: 800;
             line-height: 1.2;
+            text-transform: uppercase;
         }
 
         &__nav {

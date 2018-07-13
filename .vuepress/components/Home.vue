@@ -1,10 +1,18 @@
 <template>
     <main>
-        <div class="container">
-            <h1>Become a part of the blockchain hall of fame. Become a star now</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor si amet, consectetur adipiscing elit</p>
-
-            <router-link to="/become-a-star.html" class="btn">Become a star</router-link>
+        <div class="container hero">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="row">
+                        <h1 class="col-lg-10 hero__title">Become a part of the blockchain hall of fame. Become a star now</h1>
+                        <p class="col hero__copy">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor si amet, consectetur adipiscing elit</p>
+                    </div>
+                    <router-link to="/become-a-star.html" class="btn">Become a star</router-link>
+                </div>
+                <div class="col-lg-6">
+                    <wall :limit="2" :show-title="false" small order="ASC" class="wall-featured" />
+                </div>
+            </div>
         </div>
         <wall :limit="10" />
         <div class="text-center">
@@ -15,3 +23,39 @@
 <script>
     export default {};
 </script>
+<style lang="scss">
+    .hero {
+        &__title {
+            font-size: 2rem;
+            line-height: 1.25;
+            font-weight: 700;
+            letter-spacing: 0.0625em;
+            margin-bottom: 0.625em;
+        }
+
+        &__copy {
+            font-size: 1.125rem;
+            letter-spacing: 0;
+            line-height: 1.555;
+            margin-bottom: 2.22em;
+        }
+    }
+
+    .wall-featured {
+        .star {
+            z-index: 2;
+
+            .star__content {
+                transform: translateX(10%) translateY(50%);
+            }
+
+            &:last-child {
+                z-index: 1;
+
+                .star__content {
+                    transform: translateX(-20%);
+                }
+            }
+        }
+    }
+</style>
