@@ -1,8 +1,7 @@
 @font-face {
     font-family:'Boston';
     src: url('Boston Regular.eot');
-	src: local('Boston-Regular'), local(Boston Regular),
-		url('Boston Regular.eot?#iefix') format('embedded-opentype'),
+	src: url('Boston Regular.eot?#iefix') format('embedded-opentype'),
 		url('Boston Regular.woff2') format('woff2'),
 		url('Boston Regular.woff') format('woff'),
 		url('Boston Regular.ttf') format('truetype'),

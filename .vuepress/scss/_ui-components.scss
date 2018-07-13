@@ -45,3 +45,39 @@
         }
     }
 }
+
+.btn {
+    display: inline-block;
+    padding: 0.928em 1.642em;
+    border: 2px solid #fff;
+    border-radius: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 800;
+    line-height: 1.285;
+    letter-spacing: 0.214em;
+    text-transform: uppercase;
+    background-image: linear-gradient(103deg, #4090ef, #9c9a42, #4090ef);
+    background-size: 200% 100%;
+    background-position-x: 0;
+    color: #fff;
+    transition: .25s ease-in-out;
+
+    &:hover {
+        text-decoration: none;
+        background-position-x: 100%;
+        color: #fff;
+    }
+
+    &--thin {
+        border-width: 1px;
+    }
+
+    &--outline {
+        background-image: linear-gradient(103deg, transparent 50%, #4090ef, #9c9a42);
+        background-size: 300% 100%;
+
+        &:hover {
+            background-position-x: 100%;
+        }
+    }
+}

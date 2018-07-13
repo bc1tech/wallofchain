@@ -10,7 +10,7 @@
                      key="wall"
                      v-else
                      v-masonry
-                     transition-duration="3s"
+                     transition-duration="1s"
                      item-selector=".wall__item"
                      fit-width="true">
                     <div class="wall__item wall__sizer"></div>
@@ -22,7 +22,7 @@
                         <div class="star__content">
                             <span class="star__icon" :class="`star__icon--${item.icon}`"></span>
                             <h2 class="star__title">{{ item.title }}</h2>
-                            <div class="star__amount">{{ item.amount }} {{ item.currency }}</div>
+                            <div class="star__amount">{{ item.amount | number }} {{ item.currency }}</div>
                         </div>
                     </div>
                 </div>
@@ -36,7 +36,9 @@
 
     Vue.use(VueMasonryPlugin);
 
-    const getWall = () => new Promise((resolve, reject) => {
+    const getWall = (params) => new Promise((resolve, reject) => {
+        const { limit } = params;
+
         const generateStar = id => ({
             id,
             title: Math.random().toString(36).substring(7),
@@ -45,12 +47,11 @@
             icon: Math.floor(Math.random() * (10 - 1 + 1)) + 1,
         });
 
-        const wall = [
-            generateStar(1), generateStar(2), generateStar(3), generateStar(4),
-            generateStar(5), generateStar(6), generateStar(7), generateStar(8),
-            generateStar(9), generateStar(10), generateStar(11), generateStar(12),
-            generateStar(13), generateStar(14),
-        ];
+        const wall = [];
+
+        for (let i = 0; i < (limit || 50); i++) {
+            wall.push(generateStar(i));
+        }
 
         setTimeout(() => {
             resolve(wall);
@@ -58,6 +59,12 @@
     });
 
     export default {
+        props: {
+            limit: {
+                type: Number,
+                default: 0,
+            },
+        },
         data() {
             return {
                 loading: false,
@@ -65,10 +72,21 @@
                 sizes: [10, 20, 30],
             };
         },
+        filters: {
+            number(num, maxDecimals = 4, minDecimals = 0) {
+                const value = parseFloat(num);
+                return value.toLocaleString('en', {
+                    maximumFractionDigits: maxDecimals,
+                    minimumFractionDigits: minDecimals,
+                });
+            }
+        },
         mounted() {
             this.loading = true;
 
-            getWall().then((wall) => {
+            getWall({
+                limit: this.limit,
+            }).then((wall) => {
                 this.loading = false;
 
                 wall.sort((a, b) => {
@@ -124,7 +142,7 @@
     );
 
     .wall {
-        margin: 0 auto;
+        margin: 0 auto 1.25em;
 
         &__sizer {
             width: 100%;

@@ -35,7 +35,8 @@ body {
     &__title {
         font-size: 2rem;
         font-weight: 700;
-        margin-bottom: 1.25em;
+        line-height: 1.25;
+        margin-bottom: 0.625em;
 
         &--center {
             text-align: center;
