@@ -57,7 +57,7 @@ contract WallOfChainToken is ERC721RBACMintableToken {
     string icon
   )
   {
-    require(exists(tokenId));
+    require(exists(tokenId), "Token must exists");
 
     WallStructure storage wall = structureIndex[tokenId];
 

@@ -11,7 +11,7 @@ Install truffle, compiler and linter.
 
 ```bash
 npm install -g truffle      // Version 4.1.13+ required.
-npm install -g solium       // Version 1.1.7+ required.
+npm install -g solium       // Version 1.1.8+ required.
 ```
 
 
