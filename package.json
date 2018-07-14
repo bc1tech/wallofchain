@@ -1,7 +1,7 @@
 {
   "name": "wallofchain",
   "version": "1.0.0",
-  "description": "An ERC721 token...",
+  "description": "Become a part of the blockchain hall of fame. Become a star now.",
   "main": "truffle-config.js",
   "directories": {
     "test": "test"
@@ -58,7 +58,7 @@
     "ethjs-abi": "^0.2.1",
     "ganache-cli": "^6.1.0",
     "openzeppelin-solidity": "1.10.0",
-    "solium": "^1.1.7",
+    "solium": "^1.1.8",
     "truffle": "^4.1.13",
     "truffle-contract": "^3.0.4",
     "solidity-coverage": "^0.5.0",

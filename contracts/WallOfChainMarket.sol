@@ -35,8 +35,8 @@ contract WallOfChainMarket {
    * @param _token Address of the token being sold
    */
   constructor(address _wallet, WallOfChainToken _token) public {
-    require(_wallet != address(0));
-    require(_token != address(0));
+    require(_wallet != address(0), "Wallet can't be the zero address");
+    require(_token != address(0), "Token can't be the zero address");
 
     wallet = _wallet;
     token = _token;
@@ -95,7 +95,7 @@ contract WallOfChainMarket {
   internal
   pure
   {
-    require(_beneficiary != address(0));
+    require(_beneficiary != address(0), "Beneficiary can't be the zero address");
   }
 
   /**
