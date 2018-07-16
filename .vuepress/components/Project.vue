@@ -28,7 +28,7 @@
         </div>
 
         <div class="project-footer">
-            <h2>Are you ready?</h2>
+            <h2 class="project-footer__title">Are you ready?</h2>
             <router-link to="/become-a-star.html" class="btn">Become a star</router-link>
         </div>
     </main>
@@ -47,26 +47,25 @@
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
         background-color: rgba(255, 255, 255, 0.4);
         border: solid 4px #ffffff;
-        padding: 60px 40px 48px;
+        padding: 3.75em 2.5em 3em;
         border-radius: 24px;
         text-align: center;
-        margin: 48px auto;
+        margin: 3em auto;
 
         @include media-breakpoint-up('md') {
-            margin: 96px auto;
+            margin: 6em auto;
         }
 
         &__star {
-            $hw: 96px;
             position: absolute;
             top: 0;
             right: 0;
             left: 0;
             z-index: 1;
-            height: $hw;
-            width: $hw;
-            margin: -54px auto 0;
-            font-size: 32px;
+            height: 6rem;
+            width: 6rem;
+            margin: -3.375rem auto 0;
+            font-size: 2rem;
             font-weight: 700;
             display: flex;
             align-items: center;
@@ -94,19 +93,32 @@
         }
 
         &__star-content {
-            margin-top: 10px;
+            margin-top: .625em;
             background: linear-gradient(157deg, #2d215e, #0a0e2c);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+
+        &__title {
+            font-size: 1.75rem;
+            letter-spacing: 1px;
+            line-height: 1.4285;
         }
     }
 
     .project-footer {
         text-align: center;
-        margin-bottom: 40px;
+        margin-bottom: 2.5em;
 
         @include media-breakpoint-up('md') {
-            margin-bottom: 82px;
+            margin-bottom: 5.125em;
+        }
+
+        &__title {
+            font-size: 2rem;
+            letter-spacing: 2px;
+            line-height: 1.25;
+            margin-bottom: .8em;
         }
     }
 </style>
