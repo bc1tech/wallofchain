@@ -10,11 +10,20 @@
     export default {};
 </script>
 <style lang="scss">
+    @import "../scss/variables";
+    @import "~bootstrap/scss/functions";
+    @import "~bootstrap/scss/variables";
+    @import "~bootstrap/scss/mixins";
+
     .footer {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: space-between;
+        text-align: center;
+
+        @include media-breakpoint-up(lg) {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
 
         padding-top: 2.5em;
         padding-bottom: 2.5em;

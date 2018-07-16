@@ -62,7 +62,7 @@
     color: #fff;
     transition: .25s ease-in-out;
 
-    &:hover {
+    &:hover, &:focus, &.active {
         text-decoration: none;
         background-position-x: 100%;
         color: #fff;
@@ -76,7 +76,7 @@
         background-image: linear-gradient(103deg, transparent 50%, #4090ef, #9c9a42);
         background-size: 300% 100%;
 
-        &:hover {
+        &:hover, &:focus, &.active {
             background-position-x: 100%;
         }
     }

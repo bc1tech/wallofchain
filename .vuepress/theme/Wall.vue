@@ -9,16 +9,15 @@
              v-masonry
              transition-duration="0"
              item-selector=".wall__item"
-             gutter=".wall__gutter"
              percent-position="true"
              horizontal-order="true">
             <div class="wall__item wall__sizer"></div>
-            <div class="wall__item wall__gutter"></div>
+            <!-- <div class="wall__item wall__gutter"></div> -->
             <div v-for="item in wall"
                  :key="item.id"
                  v-masonry-tile
                  class="wall__item star"
-                 :class="`star--${sizes[item.size].className} star--style-${item.style} ${itemClass}`">
+                 :class="`star--${sizes[item.size][small ? 'classNameSmall' : 'className']} star--style-${item.style} ${itemClass}`">
                 <div class="star__content">
                     <span class="star__icon" :class="`star__icon--${item.icon}`"></span>
                     <h2 class="star__title">{{ item.title }}</h2>
@@ -79,13 +78,16 @@
                 wall: [],
                 sizes: [{
                     val: 0.2,
-                    className: 'size-1'
+                    className: 'size-1',
+                    classNameSmall: 'size-small-1'
                 }, {
                     val: 0.3,
-                    className: 'size-2'
+                    className: 'size-2',
+                    classNameSmall: 'size-small-2'
                 }, {
                     val: 0.5,
-                    className: 'size-3'
+                    className: 'size-3',
+                    classNameSmall: 'size-small-3'
                 }],
             };
         },
@@ -159,15 +161,27 @@
     $sizes: (
             size-1: (
                     xs: 6,
-                    xl: 4
+                    lg: 4
+            ),
+            size-small-1: (
+                    xs: 6,
+                    lg: 8
             ),
             size-2: (
                     xs: 3,
-                    xl: 3
+                    lg: 3
+            ),
+            size-small-2: (
+                    xs: 4,
+                    lg: 4
             ),
             size-3: (
-                    xs: 2,
-                    xl: 2
+                    xs: 3,
+                    lg: 2
+            ),
+            size-small-3: (
+                    xs: 4,
+                    lg: 4
             ),
     );
 
@@ -192,15 +206,11 @@
     );
 
     .wall {
-        margin: 0 auto 1.25em;
+        margin: 0 (($grid-gutter-width/2)*-1) 1.25em;
 
         &__sizer {
             width: 100%;
             max-width: percentage(1 / $grid-columns);
-        }
-
-        &__gutter {
-            width: $grid-gutter-width / 4;
         }
     }
 
@@ -210,7 +220,6 @@
         position: relative;
         width: 100%;
         max-width: percentage(1 / $grid-columns);
-        margin-bottom: $grid-gutter-width;
 
         @each $class, $size in $sizes {
             &--#{$class} {
@@ -223,18 +232,6 @@
                 @each $breakpoint, $columns in $size {
                     @include media-breakpoint-up($breakpoint) {
                         max-width: percentage($columns / $grid-columns);
-                    }
-                }
-
-                &#{$root}--small {
-                    @each $breakpoint, $columns in $size {
-                        @include media-breakpoint-down($breakpoint) {
-                            max-width: percentage(($columns * 1.5) / $grid-columns);
-                        }
-                    }
-
-                    #{$root}__content {
-                        font-size: map_get($font-sizes, $class) * 0.8;
                     }
                 }
             }
@@ -262,10 +259,10 @@
             flex-direction: column;
             position: absolute;
             padding: 1em;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: ($grid-gutter-width/2);
+            right: ($grid-gutter-width/2);
+            bottom: ($grid-gutter-width/2);
+            left: ($grid-gutter-width/2);
             // box-shadow: 0 30px 60px 0 rgba(0,0,0,0.50);
             border-radius: 4px;
             text-align: center;

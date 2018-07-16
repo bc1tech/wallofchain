@@ -1,23 +1,35 @@
 <template>
     <header class="navbar container">
+        <button ref="toggler"
+                class="navbar__toggler btn btn--outline btn--thin"
+                :class="navOpen ? 'active' : ''"
+                @click="toggleNavbar">
+            <span class="navbar__toggler-icon"></span>
+        </button>
+
         <router-link class="navbar__brand" to="/">
             WallOfChain.com
         </router-link>
 
-        <ul class="navbar__nav flex-row ml-md-auto">
+        <ul class="navbar__nav" :class="navOpen ? 'navbar__nav--open' : ''">
             <li class="navbar__item">
-                <router-link class="navbar__link p-2" title="Home" to="/">
+                <router-link class="navbar__link" title="Home" to="/">
                     Home
                 </router-link>
             </li>
             <li class="navbar__item">
-                <router-link class="navbar__link p-2" title="The Project" to="/project.html">
+                <router-link class="navbar__link" title="The Project" to="/project.html">
                     The Project
                 </router-link>
             </li>
             <li class="navbar__item">
-                <router-link class="navbar__link p-2" title="The Wall" to="/wall.html">
+                <router-link class="navbar__link" title="The Wall" to="/wall.html">
                     The Wall
+                </router-link>
+            </li>
+            <li class="navbar__item">
+                <router-link class="navbar__link" title="FAQ" to="/faq.html">
+                    FAQ
                 </router-link>
             </li>
             <li class="navbar__item">
@@ -29,14 +41,44 @@
     </header>
 </template>
 <script>
-    export default {};
+    export default {
+        data() {
+            return {
+                navOpen: false,
+            };
+        },
+        methods: {
+            toggleNavbar() {
+                this.navOpen = !this.navOpen;
+            },
+        },
+        watch: {
+            '$route'() {
+                if (this.navOpen) {
+                    this.navOpen = false;
+                }
+            }
+        },
+    };
 </script>
 <style lang="scss">
+    @import "../scss/variables";
+    @import "~bootstrap/scss/functions";
+    @import "~bootstrap/scss/variables";
+    @import "~bootstrap/scss/mixins";
+
     .navbar {
         display: flex;
+        flex-wrap: wrap;
         align-items: center;
-        padding-top: 3.125em;
-        padding-bottom: 5em;
+        padding-top: 1.25em;
+        padding-bottom: 2.5em;
+
+        @include media-breakpoint-up(lg) {
+            padding-top: 3.125em;
+            padding-bottom: 5em;
+            flex-wrap: nowrap;
+        }
 
         &__brand {
             font-size: 1.25rem;
@@ -50,18 +92,101 @@
             }
         }
 
-        &__nav {
-            list-style: none;
-            margin: 0 0 0 auto;
+        &__toggler {
+            position: relative;
             padding: 0;
+            margin-right: 1.25em;
+            width: 3.125em;
+            height: 3.125em;
+            background-color: transparent;
+            cursor: pointer;
+
+            @include media-breakpoint-up(lg) {
+                display: none !important;
+            }
+
+            &:focus {
+                outline: none;
+            }
+
+            &-icon {
+                top: 2px;
+                margin: 10px -12px;
+
+                &, &:before, &:after {
+                    position: absolute;
+                    width: 1.875em;
+                    height: 2px;
+                    transition-timing-function: ease;
+                    transition-duration: .15s;
+                    transition-property: transform;
+                    border-radius: 4px;
+                    background-color: #fff;
+                }
+
+                &:before, &:after {
+                    display: block;
+                    content: "";
+                }
+
+                &:before {
+                    top: 8px;
+                    transition-timing-function: ease;
+                    transition-duration: .15s;
+                    transition-property: transform,opacity;
+                }
+
+                &:after {
+                    top: 16px;
+                }
+            }
+        }
+
+        &__nav {
+            display: none;
+            list-style: none;
+            margin: 1.25em 0 0;
+            padding: 0;
+            width: 100%;
+
+            @include media-breakpoint-up(md) {
+                text-align: center;
+            }
+
+            @include media-breakpoint-up(lg) {
+                text-align: left;
+                width: auto;
+                margin-top: 0;
+                margin-left: auto;
+                display: block;
+            }
+            
+            &--open {
+                display: block;
+            }
         }
 
         &__item {
-            display: inline-block;
-            margin: 0 1.25em;
+            display: block;
+            margin: 0 0 1em;
+            text-align: center;
 
-            &:last-child {
-                margin-right: 0;
+            @include media-breakpoint-up(md) {
+                text-align: left;
+                display: inline-block;
+                margin: 0 1em;
+
+                &:first-child {
+                    margin-left: 0;
+                }
+
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+
+            @include media-breakpoint-up(lg) {
+                margin: 0 1.25em;
             }
         }
 
@@ -87,12 +212,15 @@
                 position: relative;
                 width: 20%;
                 margin: 0 auto;
-                top: 0.928em;
                 height: 2px;
                 background-image: linear-gradient(94deg, #4090ef, #9c9a42);
                 opacity: 0;
                 transform: translateY(-4px);
                 transition: .15s ease-in-out;
+
+                @include media-breakpoint-up(md) {
+                    top: 0.928em;
+                }
             }
 
             &.router-link-exact-active {
@@ -100,8 +228,12 @@
 
                 &::after {
                     opacity: 1;
-                    width: 60%;
+                    width: 20%;
                     transform: translateY(0);
+
+                    @include media-breakpoint-up(md) {
+                        width: 60%;
+                    }
                 }
             }
             
