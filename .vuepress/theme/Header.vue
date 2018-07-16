@@ -6,22 +6,22 @@
 
         <ul class="navbar__nav flex-row ml-md-auto">
             <li class="navbar__item">
-                <router-link class="navbar__link p-2" to="/">
+                <router-link class="navbar__link p-2" title="Home" to="/">
                     Home
                 </router-link>
             </li>
             <li class="navbar__item">
-                <router-link class="navbar__link p-2" to="/project.html">
+                <router-link class="navbar__link p-2" title="The Project" to="/project.html">
                     The Project
                 </router-link>
             </li>
             <li class="navbar__item">
-                <router-link class="navbar__link p-2" to="/wall.html">
+                <router-link class="navbar__link p-2" title="The Wall" to="/wall.html">
                     The Wall
                 </router-link>
             </li>
             <li class="navbar__item">
-                <router-link class="btn btn--outline btn--thin" to="/become-a-star.html">
+                <router-link class="btn btn--outline btn--thin" title="Become a Star" to="/become-a-star.html">
                     Become a Star
                 </router-link>
             </li>
@@ -71,8 +71,17 @@
             line-height: 1.285;
             letter-spacing: 0.214em;
             color: #fff;
+            
+            &::before {
+                content: attr(title);
+                height: 0;
+                display: block;
+                font-weight: 700;
+                overflow: hidden;
+                visibility: hidden;
+            }
 
-            &:after {
+            &::after {
                 content: '';
                 display: block;
                 position: relative;
@@ -89,7 +98,7 @@
             &.router-link-exact-active {
                 font-weight: 700;
 
-                &:after {
+                &::after {
                     opacity: 1;
                     width: 60%;
                     transform: translateY(0);
