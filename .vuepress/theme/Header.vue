@@ -44,6 +44,10 @@
             font-weight: 800;
             line-height: 1.2;
             text-transform: uppercase;
+
+            &:hover {
+                text-decoration: none;
+            }
         }
 
         &__nav {

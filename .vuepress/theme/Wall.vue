@@ -8,10 +8,12 @@
              v-else
              v-masonry
              transition-duration="0"
-             :item-selector="`.wall__item`"
+             item-selector=".wall__item"
+             gutter=".wall__gutter"
              percent-position="true"
              horizontal-order="true">
             <div class="wall__item wall__sizer"></div>
+            <div class="wall__item wall__gutter"></div>
             <div v-for="item in wall"
                  :key="item.id"
                  v-masonry-tile
@@ -149,11 +151,24 @@
     };
 </script>
 <style lang="scss">
-    $columns: 12;
+    @import "../scss/variables";
+    @import "~bootstrap/scss/functions";
+    @import "~bootstrap/scss/variables";
+    @import "~bootstrap/scss/mixins";
+
     $sizes: (
-            size-1: 4,
-            size-2: 3,
-            size-3: 2,
+            size-1: (
+                    xs: 6,
+                    xl: 4
+            ),
+            size-2: (
+                    xs: 3,
+                    xl: 3
+            ),
+            size-3: (
+                    xs: 2,
+                    xl: 2
+            ),
     );
 
     $font-sizes: (
@@ -177,12 +192,15 @@
     );
 
     .wall {
-        width: 100%;
         margin: 0 auto 1.25em;
 
         &__sizer {
             width: 100%;
-            max-width: percentage(1 / $columns);
+            max-width: percentage(1 / $grid-columns);
+        }
+
+        &__gutter {
+            width: $grid-gutter-width / 4;
         }
     }
 
@@ -191,18 +209,29 @@
         display: block;
         position: relative;
         width: 100%;
-        max-width: percentage(1 / $columns);
+        max-width: percentage(1 / $grid-columns);
+        margin-bottom: $grid-gutter-width;
 
         @each $class, $size in $sizes {
             &--#{$class} {
-                max-width: percentage($size / $columns);
+                // max-width: percentage($size / $grid-columns);
 
                 #{$root}__content {
                     font-size: map_get($font-sizes, $class);
                 }
 
+                @each $breakpoint, $columns in $size {
+                    @include media-breakpoint-up($breakpoint) {
+                        max-width: percentage($columns / $grid-columns);
+                    }
+                }
+
                 &#{$root}--small {
-                    max-width: percentage(($size * 2) / $columns);
+                    @each $breakpoint, $columns in $size {
+                        @include media-breakpoint-down($breakpoint) {
+                            max-width: percentage(($columns * 1.5) / $grid-columns);
+                        }
+                    }
 
                     #{$root}__content {
                         font-size: map_get($font-sizes, $class) * 0.8;
@@ -232,11 +261,11 @@
             justify-content: center;
             flex-direction: column;
             position: absolute;
-            top: 20px;
-            right: 20px;
-            bottom: 20px;
-            left: 20px;
             padding: 1em;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             // box-shadow: 0 30px 60px 0 rgba(0,0,0,0.50);
             border-radius: 4px;
             text-align: center;
