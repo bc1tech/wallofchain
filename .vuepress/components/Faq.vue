@@ -2,23 +2,32 @@
     <main class="container">
         <h1 class="text-center">Frequently Asked Questions</h1>
         
-        <nav>
-            <ul>
-                <li v-for="category in categories" @click="selectedFaq = category" :class="{ 'active-tab': selectedFaq == category }">
-                    {{ category }}
-                </li>
-            </ul>  
-        </nav>
+        <div class="row">
 
-        <div class="accordion-wrapper">
-            <div class="accordion" v-for="(faq, index) in filteredFaq">
-                <input :id="'faq-' + index" name="faq" type="radio" class="accordion__input"/>
-                <label  :for="'faq-' + index" class="accordion__label">{{ faq.title }} <i class="accordion__icon"></i></label>
-                <article class="accordion__content">
-                    <p class="accordion__copy">{{ faq.content }} </p>
-                </article>
+            <div class="col-md-3">
+                <nav class="tab">
+                    <ul class="tab__list">
+                        <li class="tab__li" v-for="category in categories" @click="selectedFaq = category" :class="{ 'tab__li--active': selectedFaq == category }">
+                            <span>{{ category }}</span>
+                        </li>
+                    </ul>  
+                </nav>
+            </div>
+
+            <div class="col-md-9">
+                <div class="accordion-wrapper">
+                    <div class="accordion" v-for="(faq, index) in filteredFaq">
+                        <input :id="faq.category.toLowerCase().replace(/ /g,'') + index" name="faq" type="radio" class="accordion__input"/>
+                        <label  :for="faq.category.toLowerCase().replace(/ /g,'') + index" class="accordion__label">{{ faq.title }} <i class="accordion__icon"></i></label>
+                        <article class="accordion__content">
+                            <p class="accordion__copy">{{ faq.content }} </p>
+                        </article>
+                    </div>
+                </div>
             </div>
         </div>
+
+        
 
     </main>
 </template>
@@ -45,12 +54,12 @@
                     },
                     {
                         title: 'Titolo della domanda 0',
-                        category: 'Understanding',
+                        category: 'Understanding WALLOFFCHAIN',
                         content: 'Contenuto della risposta 0'
                     },
                     {
                         title: 'Titolo della domanda 1',
-                        category: 'Understanding',
+                        category: 'Understanding WALLOFFCHAIN',
                         content: 'Contenuto della risposta 1'
                     },
                     {
@@ -78,7 +87,7 @@
                 return this.faqs.filter(faq => {
                     return faq.category.match(this.selectedFaq);
                 });
-            }
+            },
         },
         methods: {
             getCategories() {
@@ -96,6 +105,63 @@
     };
 </script>
 <style lang="scss">
+
+    @import "../scss/variables";
+    @import "~bootstrap/scss/functions";
+    @import "~bootstrap/scss/variables";
+    @import "~bootstrap/scss/mixins";
+
+    .tab {
+
+        &__list {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            justify-content: space-between;
+            margin: 0 -.75rem;
+            @include media-breakpoint-up('md') {
+                flex-direction: column;
+                margin: 0;
+            }
+        }
+
+        &__li {
+            width: calc(100% - 1rem);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            border: 1px solid rgba(#fff, .6);
+
+            cursor: pointer;
+            text-align: center;            
+            margin-right: .75rem;
+            margin-left: .75rem;
+            transition: all .3s ease-in-out;
+            overflow: hidden;
+            border-radius: 5px;
+            
+            &--active {
+                font-weight: 700;
+                border-image: linear-gradient(111deg, #4090ef, #9c9a42);
+                border-image-slice: 1;
+
+                @include media-breakpoint-up('md') {
+                    width: 100%;
+                }
+            }
+
+            @include media-breakpoint-up('md') {
+                margin-right: auto;
+                margin-left: auto;
+
+                & + & {
+                    margin-top: .75rem;
+                }
+            }
+        }
+    }
+
     .accordion {
         position: relative;
         
