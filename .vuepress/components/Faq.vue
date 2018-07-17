@@ -139,15 +139,13 @@
             justify-content: center;
             padding: 1rem;
             border: 1px solid rgba(#fff, .6);
-
             cursor: pointer;
-            text-align: center;            
+            text-align: center;
             margin-right: .75rem;
             margin-left: .75rem;
             transition: all .3s ease-in-out;
             overflow: hidden;
-            border-radius: 5px;
-            
+
             &--active {
                 font-weight: 700;
                 border-image: linear-gradient(111deg, #4090ef, #9c9a42);
