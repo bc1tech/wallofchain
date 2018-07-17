@@ -17,8 +17,8 @@
             <div class="col-md-9">
                 <div class="accordion-wrapper">
                     <div class="accordion" v-for="(faq, index) in filteredFaq">
-                        <input :id="faq.category.toLowerCase().replace(/ /g,'') + index" name="faq" type="radio" class="accordion__input"/>
-                        <label  :for="faq.category.toLowerCase().replace(/ /g,'') + index" class="accordion__label">{{ faq.title }} <i class="accordion__icon"></i></label>
+                        <input v-bind:id="faq.category + index | identify" name="faq" type="radio" class="accordion__input"/>
+                        <label  v-bind:for="faq.category + index | identify" class="accordion__label">{{ faq.title }} <i class="accordion__icon"></i></label>
                         <article class="accordion__content">
                             <p class="accordion__copy">{{ faq.content }} </p>
                         </article>
@@ -87,6 +87,13 @@
                 return this.faqs.filter(faq => {
                     return faq.category.match(this.selectedFaq);
                 });
+            },
+        },
+        filters: {
+            identify : function (value) {
+                if (!value) return ''
+                value = value.toString()
+                return value.toLowerCase().replace(/ /g,'')
             },
         },
         methods: {
