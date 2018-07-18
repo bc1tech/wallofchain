@@ -493,6 +493,71 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
             });
           });
         });
+
+        context('testing push', function () {
+          let thirdTokenId;
+          let thirdNode;
+
+          beforeEach(async function () {
+            await this.token.newToken(
+              beneficiary,
+              tokenDetails.value,
+              tokenDetails.firstName,
+              tokenDetails.lastName,
+              tokenDetails.pattern,
+              tokenDetails.icon,
+              { from: minter }
+            );
+
+            thirdTokenId = await this.token.progressiveId();
+          });
+
+          describe('push to HEAD', function () {
+            beforeEach(async function () {
+              const { logs } = await this.list.push(thirdTokenId, NEXT);
+              const event = logs.find(e => e.event === 'LogNotice');
+              should.exist(event);
+              event.args.booleanValue.should.equal(true);
+              node = await this.list.getNode(tokenId);
+              thirdNode = await this.list.getNode(thirdTokenId);
+            });
+
+            it('node PREV should be thirdNode', async function () {
+              node[1].should.be.bignumber.equal(thirdTokenId);
+            });
+
+            it('thirdNode PREV should be HEAD', async function () {
+              thirdNode[1].should.be.bignumber.equal(HEAD);
+            });
+
+            it('thirdNode NEXT should be node', async function () {
+              thirdNode[2].should.be.bignumber.equal(tokenId);
+            });
+          });
+
+          describe('push to TAIL', function () {
+            beforeEach(async function () {
+              const { logs } = await this.list.push(thirdTokenId, PREV);
+              const event = logs.find(e => e.event === 'LogNotice');
+              should.exist(event);
+              event.args.booleanValue.should.equal(true);
+              secondNode = await this.list.getNode(secondTokenId);
+              thirdNode = await this.list.getNode(thirdTokenId);
+            });
+
+            it('secondNode NEXT should be thirdNode', async function () {
+              secondNode[2].should.be.bignumber.equal(thirdTokenId);
+            });
+
+            it('thirdNode PREV should be secondNode', async function () {
+              thirdNode[1].should.be.bignumber.equal(secondTokenId);
+            });
+
+            it('thirdNode NEXT should be HEAD', async function () {
+              thirdNode[2].should.be.bignumber.equal(HEAD);
+            });
+          });
+        });
       });
 
       describe('adding before (2 times)', function () {
