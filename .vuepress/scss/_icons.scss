@@ -1,0 +1,27 @@
+.icon {
+
+    &--check {
+        background-image: url(../svg/check.svg);
+    }
+
+    
+}
+
+$list: gym, drink, food, car, basketball, setting, bowling, dog, ribbon, trumpet;
+
+@for $i from 1 through length($list) {
+    $item: nth($list, $i);
+
+    .icon-#{$i} {
+        &::before {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-image: url(../svg/#{$item}.svg);
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center center;
+        }
+    }
+}

@@ -39,9 +39,111 @@
                     <div class="row form__row">
                         <div class="col-lg-6">
                             <label class="form__label">Background colors</label>
+                            <ul class="dropdown">
+                                <li class="dropdown__child">
+                                    <a href="javascript:void(0)" title="Select your gradient" class="dropdown__el">Select your gradient</a>
+                                    <input type="checkbox" class="dropdown__checkbox">
+                                    <span class="caret"></span>
+                                    <ul class="dropdown__menu dropdown__menu--gradient">
+                                        <li class="dropdown__menu-child dropdown__menu-child--gradient">
+                                            <input type="radio" name="gradient-style" class="dropdown__radio">
+                                            <label for="gradient-style" class="dropdown__label dropdown__label--gradient gradient-style gradient-style-0"></label>
+                                        </li>
+                                        <li class="dropdown__menu-child dropdown__menu-child--gradient">
+                                            <input type="radio" name="gradient-style" class="dropdown__radio">
+                                            <label for="gradient-style" class="dropdown__label dropdown__label--gradient gradient-style gradient-style-1"></label>
+                                        </li>
+                                        <li class="dropdown__menu-child dropdown__menu-child--gradient">
+                                            <input type="radio" name="gradient-style" class="dropdown__radio">
+                                            <label for="gradient-style" class="dropdown__label dropdown__label--gradient gradient-style gradient-style-2"></label>
+                                        </li>
+                                        <li class="dropdown__menu-child dropdown__menu-child--gradient">
+                                            <input type="radio" name="gradient-style" class="dropdown__radio">
+                                            <label for="gradient-style" class="dropdown__label dropdown__label--gradient gradient-style gradient-style-3"></label>
+                                        </li>
+                                        <li class="dropdown__menu-child dropdown__menu-child--gradient">
+                                            <input type="radio" name="gradient-style" class="dropdown__radio">
+                                            <label for="gradient-style" class="dropdown__label dropdown__label--gradient gradient-style gradient-style-4"></label>
+                                        </li>
+                                        <li class="dropdown__menu-child dropdown__menu-child--gradient">
+                                            <input type="radio" name="gradient-style" class="dropdown__radio">
+                                            <label for="gradient-style" class="dropdown__label dropdown__label--gradient gradient-style gradient-style-5"></label>
+                                        </li>
+                                        <li class="dropdown__menu-child dropdown__menu-child--gradient">
+                                            <input type="radio" name="gradient-style" class="dropdown__radio">
+                                            <label for="gradient-style" class="dropdown__label dropdown__label--gradient gradient-style gradient-style-6"></label>
+                                        </li>
+                                        <li class="dropdown__menu-child dropdown__menu-child--gradient">
+                                            <input type="radio" name="gradient-style" class="dropdown__radio">
+                                            <label for="gradient-style" class="dropdown__label dropdown__label--gradient gradient-style gradient-style-7"></label>
+                                        </li>
+                                        <li class="dropdown__menu-child dropdown__menu-child--gradient">
+                                            <input type="radio" name="gradient-style" class="dropdown__radio">
+                                            <label for="gradient-style" class="dropdown__label dropdown__label--gradient gradient-style gradient-style-8"></label>
+                                        </li>
+                                        <li class="dropdown__menu-child dropdown__menu-child--gradient">
+                                            <input type="radio" name="gradient-style" class="dropdown__radio">
+                                            <label for="gradient-style" class="dropdown__label dropdown__label--gradient gradient-style gradient-style-9"></label>
+                                        </li>
+                                        <li class="dropdown__menu-child dropdown__menu-child--gradient">
+                                            <input type="radio" name="gradient-style" class="dropdown__radio">
+                                            <label for="gradient-style" class="dropdown__label dropdown__label--gradient gradient-style gradient-style-10"></label>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
                         </div>
                         <div class="col-lg-6">
                             <label class="form__label">Icon</label>
+                            <ul class="dropdown">
+                                <li class="dropdown__child">
+                                    <a href="javascript:void(0)" title="Select your gradient" class="dropdown__el">Select your icon</a>
+                                    <input type="checkbox" class="dropdown__checkbox">
+                                    <span class="caret"></span>
+                                    <ul class="dropdown__menu dropdown__menu--icon">
+                                        <li class="dropdown__menu-child dropdown__menu-child--icon">
+                                            <input type="radio" name="icon" class="dropdown__radio">
+                                            <label for="icon" class="dropdown__label dropdown__label--icon icon-1"></label>
+                                        </li>
+                                        <li class="dropdown__menu-child dropdown__menu-child--icon">
+                                            <input type="radio" name="icon" class="dropdown__radio">
+                                            <label for="icon" class="dropdown__label dropdown__label--icon icon-2"></label>
+                                        </li>
+                                        <li class="dropdown__menu-child dropdown__menu-child--icon">
+                                            <input type="radio" name="icon" class="dropdown__radio">
+                                            <label for="icon" class="dropdown__label dropdown__label--icon icon-3"></label>
+                                        </li>
+                                        <li class="dropdown__menu-child dropdown__menu-child--icon">
+                                            <input type="radio" name="icon" class="dropdown__radio">
+                                            <label for="icon" class="dropdown__label dropdown__label--icon icon-4"></label>
+                                        </li>
+                                        <li class="dropdown__menu-child dropdown__menu-child--icon">
+                                            <input type="radio" name="icon" class="dropdown__radio">
+                                            <label for="icon" class="dropdown__label dropdown__label--icon icon-5"></label>
+                                        </li>
+                                        <li class="dropdown__menu-child dropdown__menu-child--icon">
+                                            <input type="radio" name="icon" class="dropdown__radio">
+                                            <label for="icon" class="dropdown__label dropdown__label--icon icon-6"></label>
+                                        </li>
+                                        <li class="dropdown__menu-child dropdown__menu-child--icon">
+                                            <input type="radio" name="icon" class="dropdown__radio">
+                                            <label for="icon" class="dropdown__label dropdown__label--icon icon-7"></label>
+                                        </li>
+                                        <li class="dropdown__menu-child dropdown__menu-child--icon">
+                                            <input type="radio" name="icon" class="dropdown__radio">
+                                            <label for="icon" class="dropdown__label dropdown__label--icon icon-8"></label>
+                                        </li>
+                                        <li class="dropdown__menu-child dropdown__menu-child--icon">
+                                            <input type="radio" name="icon" class="dropdown__radio">
+                                            <label for="icon" class="dropdown__label dropdown__label--icon icon-9"></label>
+                                        </li>
+                                        <li class="dropdown__menu-child dropdown__menu-child--icon">
+                                            <input type="radio" name="icon" class="dropdown__radio">
+                                            <label for="icon" class="dropdown__label dropdown__label--icon icon-10"></label>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
                         </div>
                     </div>
 
@@ -51,7 +153,7 @@
                     <div class="edit-star">
                         <h2 class="title">Edit your stars</h2>
 
-                        <div class="star star--edit star--style-1">
+                        <div class="star star--edit star--style-0">
                             <div class="star__content">
                                 <span class="star__icon star__icon--3">Select icon</span>
                                 <h2 class="star__title">Insert infos</h2>
@@ -159,156 +261,222 @@
         }
     }
 
-    $sizes: (
-        size-1: (
-                xs: 6,
-                lg: 4
-        ),
-        size-small-1: (
-                xs: 6,
-                lg: 8
-        ),
-        size-2: (
-                xs: 3,
-                lg: 3
-        ),
-        size-small-2: (
-                xs: 4,
-                lg: 4
-        ),
-        size-3: (
-                xs: 3,
-                lg: 2
-        ),
-        size-small-3: (
-                xs: 4,
-                lg: 4
-        ),
-);
+    .dropdown {
+        position: relative;
+        width: 100%;
+        list-style: none;
+        margin: 0 0 1.25rem;
+        padding: 0;
 
-$font-sizes: (
-        size-1: 1.75rem,
-        size-2: 1.375rem,
-        size-3: 1rem,
-);
+        .caret {
+            position: absolute;
+            top: -.5rem;
+            right: .875rem;
+            bottom: 0;
+            height: .875rem;
+            width: .875rem;
+            margin: auto;
+            display: inline-block;
+            transform: rotate(135deg);
+            transition: all .3s ease-in-out;
+            
 
-$styles: (
-        style-1: linear-gradient(-135deg, #959595 0%, #C6C6C6 100%),
-        style-2: linear-gradient(-135deg, #FCE38A 0%, #F38181 100%),
-        style-3: linear-gradient(45deg, #FF7676 0%, #F54EA2 100%),
-        style-4: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%),
-        style-5: linear-gradient(-135deg, #622774 0%, #C53364 100%),
-        style-6: linear-gradient(-135deg, #7117EA 0%, #EA6060 100%),
-        style-7: linear-gradient(-135deg, #43E695 0%, #3BB2B8 100%),
-        style-8: linear-gradient(-135deg, #F030C1 0%, #6094EA 100%),
-        style-9: linear-gradient(44deg, #5E2563 0%, #65799B 100%),
-        style-10: linear-gradient(44deg, #57CA85 0%, #194F68 100%),
-        style-11: linear-gradient(45deg, #1BCEDF 0%, #5B247A 100%),
-);
+            &::before {
+                height: .875rem;
+                width: .875rem;
+                content: '';
+                display: block;
+                border-color: #fff;
+                border-width: 1px 1px 0 0;
+                border-style: solid;
+            }
+        }
 
+        &__child {
 
-.star {
-    $root: &;
-    display: block;
-    position: relative;
-    width: 100%;
-    max-width: percentage(1 / $grid-columns);
+            &:hover  {
+                .dropdown__menu { 
+                    left: 0;
+                }
 
-    @each $class, $size in $sizes {
-        &--#{$class} {
-            // max-width: percentage($size / $grid-columns);
-
-            #{$root}__content {
-                font-size: map_get($font-sizes, $class);
+                .caret {
+                    top: .5rem;
+                    transform: rotate(-45deg);
+                }
             }
 
-            @each $breakpoint, $columns in $size {
-                @include media-breakpoint-up($breakpoint) {
-                    max-width: percentage($columns / $grid-columns);
+        }
+
+        &__el {
+            padding: 1rem;
+            border: 1px solid rgba(255,255,255,0.40);
+            border-radius: 12px;
+            font-size: .875rem;
+            color: rgba(255,255,255,0.80);
+            letter-spacing: 1px;
+            line-height: 1.125;
+            display: block;
+            margin: 0;
+
+            &:hover {
+                text-decoration: none;
+            }
+        }
+
+        &__menu {
+            position: absolute;
+            left: -9999px;
+            width: 100%;
+            background: rgba(255,255,255,0.20);
+            border: 1px solid rgba(255,255,255,0.40);
+            border-radius: 12px;
+            list-style: none;
+            padding: .3rem;
+            margin: .325rem 0 0;
+            display: flex;
+            flex-wrap: wrap;
+            overflow: scroll;
+            transition-delay: left .3s ease-in;
+
+            &::before {
+                position: absolute;
+                top: -1rem;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                content: '';
+                height: 100%;
+                width: 100%;
+                display: block;
+                padding: .325rem 0 0 0;
+            }
+
+            &--gradient {
+                height: 100px;
+            }
+
+            &--icon {
+                height: 130px;
+                justify-content: space-between;
+            }
+        }
+
+        &__menu-child {
+            position: relative;
+            overflow: hidden;
+
+            &--gradient {
+                height: 2rem;
+                width: 2rem;
+                max-width: 2rem;
+                margin: .375rem;
+            }
+
+            &--icon {
+                height: 3rem;
+                width: 3rem;
+                max-width: 3rem;
+                margin: .275rem;
+                
+            }
+        }
+
+        &__checkbox {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            &:checked {
+                ~ .dropdown__menu {
+                    left: 0;
+                }
+
+                ~ .caret {
+                    top: .5rem;
+                    transform: rotate(-45deg);
+                }
+            }
+        }
+
+        &__radio {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            opacity: 0;
+
+            &:checked {
+                ~ .dropdown__label--gradient {
+                    &::after {
+                        height: 100%;
+                        width: 100%;
+                        opacity: 1;
+                        transform: scale(1);
+                    }
+                }
+                ~ .dropdown__label--icon {
+                    &::after {
+                        opacity: 1;
+                        transform: scale(1);
+                    }
+                }
+            }
+        }
+
+        &__label {
+            height: 100%;
+            width: 100%;
+            border-radius: 2rem;
+            border: 0;
+            margin: 0;
+
+            &--icon {
+                border: 1px solid #fff;
+                border-radius: 50%;
+                padding: .6em;
+                
+                &::after {
+                    content: '';
+                    position: absolute;
+                    right: .02rem;
+                    bottom: .02rem;
+                    height: .8rem;
+                    width: .8rem;
+                    opacity: 0;
+                    transform: scale(0);
+                    display: block;
+                    background-image: url(../svg/check.svg), linear-gradient(-135deg, #4090ef, #9c9a42, #4090ef);
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    background-size: contain;
+                    transition: all .2s ease-in-out;
+                    border-radius: 50%;
+                    
+                    
+                }
+            }
+
+            &--gradient {
+                &::after {
+                    content: '';
+                    position: relative;
+                    top: .08rem;
+                    opacity: 0;
+                    display: block;
+                    background-image: url(../svg/check.svg);
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    transition: all .2s ease-in-out;
+                    transform: scale(.8);
                 }
             }
         }
     }
-
-    @each $class, $style in $styles {
-        &--#{$class} {
-            #{$root}__content {
-                background-image: map_get($styles, $class);
-            }
-        }
-    }
-
-    &:before {
-        content: '';
-        width: 100%;
-        padding-top: 100%;
-        display: block;
-    }
-
-    &__content {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        position: absolute;
-        padding: 1em;
-        top: ($grid-gutter-width/2);
-        right: ($grid-gutter-width/2);
-        bottom: ($grid-gutter-width/2);
-        left: ($grid-gutter-width/2);
-        // box-shadow: 0 30px 60px 0 rgba(0,0,0,0.50);
-        border-radius: 4px;
-        text-align: center;
-        text-shadow: 0 3px 3px rgba(112,112,112,0.50);
-        z-index: 1;
-
-        &:before {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            content: '';
-            background-image: url(../images/star.png);
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: 100%;
-
-            @media
-            (-webkit-min-device-pixel-ratio: 2),
-            (min-resolution: 192dpi) {
-                background-image: url(../images/star@2x.png);
-            }
-        }
-    }
-
-    &__title {
-        font-weight: 700;
-        line-height: 1.02;
-        font-size: inherit;
-        margin-bottom: 0.5em;
-        letter-spacing: 0;
-    }
-
-    &__amount {
-        font-weight: 700;
-        font-size: 80%;
-        letter-spacing: 0;
-        line-height: 1.02;
-    }
-
-    &--edit {
-
-        #{$root}__title {
-            margin: 1.75rem 0 1.25rem 0;
-        }
-
-        #{$root}__icon,
-        #{$root}__title,
-        #{$root}__amount {
-            font-size: 1.625em;
-        }
-    }
-}
 </style>
