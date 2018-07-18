@@ -103,6 +103,22 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
       });
     });
 
+    describe('getNextNode of not existent node', function () {
+      it('should be false', async function () {
+        const node = await this.list.getNextNode(111);
+        node[0].should.be.equal(false);
+        node[1].should.be.bignumber.equal(HEAD);
+      });
+    });
+
+    describe('getPreviousNode of not existent node', function () {
+      it('should be false', async function () {
+        const node = await this.list.getPreviousNode(111);
+        node[0].should.be.equal(false);
+        node[1].should.be.bignumber.equal(HEAD);
+      });
+    });
+
     context('adding more nodes (not ordered)', function () {
       let firstTokenId;
       let secondTokenId;
