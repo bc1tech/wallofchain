@@ -63,7 +63,7 @@
     transition: .25s ease-in-out;
     cursor: pointer;
 
-    &:hover, &:focus, &.active {
+    &:hover, &.active {
         text-decoration: none;
         background-position-x: 100%;
         color: #fff;
@@ -77,12 +77,12 @@
         background-image: linear-gradient(103deg, transparent 50%, #4090ef, #9c9a42);
         background-size: 300% 100%;
 
-        &:hover, &:focus, &.active {
+        &:hover, &.active {
             background-position-x: 100%;
         }
     }
 
     &--no-border {
-        border: 0px;
+        border: 0;
     }
 }
