@@ -91,11 +91,18 @@ library OrderedLinkedListLib {
     return getAdjacent(self, _node, NEXT);
   }
 
+  /// @dev Returns the link of a node `_node` in direction `PREV`.
+  /// @param self stored linked list from contract
+  /// @param _node id of the node to step from
+  function getPreviousNode(OrderedLinkedList storage self, uint256 _node) internal view returns (bool, uint256) {
+    return getAdjacent(self, _node, PREV);
+  }
+
   /// @dev Can be used before `insert` to build an ordered list
   /// @param self stored linked list from contract
   /// @param _token the token instance
   /// @param _value value to seek
-  //  @return next first node with a value greater than _value
+  //  @return next first node with a value less than _value
   function getSortedSpot(
     OrderedLinkedList storage self,
     WallOfChainToken _token,

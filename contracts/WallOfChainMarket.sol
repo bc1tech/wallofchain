@@ -1,7 +1,7 @@
 pragma solidity ^0.4.24;
 
 import "openzeppelin-solidity/contracts/math/SafeMath.sol";
-import "./libraries/OrderedLinkedList.sol";
+import "./libraries/OrderedLinkedListLib.sol";
 
 
 contract WallOfChainMarket {

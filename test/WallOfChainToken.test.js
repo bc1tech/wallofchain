@@ -104,6 +104,19 @@ contract('WallOfChainToken', function (accounts) {
       });
     });
 
+    describe('get wall value', function () {
+      it('is the right value', async function () {
+        const tokenValue = await this.token.getWallValue(tokenId);
+        tokenValue.should.be.bignumber.equal(this.structure.value);
+      });
+
+      describe('if token id not exists', function () {
+        it('reverts', async function () {
+          await assertRevert(this.token.getWallValue(999));
+        });
+      });
+    });
+
     describe('progressive id', function () {
       it('should increase', async function () {
         const oldProgressiveId = await this.token.progressiveId();
