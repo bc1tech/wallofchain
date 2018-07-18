@@ -2,7 +2,7 @@ import ether from './helpers/ether';
 
 const BigNumber = web3.BigNumber;
 
-require('chai')
+const should = require('chai')
   .use(require('chai-as-promised'))
   .use(require('chai-bignumber')(BigNumber))
   .should();
@@ -133,7 +133,10 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
         );
 
         const newTokenId = await this.token.progressiveId();
-        await this.list.insertAfter(INVALID_TOKEN_ID, newTokenId);
+        const { logs } = await this.list.insertAfter(INVALID_TOKEN_ID, newTokenId);
+        const event = logs.find(e => e.event === 'LogNotice');
+        should.exist(event);
+        event.args.booleanValue.should.equal(false);
 
         const node = await this.list.getNode(newTokenId);
         node[0].should.be.equal(false);
@@ -155,12 +158,33 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
         );
 
         const newTokenId = await this.token.progressiveId();
-        await this.list.insertBefore(INVALID_TOKEN_ID, newTokenId);
+        const { logs } = await this.list.insertBefore(INVALID_TOKEN_ID, newTokenId);
+        const event = logs.find(e => e.event === 'LogNotice');
+        should.exist(event);
+        event.args.booleanValue.should.equal(false);
 
         const node = await this.list.getNode(newTokenId);
         node[0].should.be.equal(false);
         node[1].should.be.bignumber.equal(HEAD);
         node[2].should.be.bignumber.equal(HEAD);
+      });
+    });
+
+    describe('remove not existent node', function () {
+      it('should fail', async function () {
+        const { logs } = await this.list.remove(INVALID_TOKEN_ID);
+        const event = logs.find(e => e.event === 'LogNotice');
+        should.exist(event);
+        event.args.booleanValue.should.equal(false);
+      });
+    });
+
+    describe('remove the HEAD node', function () {
+      it('should fail', async function () {
+        const { logs } = await this.list.remove(HEAD);
+        const event = logs.find(e => e.event === 'LogNotice');
+        should.exist(event);
+        event.args.booleanValue.should.equal(false);
       });
     });
 
@@ -289,6 +313,110 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
               retrievedNode[0].should.be.equal(true);
               retrievedNode[1].should.be.bignumber.equal(tokenId);
               retrievedNode[2].should.be.bignumber.equal(secondTokenId);
+            });
+          });
+        });
+
+        context('testing remove', function () {
+          describe('remove node', function () {
+            beforeEach(async function () {
+              const { logs } = await this.list.remove(tokenId);
+              const event = logs.find(e => e.event === 'LogNotice');
+              should.exist(event);
+              event.args.booleanValue.should.equal(true);
+              firstNode = await this.list.getNode(firstTokenId);
+              secondNode = await this.list.getNode(secondTokenId);
+            });
+
+            it('node should no log exists', async function () {
+              node = await this.list.getNode(tokenId);
+              node[0].should.be.equal(false);
+              node[1].should.be.bignumber.equal(HEAD);
+              node[2].should.be.bignumber.equal(HEAD);
+            });
+
+            it('firstNode PREV should be HEAD', async function () {
+              firstNode[1].should.be.bignumber.equal(HEAD);
+            });
+
+            it('firstNode NEXT should be secondNode', async function () {
+              firstNode[2].should.be.bignumber.equal(secondTokenId);
+            });
+
+            it('secondNode PREV should be firstNode', async function () {
+              secondNode[1].should.be.bignumber.equal(firstTokenId);
+            });
+
+            it('secondNode NEXT should be HEAD', async function () {
+              secondNode[2].should.be.bignumber.equal(HEAD);
+            });
+          });
+
+          describe('remove firstNode', function () {
+            beforeEach(async function () {
+              const { logs } = await this.list.remove(firstTokenId);
+              const event = logs.find(e => e.event === 'LogNotice');
+              should.exist(event);
+              event.args.booleanValue.should.equal(true);
+              node = await this.list.getNode(tokenId);
+              secondNode = await this.list.getNode(secondTokenId);
+            });
+
+            it('firstNode should no log exists', async function () {
+              firstNode = await this.list.getNode(firstTokenId);
+              firstNode[0].should.be.equal(false);
+              firstNode[1].should.be.bignumber.equal(HEAD);
+              firstNode[2].should.be.bignumber.equal(HEAD);
+            });
+
+            it('node PREV should be HEAD', async function () {
+              node[1].should.be.bignumber.equal(HEAD);
+            });
+
+            it('node NEXT should be secondNode', async function () {
+              node[2].should.be.bignumber.equal(secondTokenId);
+            });
+
+            it('secondNode PREV should be node', async function () {
+              secondNode[1].should.be.bignumber.equal(tokenId);
+            });
+
+            it('secondNode NEXT should be HEAD', async function () {
+              secondNode[2].should.be.bignumber.equal(HEAD);
+            });
+          });
+
+          describe('remove secondNode', function () {
+            beforeEach(async function () {
+              const { logs } = await this.list.remove(secondTokenId);
+              const event = logs.find(e => e.event === 'LogNotice');
+              should.exist(event);
+              event.args.booleanValue.should.equal(true);
+              node = await this.list.getNode(tokenId);
+              firstNode = await this.list.getNode(firstTokenId);
+            });
+
+            it('firstNode should no log exists', async function () {
+              secondNode = await this.list.getNode(secondTokenId);
+              secondNode[0].should.be.equal(false);
+              secondNode[1].should.be.bignumber.equal(HEAD);
+              secondNode[2].should.be.bignumber.equal(HEAD);
+            });
+
+            it('node PREV should be HEAD', async function () {
+              node[1].should.be.bignumber.equal(HEAD);
+            });
+
+            it('node NEXT should be firstNode', async function () {
+              node[2].should.be.bignumber.equal(firstTokenId);
+            });
+
+            it('firstNode PREV should be node', async function () {
+              firstNode[1].should.be.bignumber.equal(tokenId);
+            });
+
+            it('firstNode NEXT should be HEAD', async function () {
+              firstNode[2].should.be.bignumber.equal(HEAD);
             });
           });
         });

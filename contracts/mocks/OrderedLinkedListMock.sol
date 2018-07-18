@@ -8,7 +8,7 @@ contract OrderedLinkedListMock {
 
   OrderedLinkedListLib.OrderedLinkedList list;
 
-  event LogNotice(string msg);
+  event LogNotice(bool booleanValue);
 
   function listExists() public view returns (bool) {
     return list.listExists();
@@ -53,20 +53,20 @@ contract OrderedLinkedListMock {
   /// @param _node existing node
   /// @param _new  new node to insert
   function insertAfter(uint256 _node, uint256 _new) public {
-    list.insertAfter(_node, _new);
+    emit LogNotice(list.insertAfter(_node, _new));
   }
 
   /// @dev Insert node `_new` beside existing node `_node` in direction `PREV`.
   /// @param _node existing node
   /// @param _new  new node to insert
   function insertBefore(uint256 _node, uint256 _new) public {
-    list.insertBefore(_node, _new);
+    emit LogNotice(list.insertBefore(_node, _new));
   }
 
   /// @dev removes an entry from the linked list
   /// @param _node node to remove from the list
-  function remove(uint256 _node) public returns (uint256) {
-    return list.remove(_node);
+  function remove(uint256 _node) public {
+    emit LogNotice(list.remove(_node) > 0 ? true : false);
   }
 
   /// @dev pushes an enrty to the head of the linked list
