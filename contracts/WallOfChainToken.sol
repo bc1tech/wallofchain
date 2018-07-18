@@ -1,9 +1,14 @@
 pragma solidity ^0.4.24;
 
 import "./ERC721RBACMintableToken.sol";
+import "./libraries/OrderedLinkedListLib.sol";
 
 
 contract WallOfChainToken is ERC721RBACMintableToken {
+  using OrderedLinkedListLib for OrderedLinkedListLib.OrderedLinkedList;
+
+  OrderedLinkedListLib.OrderedLinkedList list;
+
   struct WallStructure {
     uint256 value;
     string firstName;
@@ -42,6 +47,10 @@ contract WallOfChainToken is ERC721RBACMintableToken {
       _icon
     );
     progressiveId = tokenId;
+
+    uint256 position = list.getSortedSpot(this, _value);
+    list.insertAfter(position, tokenId);
+
     return tokenId;
   }
 
@@ -76,12 +85,17 @@ contract WallOfChainToken is ERC721RBACMintableToken {
     return wall.value;
   }
 
+  function getNextNode(uint256 _tokenId) public view returns (bool, uint256) {
+    return list.getNextNode(_tokenId);
+  }
+
   /**
    * @dev Only contract owner or token owner can burn
    */
   function burn(uint256 tokenId) public {
     address tokenOwner = msg.sender == owner ? ownerOf(tokenId) : msg.sender;
     super._burn(tokenOwner, tokenId);
+    list.remove(tokenId);
     delete structureIndex[tokenId];
   }
 }
