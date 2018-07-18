@@ -167,6 +167,52 @@ contract('WallOfChainToken', function (accounts) {
         );
       });
     });
+
+    describe('check getNextNode', function () {
+      let newTokenId;
+      beforeEach(async function () {
+        await this.token.newToken(
+          beneficiary,
+          this.structure.value.add(1),
+          this.structure.firstName,
+          this.structure.lastName,
+          this.structure.pattern,
+          this.structure.icon,
+          { from: minter }
+        );
+
+        newTokenId = await this.token.progressiveId();
+      });
+
+      it('should be newTokenId', async function () {
+        const expectedToken = await this.token.getNextNode(tokenId);
+        expectedToken[0].should.be.equal(true);
+        expectedToken[1].should.be.bignumber.equal(newTokenId);
+      });
+    });
+
+    describe('check getPreviousNode', function () {
+      let newTokenId;
+      beforeEach(async function () {
+        await this.token.newToken(
+          beneficiary,
+          this.structure.value.sub(1),
+          this.structure.firstName,
+          this.structure.lastName,
+          this.structure.pattern,
+          this.structure.icon,
+          { from: minter }
+        );
+
+        newTokenId = await this.token.progressiveId();
+      });
+
+      it('should be newTokenId', async function () {
+        const expectedToken = await this.token.getPreviousNode(tokenId);
+        expectedToken[0].should.be.equal(true);
+        expectedToken[1].should.be.bignumber.equal(newTokenId);
+      });
+    });
   });
 
   context('like an ERC721RBACMintableToken', function () {

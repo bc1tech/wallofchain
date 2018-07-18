@@ -89,6 +89,10 @@ contract WallOfChainToken is ERC721RBACMintableToken {
     return list.getNextNode(_tokenId);
   }
 
+  function getPreviousNode(uint256 _tokenId) public view returns (bool, uint256) {
+    return list.getPreviousNode(_tokenId);
+  }
+
   /**
    * @dev Only contract owner or token owner can burn
    */
