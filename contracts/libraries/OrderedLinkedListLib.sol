@@ -99,6 +99,7 @@ library OrderedLinkedListLib {
   }
 
   /// @dev Can be used before `insert` to build an ordered list
+  /// @dev This is adapted to our needs. If you want to order basing on other than token.value edit this function
   /// @param self stored linked list from contract
   /// @param _token the token instance
   /// @param _value value to seek
@@ -181,6 +182,19 @@ library OrderedLinkedListLib {
       _node,
       _new,
       NEXT
+    );
+  }
+
+  /// @dev Insert node `_new` beside existing node `_node` in direction `PREV`.
+  /// @param self stored linked list from contract
+  /// @param _node existing node
+  /// @param _new  new node to insert
+  function insertBefore(OrderedLinkedList storage self, uint256 _node, uint256 _new) internal returns (bool) {
+    return insert(
+      self,
+      _node,
+      _new,
+      PREV
     );
   }
 
