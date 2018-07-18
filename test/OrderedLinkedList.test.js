@@ -44,6 +44,15 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
         sizeOf.should.be.bignumber.equal(0);
       });
     });
+
+    describe('getNode', function () {
+      it('should not exists', async function () {
+        const node = await this.list.getNode(1);
+        node[0].should.be.equal(false);
+        node[1].should.be.bignumber.equal(HEAD);
+        node[2].should.be.bignumber.equal(HEAD);
+      });
+    });
   });
 
   context('when list is not empty (1 node)', function () {
@@ -160,6 +169,68 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
         it('secondNode NEXT should be HEAD', async function () {
           secondNode[2].should.be.bignumber.equal(HEAD);
         });
+
+        context('testing getNextNode', function () {
+          describe('using node', function () {
+            it('should be firstNode', async function () {
+              const retrievedTokenId = await this.list.getNextNode(tokenId);
+              const retrievedNode = await this.list.getNode(retrievedTokenId[1]);
+              retrievedNode[0].should.be.equal(true);
+              retrievedNode[1].should.be.bignumber.equal(tokenId);
+              retrievedNode[2].should.be.bignumber.equal(secondTokenId);
+            });
+          });
+
+          describe('using firstNode', function () {
+            it('should be secondNode', async function () {
+              const retrievedTokenId = await this.list.getNextNode(firstTokenId);
+              const retrievedNode = await this.list.getNode(retrievedTokenId[1]);
+              retrievedNode[0].should.be.equal(true);
+              retrievedNode[1].should.be.bignumber.equal(firstTokenId);
+              retrievedNode[2].should.be.bignumber.equal(HEAD);
+            });
+          });
+
+          describe('using secondNode', function () {
+            it('should be HEAD', async function () {
+              const retrievedTokenId = await this.list.getNextNode(secondTokenId);
+              retrievedTokenId[0].should.be.equal(true);
+              retrievedTokenId[1].should.be.bignumber.equal(HEAD);
+            });
+          });
+        });
+
+        context('testing getPreviousNode', function () {
+          describe('using node', function () {
+            it('should be HEAD', async function () {
+              const retrievedTokenId = await this.list.getPreviousNode(tokenId);
+              const retrievedNode = await this.list.getNode(retrievedTokenId[1]);
+              retrievedNode[0].should.be.equal(true);
+              retrievedNode[1].should.be.bignumber.equal(secondTokenId);
+              retrievedNode[2].should.be.bignumber.equal(tokenId);
+            });
+          });
+
+          describe('using firstNode', function () {
+            it('should be node', async function () {
+              const retrievedTokenId = await this.list.getPreviousNode(firstTokenId);
+              const retrievedNode = await this.list.getNode(retrievedTokenId[1]);
+              retrievedNode[0].should.be.equal(true);
+              retrievedNode[1].should.be.bignumber.equal(HEAD);
+              retrievedNode[2].should.be.bignumber.equal(firstTokenId);
+            });
+          });
+
+          describe('using secondNode', function () {
+            it('should be firstNode', async function () {
+              const retrievedTokenId = await this.list.getPreviousNode(secondTokenId);
+              const retrievedNode = await this.list.getNode(retrievedTokenId[1]);
+              retrievedNode[0].should.be.equal(true);
+              retrievedNode[1].should.be.bignumber.equal(tokenId);
+              retrievedNode[2].should.be.bignumber.equal(secondTokenId);
+            });
+          });
+        });
       });
 
       describe('adding before (2 times)', function () {
@@ -197,6 +268,68 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
 
         it('secondNode NEXT should be firstNode', async function () {
           secondNode[2].should.be.bignumber.equal(firstTokenId);
+        });
+
+        context('testing getNextNode', function () {
+          describe('using node', function () {
+            it('should be HEAD', async function () {
+              const retrievedTokenId = await this.list.getNextNode(tokenId);
+              retrievedTokenId[0].should.be.equal(true);
+              retrievedTokenId[1].should.be.bignumber.equal(HEAD);
+            });
+          });
+
+          describe('using firstNode', function () {
+            it('should be node', async function () {
+              const retrievedTokenId = await this.list.getNextNode(firstTokenId);
+              const retrievedNode = await this.list.getNode(retrievedTokenId[1]);
+              retrievedNode[0].should.be.equal(true);
+              retrievedNode[1].should.be.bignumber.equal(firstTokenId);
+              retrievedNode[2].should.be.bignumber.equal(HEAD);
+            });
+          });
+
+          describe('using secondNode', function () {
+            it('should be firstNode', async function () {
+              const retrievedTokenId = await this.list.getNextNode(secondTokenId);
+              const retrievedNode = await this.list.getNode(retrievedTokenId[1]);
+              retrievedNode[0].should.be.equal(true);
+              retrievedNode[1].should.be.bignumber.equal(secondTokenId);
+              retrievedNode[2].should.be.bignumber.equal(tokenId);
+            });
+          });
+        });
+
+        context('testing getPreviousNode', function () {
+          describe('using secondNode', function () {
+            it('should be HEAD', async function () {
+              const retrievedTokenId = await this.list.getPreviousNode(secondTokenId);
+              const retrievedNode = await this.list.getNode(retrievedTokenId[1]);
+              retrievedNode[0].should.be.equal(true);
+              retrievedNode[1].should.be.bignumber.equal(tokenId);
+              retrievedNode[2].should.be.bignumber.equal(secondTokenId);
+            });
+          });
+
+          describe('using firstNode', function () {
+            it('should be secondNode', async function () {
+              const retrievedTokenId = await this.list.getPreviousNode(firstTokenId);
+              const retrievedNode = await this.list.getNode(retrievedTokenId[1]);
+              retrievedNode[0].should.be.equal(true);
+              retrievedNode[1].should.be.bignumber.equal(HEAD);
+              retrievedNode[2].should.be.bignumber.equal(firstTokenId);
+            });
+          });
+
+          describe('using node', function () {
+            it('should be HEAD', async function () {
+              const retrievedTokenId = await this.list.getPreviousNode(tokenId);
+              const retrievedNode = await this.list.getNode(retrievedTokenId[1]);
+              retrievedNode[0].should.be.equal(true);
+              retrievedNode[1].should.be.bignumber.equal(secondTokenId);
+              retrievedNode[2].should.be.bignumber.equal(tokenId);
+            });
+          });
         });
       });
     });
