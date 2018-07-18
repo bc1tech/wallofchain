@@ -61,6 +61,7 @@
     background-position-x: 0;
     color: #fff;
     transition: .25s ease-in-out;
+    cursor: pointer;
 
     &:hover, &:focus, &.active {
         text-decoration: none;
@@ -79,5 +80,9 @@
         &:hover, &:focus, &.active {
             background-position-x: 100%;
         }
+    }
+
+    &--no-border {
+        border: 0px;
     }
 }
