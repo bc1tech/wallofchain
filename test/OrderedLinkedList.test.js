@@ -31,14 +31,23 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
 
   context('when list is empty', function () {
     describe('listExists', function () {
-      it('should be false ', async function () {
+      it('should be false', async function () {
         const exists = await this.list.listExists();
         exists.should.be.equal(false);
+      });
+    });
+
+    describe('sizeOf', function () {
+      it('should be zero', async function () {
+        const sizeOf = await this.list.sizeOf();
+        sizeOf.should.be.bignumber.equal(0);
       });
     });
   });
 
   context('when list is not empty', function () {
+    let tokenId;
+
     beforeEach(async function () {
       await this.token.newToken(
         beneficiary,
@@ -49,12 +58,29 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
         tokenDetails.icon,
         { from: minter }
       );
+
+      tokenId = await this.token.progressiveId();
+      await this.list.insertAfter(0, tokenId);
     });
 
     describe('listExists', function () {
-      it('should be true ', async function () {
+      it('should be true', async function () {
         const exists = await this.list.listExists();
-        exists.should.be.equal(false);
+        exists.should.be.equal(true);
+      });
+    });
+
+    describe('sizeOf', function () {
+      it('should be greater than zero', async function () {
+        const sizeOf = await this.list.sizeOf();
+        sizeOf.should.be.bignumber.gt(0);
+      });
+    });
+
+    describe('nodeExists', function () {
+      it('should be true', async function () {
+        const nodeExists = await this.list.nodeExists(tokenId);
+        nodeExists.should.be.equal(true);
       });
     });
   });
