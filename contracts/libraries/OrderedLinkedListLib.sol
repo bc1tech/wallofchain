@@ -216,12 +216,12 @@ library OrderedLinkedListLib {
     return _node;
   }
 
-  /// @dev pushes an enrty to the head of the linked list
+  /// @dev pushes an entry to the head of the linked list
   /// @param self stored linked list from contract
   /// @param _node new entry to push to the head
   /// @param _direction push to the head (NEXT) or tail (PREV)
-  function push(OrderedLinkedList storage self, uint256 _node, bool _direction) internal {
-    insert(
+  function push(OrderedLinkedList storage self, uint256 _node, bool _direction) internal returns (bool) {
+    return insert(
       self,
       HEAD,
       _node,

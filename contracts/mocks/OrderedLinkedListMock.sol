@@ -73,12 +73,12 @@ contract OrderedLinkedListMock {
   /// @param _node new entry to push to the head
   /// @param _direction push to the head (NEXT) or tail (PREV)
   function push(uint256 _node, bool _direction) public {
-    list.push(_node, _direction);
+    emit LogNotice(list.push(_node, _direction));
   }
 
   /// @dev pops the first entry from the linked list
   /// @param _direction pop from the head (NEXT) or the tail (PREV)
-  function pop(bool _direction) public returns (uint256) {
-    return list.pop(_direction);
+  function pop(bool _direction) public {
+    emit LogNotice(list.pop(_direction) > 0 ? true : false);
   }
 }

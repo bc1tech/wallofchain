@@ -10,6 +10,9 @@ const should = require('chai')
 const HEAD = 0;
 const INVALID_TOKEN_ID = 111;
 
+const PREV = false;
+const NEXT = true;
+
 const OrderedLinkedList = artifacts.require('OrderedLinkedListMock.sol');
 const WallOfChainToken = artifacts.require('WallOfChainToken.sol');
 
@@ -328,7 +331,7 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
               secondNode = await this.list.getNode(secondTokenId);
             });
 
-            it('node should no log exists', async function () {
+            it('node should no longer exists', async function () {
               node = await this.list.getNode(tokenId);
               node[0].should.be.equal(false);
               node[1].should.be.bignumber.equal(HEAD);
@@ -362,7 +365,7 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
               secondNode = await this.list.getNode(secondTokenId);
             });
 
-            it('firstNode should no log exists', async function () {
+            it('firstNode should no longer exists', async function () {
               firstNode = await this.list.getNode(firstTokenId);
               firstNode[0].should.be.equal(false);
               firstNode[1].should.be.bignumber.equal(HEAD);
@@ -396,7 +399,77 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
               firstNode = await this.list.getNode(firstTokenId);
             });
 
-            it('firstNode should no log exists', async function () {
+            it('firstNode should no longer exists', async function () {
+              secondNode = await this.list.getNode(secondTokenId);
+              secondNode[0].should.be.equal(false);
+              secondNode[1].should.be.bignumber.equal(HEAD);
+              secondNode[2].should.be.bignumber.equal(HEAD);
+            });
+
+            it('node PREV should be HEAD', async function () {
+              node[1].should.be.bignumber.equal(HEAD);
+            });
+
+            it('node NEXT should be firstNode', async function () {
+              node[2].should.be.bignumber.equal(firstTokenId);
+            });
+
+            it('firstNode PREV should be node', async function () {
+              firstNode[1].should.be.bignumber.equal(tokenId);
+            });
+
+            it('firstNode NEXT should be HEAD', async function () {
+              firstNode[2].should.be.bignumber.equal(HEAD);
+            });
+          });
+        });
+
+        context('testing pop', function () {
+          describe('pop from HEAD', function () {
+            beforeEach(async function () {
+              const { logs } = await this.list.pop(NEXT);
+              const event = logs.find(e => e.event === 'LogNotice');
+              should.exist(event);
+              event.args.booleanValue.should.equal(true);
+              firstNode = await this.list.getNode(firstTokenId);
+              secondNode = await this.list.getNode(secondTokenId);
+            });
+
+            it('node should no longer exists', async function () {
+              node = await this.list.getNode(tokenId);
+              node[0].should.be.equal(false);
+              node[1].should.be.bignumber.equal(HEAD);
+              node[2].should.be.bignumber.equal(HEAD);
+            });
+
+            it('firstNode PREV should be HEAD', async function () {
+              firstNode[1].should.be.bignumber.equal(HEAD);
+            });
+
+            it('firstNode NEXT should be secondNode', async function () {
+              firstNode[2].should.be.bignumber.equal(secondTokenId);
+            });
+
+            it('secondNode PREV should be firstNode', async function () {
+              secondNode[1].should.be.bignumber.equal(firstTokenId);
+            });
+
+            it('secondNode NEXT should be HEAD', async function () {
+              secondNode[2].should.be.bignumber.equal(HEAD);
+            });
+          });
+
+          describe('pop from TAIL', function () {
+            beforeEach(async function () {
+              const { logs } = await this.list.pop(PREV);
+              const event = logs.find(e => e.event === 'LogNotice');
+              should.exist(event);
+              event.args.booleanValue.should.equal(true);
+              node = await this.list.getNode(tokenId);
+              firstNode = await this.list.getNode(firstTokenId);
+            });
+
+            it('firstNode should no longer exists', async function () {
               secondNode = await this.list.getNode(secondTokenId);
               secondNode[0].should.be.equal(false);
               secondNode[1].should.be.bignumber.equal(HEAD);
