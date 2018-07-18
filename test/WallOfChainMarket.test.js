@@ -22,8 +22,8 @@ contract('WallOfChainMarket', function ([_, wallet, purchaser, beneficiary]) {
     value: ether(0.1),
     firstName: 'Vittorio',
     lastName: 'Minacori',
-    pattern: 'yellow',
-    icon: 'default',
+    pattern: new BigNumber(1),
+    icon: new BigNumber(1),
   };
 
   const value = ether(0.01);

@@ -52,8 +52,8 @@ contract WallOfChainMarket {
     address beneficiary,
     string _firstName,
     string _lastName,
-    string _pattern,
-    string _icon
+    uint256 _pattern,
+    uint256 _icon
   )
   public
   payable
@@ -120,8 +120,8 @@ contract WallOfChainMarket {
     uint256 _weiAmount,
     string _firstName,
     string _lastName,
-    string _pattern,
-    string _icon
+    uint256 _pattern,
+    uint256 _icon
   )
   internal
   returns (uint256)

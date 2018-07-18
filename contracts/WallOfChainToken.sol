@@ -8,8 +8,8 @@ contract WallOfChainToken is ERC721RBACMintableToken {
     uint256 value;
     string firstName;
     string lastName;
-    string pattern;
-    string icon;
+    uint256 pattern;
+    uint256 icon;
   }
 
   uint256 public progressiveId = 0;
@@ -26,8 +26,8 @@ contract WallOfChainToken is ERC721RBACMintableToken {
     uint256 _value,
     string _firstName,
     string _lastName,
-    string _pattern,
-    string _icon
+    uint256 _pattern,
+    uint256 _icon
   )
   public
   returns (uint256)
@@ -53,8 +53,8 @@ contract WallOfChainToken is ERC721RBACMintableToken {
     uint256 value,
     string firstName,
     string lastName,
-    string pattern,
-    string icon
+    uint256 pattern,
+    uint256 icon
   )
   {
     require(exists(tokenId), "Token must exists");

@@ -37,8 +37,8 @@ contract('WallOfChainToken', function (accounts) {
       value: ether(0.1),
       firstName: 'Vittorio',
       lastName: 'Minacori',
-      pattern: 'yellow',
-      icon: 'default',
+      pattern: new BigNumber(1),
+      icon: new BigNumber(1),
     };
 
     this.token = await WallOfChainToken.new(name, symbol, { from: creator });
@@ -89,12 +89,12 @@ contract('WallOfChainToken', function (accounts) {
 
       it('has a pattern', async function () {
         const pattern = tokenStructure[4];
-        pattern.should.be.equal(this.structure.pattern);
+        pattern.should.be.bignumber.equal(this.structure.pattern);
       });
 
       it('has a icon', async function () {
         const icon = tokenStructure[5];
-        icon.should.be.equal(this.structure.icon);
+        icon.should.be.bignumber.equal(this.structure.icon);
       });
 
       describe('if token id not exists', function () {
