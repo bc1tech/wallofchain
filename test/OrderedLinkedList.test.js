@@ -62,69 +62,8 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
   context('when list is not empty (1 node)', function () {
     let tokenId;
 
-    beforeEach(async function () {
-      await this.token.newToken(
-        beneficiary,
-        tokenDetails.value,
-        tokenDetails.firstName,
-        tokenDetails.lastName,
-        tokenDetails.pattern,
-        tokenDetails.icon,
-        { from: minter }
-      );
-
-      tokenId = await this.token.progressiveId();
-      await this.list.insertAfter(HEAD, tokenId);
-    });
-
-    describe('listExists', function () {
-      it('should be true', async function () {
-        const exists = await this.list.listExists();
-        exists.should.be.equal(true);
-      });
-    });
-
-    describe('sizeOf', function () {
-      it('should be greater than zero', async function () {
-        const sizeOf = await this.list.sizeOf();
-        sizeOf.should.be.bignumber.gt(0);
-      });
-    });
-
-    describe('nodeExists', function () {
-      it('should be true', async function () {
-        const nodeExists = await this.list.nodeExists(tokenId);
-        nodeExists.should.be.equal(true);
-      });
-    });
-
-    describe('getNode', function () {
-      it('PREV and NEXT should be HEAD', async function () {
-        const node = await this.list.getNode(tokenId);
-        node[0].should.be.equal(true);
-        node[1].should.be.bignumber.equal(HEAD);
-        node[2].should.be.bignumber.equal(HEAD);
-      });
-    });
-
-    describe('getNextNode of not existent node', function () {
-      it('should be false', async function () {
-        const node = await this.list.getNextNode(INVALID_TOKEN_ID);
-        node[0].should.be.equal(false);
-        node[1].should.be.bignumber.equal(HEAD);
-      });
-    });
-
-    describe('getPreviousNode of not existent node', function () {
-      it('should be false', async function () {
-        const node = await this.list.getPreviousNode(INVALID_TOKEN_ID);
-        node[0].should.be.equal(false);
-        node[1].should.be.bignumber.equal(HEAD);
-      });
-    });
-
-    describe('insertAfter of not existent node', function () {
-      it('should fail', async function () {
+    context('adding a node', function () {
+      beforeEach(async function () {
         await this.token.newToken(
           beneficiary,
           tokenDetails.value,
@@ -135,59 +74,122 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
           { from: minter }
         );
 
-        const newTokenId = await this.token.progressiveId();
-        const { logs } = await this.list.insertAfter(INVALID_TOKEN_ID, newTokenId);
-        const event = logs.find(e => e.event === 'LogNotice');
-        should.exist(event);
-        event.args.booleanValue.should.equal(false);
-
-        const node = await this.list.getNode(newTokenId);
-        node[0].should.be.equal(false);
-        node[1].should.be.bignumber.equal(HEAD);
-        node[2].should.be.bignumber.equal(HEAD);
+        tokenId = await this.token.progressiveId();
+        await this.list.insertAfter(HEAD, tokenId);
       });
-    });
 
-    describe('insertBefore of not existent node', function () {
-      it('should fail', async function () {
-        await this.token.newToken(
-          beneficiary,
-          tokenDetails.value,
-          tokenDetails.firstName,
-          tokenDetails.lastName,
-          tokenDetails.pattern,
-          tokenDetails.icon,
-          { from: minter }
-        );
-
-        const newTokenId = await this.token.progressiveId();
-        const { logs } = await this.list.insertBefore(INVALID_TOKEN_ID, newTokenId);
-        const event = logs.find(e => e.event === 'LogNotice');
-        should.exist(event);
-        event.args.booleanValue.should.equal(false);
-
-        const node = await this.list.getNode(newTokenId);
-        node[0].should.be.equal(false);
-        node[1].should.be.bignumber.equal(HEAD);
-        node[2].should.be.bignumber.equal(HEAD);
+      describe('listExists', function () {
+        it('should be true', async function () {
+          const exists = await this.list.listExists();
+          exists.should.be.equal(true);
+        });
       });
-    });
 
-    describe('remove not existent node', function () {
-      it('should fail', async function () {
-        const { logs } = await this.list.remove(INVALID_TOKEN_ID);
-        const event = logs.find(e => e.event === 'LogNotice');
-        should.exist(event);
-        event.args.booleanValue.should.equal(false);
+      describe('sizeOf', function () {
+        it('should be greater than zero', async function () {
+          const sizeOf = await this.list.sizeOf();
+          sizeOf.should.be.bignumber.gt(0);
+        });
       });
-    });
 
-    describe('remove the HEAD node', function () {
-      it('should fail', async function () {
-        const { logs } = await this.list.remove(HEAD);
-        const event = logs.find(e => e.event === 'LogNotice');
-        should.exist(event);
-        event.args.booleanValue.should.equal(false);
+      describe('nodeExists', function () {
+        it('should be true', async function () {
+          const nodeExists = await this.list.nodeExists(tokenId);
+          nodeExists.should.be.equal(true);
+        });
+      });
+
+      describe('getNode', function () {
+        it('PREV and NEXT should be HEAD', async function () {
+          const node = await this.list.getNode(tokenId);
+          node[0].should.be.equal(true);
+          node[1].should.be.bignumber.equal(HEAD);
+          node[2].should.be.bignumber.equal(HEAD);
+        });
+      });
+
+      describe('getNextNode of not existent node', function () {
+        it('should be false', async function () {
+          const node = await this.list.getNextNode(INVALID_TOKEN_ID);
+          node[0].should.be.equal(false);
+          node[1].should.be.bignumber.equal(HEAD);
+        });
+      });
+
+      describe('getPreviousNode of not existent node', function () {
+        it('should be false', async function () {
+          const node = await this.list.getPreviousNode(INVALID_TOKEN_ID);
+          node[0].should.be.equal(false);
+          node[1].should.be.bignumber.equal(HEAD);
+        });
+      });
+
+      describe('insertAfter of not existent node', function () {
+        it('should fail', async function () {
+          await this.token.newToken(
+            beneficiary,
+            tokenDetails.value,
+            tokenDetails.firstName,
+            tokenDetails.lastName,
+            tokenDetails.pattern,
+            tokenDetails.icon,
+            { from: minter }
+          );
+
+          const newTokenId = await this.token.progressiveId();
+          const { logs } = await this.list.insertAfter(INVALID_TOKEN_ID, newTokenId);
+          const event = logs.find(e => e.event === 'LogNotice');
+          should.exist(event);
+          event.args.booleanValue.should.equal(false);
+
+          const node = await this.list.getNode(newTokenId);
+          node[0].should.be.equal(false);
+          node[1].should.be.bignumber.equal(HEAD);
+          node[2].should.be.bignumber.equal(HEAD);
+        });
+      });
+
+      describe('insertBefore of not existent node', function () {
+        it('should fail', async function () {
+          await this.token.newToken(
+            beneficiary,
+            tokenDetails.value,
+            tokenDetails.firstName,
+            tokenDetails.lastName,
+            tokenDetails.pattern,
+            tokenDetails.icon,
+            { from: minter }
+          );
+
+          const newTokenId = await this.token.progressiveId();
+          const { logs } = await this.list.insertBefore(INVALID_TOKEN_ID, newTokenId);
+          const event = logs.find(e => e.event === 'LogNotice');
+          should.exist(event);
+          event.args.booleanValue.should.equal(false);
+
+          const node = await this.list.getNode(newTokenId);
+          node[0].should.be.equal(false);
+          node[1].should.be.bignumber.equal(HEAD);
+          node[2].should.be.bignumber.equal(HEAD);
+        });
+      });
+
+      describe('remove not existent node', function () {
+        it('should fail', async function () {
+          const { logs } = await this.list.remove(INVALID_TOKEN_ID);
+          const event = logs.find(e => e.event === 'LogNotice');
+          should.exist(event);
+          event.args.booleanValue.should.equal(false);
+        });
+      });
+
+      describe('remove the HEAD node', function () {
+        it('should fail', async function () {
+          const { logs } = await this.list.remove(HEAD);
+          const event = logs.find(e => e.event === 'LogNotice');
+          should.exist(event);
+          event.args.booleanValue.should.equal(false);
+        });
       });
     });
 
@@ -196,6 +198,19 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
       let secondTokenId;
 
       beforeEach(async function () {
+        await this.token.newToken(
+          beneficiary,
+          tokenDetails.value,
+          tokenDetails.firstName,
+          tokenDetails.lastName,
+          tokenDetails.pattern,
+          tokenDetails.icon,
+          { from: minter }
+        );
+
+        tokenId = await this.token.progressiveId();
+        await this.list.insertAfter(HEAD, tokenId);
+
         await this.token.newToken(
           beneficiary,
           tokenDetails.value,
@@ -399,7 +414,7 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
               firstNode = await this.list.getNode(firstTokenId);
             });
 
-            it('firstNode should no longer exists', async function () {
+            it('secondNode should no longer exists', async function () {
               secondNode = await this.list.getNode(secondTokenId);
               secondNode[0].should.be.equal(false);
               secondNode[1].should.be.bignumber.equal(HEAD);
@@ -469,7 +484,7 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
               firstNode = await this.list.getNode(firstTokenId);
             });
 
-            it('firstNode should no longer exists', async function () {
+            it('secondNode should no longer exists', async function () {
               secondNode = await this.list.getNode(secondTokenId);
               secondNode[0].should.be.equal(false);
               secondNode[1].should.be.bignumber.equal(HEAD);
@@ -655,6 +670,200 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
               retrievedNode[0].should.be.equal(true);
               retrievedNode[1].should.be.bignumber.equal(secondTokenId);
               retrievedNode[2].should.be.bignumber.equal(tokenId);
+            });
+          });
+        });
+      });
+    });
+
+    context('adding more nodes (ordered)', function () {
+      let firstTokenId;
+      let secondTokenId;
+
+      let firstTokenValue = tokenDetails.value.add(1);
+      let secondTokenValue = tokenDetails.value.sub(1);
+
+      beforeEach(async function () {
+        await this.token.newToken(
+          beneficiary,
+          tokenDetails.value,
+          tokenDetails.firstName,
+          tokenDetails.lastName,
+          tokenDetails.pattern,
+          tokenDetails.icon,
+          { from: minter }
+        );
+
+        tokenId = await this.token.progressiveId();
+        let position = await this.list.getSortedSpot(this.token.address, tokenId);
+        await this.list.insertAfter(position, tokenId);
+
+        await this.token.newToken(
+          beneficiary,
+          firstTokenValue,
+          tokenDetails.firstName,
+          tokenDetails.lastName,
+          tokenDetails.pattern,
+          tokenDetails.icon,
+          { from: minter }
+        );
+
+        firstTokenId = await this.token.progressiveId();
+
+        await this.token.newToken(
+          beneficiary,
+          secondTokenValue,
+          tokenDetails.firstName,
+          tokenDetails.lastName,
+          tokenDetails.pattern,
+          tokenDetails.icon,
+          { from: minter }
+        );
+
+        secondTokenId = await this.token.progressiveId();
+      });
+
+      describe('adding nodes (2 times)', function () {
+        let node;
+        let firstNode;
+        let secondNode;
+
+        beforeEach(async function () {
+          let position = await this.list.getSortedSpot(this.token.address, firstTokenValue);
+          await this.list.insertAfter(position, firstTokenId);
+
+          position = await this.list.getSortedSpot(this.token.address, secondTokenValue);
+          await this.list.insertAfter(position, secondTokenId);
+
+          node = await this.list.getNode(tokenId);
+          firstNode = await this.list.getNode(firstTokenId);
+          secondNode = await this.list.getNode(secondTokenId);
+        });
+
+        it('secondNode PREV should be HEAD', async function () {
+          secondNode[1].should.be.bignumber.equal(HEAD);
+        });
+
+        it('secondNode NEXT should be node', async function () {
+          secondNode[2].should.be.bignumber.equal(tokenId);
+        });
+
+        it('node PREV should be secondNode', async function () {
+          node[1].should.be.bignumber.equal(secondTokenId);
+        });
+
+        it('node NEXT should be firstNode', async function () {
+          node[2].should.be.bignumber.equal(firstTokenId);
+        });
+
+        it('firstNode PREV should be node', async function () {
+          firstNode[1].should.be.bignumber.equal(tokenId);
+        });
+
+        it('firstNode NEXT should be HEAD', async function () {
+          firstNode[2].should.be.bignumber.equal(HEAD);
+        });
+
+        context('testing remove', function () {
+          describe('remove node', function () {
+            beforeEach(async function () {
+              const { logs } = await this.list.remove(tokenId);
+              const event = logs.find(e => e.event === 'LogNotice');
+              should.exist(event);
+              event.args.booleanValue.should.equal(true);
+              firstNode = await this.list.getNode(firstTokenId);
+              secondNode = await this.list.getNode(secondTokenId);
+            });
+
+            it('node should no longer exists', async function () {
+              node = await this.list.getNode(tokenId);
+              node[0].should.be.equal(false);
+              node[1].should.be.bignumber.equal(HEAD);
+              node[2].should.be.bignumber.equal(HEAD);
+            });
+
+            it('firstNode PREV should be secondNode', async function () {
+              firstNode[1].should.be.bignumber.equal(secondTokenId);
+            });
+
+            it('firstNode NEXT should be HEAD', async function () {
+              firstNode[2].should.be.bignumber.equal(HEAD);
+            });
+
+            it('secondNode PREV should be HEAD', async function () {
+              secondNode[1].should.be.bignumber.equal(HEAD);
+            });
+
+            it('secondNode NEXT should be firstNode', async function () {
+              secondNode[2].should.be.bignumber.equal(firstTokenId);
+            });
+          });
+
+          describe('remove firstNode', function () {
+            beforeEach(async function () {
+              const { logs } = await this.list.remove(firstTokenId);
+              const event = logs.find(e => e.event === 'LogNotice');
+              should.exist(event);
+              event.args.booleanValue.should.equal(true);
+              node = await this.list.getNode(tokenId);
+              secondNode = await this.list.getNode(secondTokenId);
+            });
+
+            it('firstNode should no longer exists', async function () {
+              firstNode = await this.list.getNode(firstTokenId);
+              firstNode[0].should.be.equal(false);
+              firstNode[1].should.be.bignumber.equal(HEAD);
+              firstNode[2].should.be.bignumber.equal(HEAD);
+            });
+
+            it('node PREV should be secondNode', async function () {
+              node[1].should.be.bignumber.equal(secondTokenId);
+            });
+
+            it('node NEXT should be HEAD', async function () {
+              node[2].should.be.bignumber.equal(HEAD);
+            });
+
+            it('secondNode PREV should be HEAD', async function () {
+              secondNode[1].should.be.bignumber.equal(HEAD);
+            });
+
+            it('secondNode NEXT should be node', async function () {
+              secondNode[2].should.be.bignumber.equal(tokenId);
+            });
+          });
+
+          describe('remove secondNode', function () {
+            beforeEach(async function () {
+              const { logs } = await this.list.remove(secondTokenId);
+              const event = logs.find(e => e.event === 'LogNotice');
+              should.exist(event);
+              event.args.booleanValue.should.equal(true);
+              node = await this.list.getNode(tokenId);
+              firstNode = await this.list.getNode(firstTokenId);
+            });
+
+            it('secondNode should no longer exists', async function () {
+              secondNode = await this.list.getNode(secondTokenId);
+              secondNode[0].should.be.equal(false);
+              secondNode[1].should.be.bignumber.equal(HEAD);
+              secondNode[2].should.be.bignumber.equal(HEAD);
+            });
+
+            it('node PREV should be HEAD', async function () {
+              node[1].should.be.bignumber.equal(HEAD);
+            });
+
+            it('node NEXT should be firstNode', async function () {
+              node[2].should.be.bignumber.equal(firstTokenId);
+            });
+
+            it('firstNode PREV should be node', async function () {
+              firstNode[1].should.be.bignumber.equal(tokenId);
+            });
+
+            it('firstNode NEXT should be HEAD', async function () {
+              firstNode[2].should.be.bignumber.equal(HEAD);
             });
           });
         });
