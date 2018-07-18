@@ -4,20 +4,20 @@
             <div class="loader" title="Loading"><div></div><div></div><div></div></div>
         </div>
         <div class="masonry-container wall"
-             key="wall"
-             v-else
-             v-masonry
-             transition-duration="0"
-             item-selector=".wall__item"
-             percent-position="true"
-             horizontal-order="true">
+            key="wall"
+            v-else
+            v-masonry
+            transition-duration="0"
+            item-selector=".wall__item"
+            percent-position="true"
+            horizontal-order="true">
             <div class="wall__item wall__sizer"></div>
             <!-- <div class="wall__item wall__gutter"></div> -->
             <div v-for="item in wall"
-                 :key="item.id"
-                 v-masonry-tile
-                 class="wall__item star"
-                 :class="`star--${sizes[item.size][small ? 'classNameSmall' : 'className']} star--style-${item.style} ${itemClass}`">
+                :key="item.id"
+                v-masonry-tile
+                class="wall__item star"
+                :class="`star--${sizes[item.size][small ? 'classNameSmall' : 'className']} star--style-${item.style} ${itemClass}`">
                 <div class="star__content">
                     <span class="star__icon" :class="`star__icon--${item.icon}`"></span>
                     <h2 class="star__title">{{ item.title }}</h2>
@@ -42,7 +42,7 @@
             amount: Math.random() * 10,
             currency: 'ETH',
             icon: Math.floor(Math.random() * (10 - 1 + 1)) + 1,
-            style: Math.floor(Math.random() * (11 - 1 + 1)) + 1,
+            style: Math.floor(Math.random() * (10 - 1 + 1)) + 1,
         });
 
         const wall = [];
@@ -152,157 +152,3 @@
         },
     };
 </script>
-<style lang="scss">
-    @import "../scss/variables";
-    @import "~bootstrap/scss/functions";
-    @import "~bootstrap/scss/variables";
-    @import "~bootstrap/scss/mixins";
-
-    $sizes: (
-            size-1: (
-                    xs: 6,
-                    lg: 4
-            ),
-            size-small-1: (
-                    xs: 6,
-                    lg: 8
-            ),
-            size-2: (
-                    xs: 3,
-                    lg: 3
-            ),
-            size-small-2: (
-                    xs: 4,
-                    lg: 4
-            ),
-            size-3: (
-                    xs: 3,
-                    lg: 2
-            ),
-            size-small-3: (
-                    xs: 4,
-                    lg: 4
-            ),
-    );
-
-    $font-sizes: (
-            size-1: 1.75rem,
-            size-2: 1.375rem,
-            size-3: 1rem,
-    );
-
-    $styles: (
-            style-1: linear-gradient(-135deg, #959595 0%, #C6C6C6 100%),
-            style-2: linear-gradient(-135deg, #FCE38A 0%, #F38181 100%),
-            style-3: linear-gradient(45deg, #FF7676 0%, #F54EA2 100%),
-            style-4: linear-gradient(-135deg, #17EAD9 0%, #6078EA 100%),
-            style-5: linear-gradient(-135deg, #622774 0%, #C53364 100%),
-            style-6: linear-gradient(-135deg, #7117EA 0%, #EA6060 100%),
-            style-7: linear-gradient(-135deg, #43E695 0%, #3BB2B8 100%),
-            style-8: linear-gradient(-135deg, #F030C1 0%, #6094EA 100%),
-            style-9: linear-gradient(44deg, #5E2563 0%, #65799B 100%),
-            style-10: linear-gradient(44deg, #57CA85 0%, #194F68 100%),
-            style-11: linear-gradient(45deg, #1BCEDF 0%, #5B247A 100%),
-    );
-
-    .wall {
-        margin: 0 (($grid-gutter-width/2)*-1) 1.25em;
-
-        &__sizer {
-            width: 100%;
-            max-width: percentage(1 / $grid-columns);
-        }
-    }
-
-    .star {
-        $root: &;
-        display: block;
-        position: relative;
-        width: 100%;
-        max-width: percentage(1 / $grid-columns);
-
-        @each $class, $size in $sizes {
-            &--#{$class} {
-                // max-width: percentage($size / $grid-columns);
-
-                #{$root}__content {
-                    font-size: map_get($font-sizes, $class);
-                }
-
-                @each $breakpoint, $columns in $size {
-                    @include media-breakpoint-up($breakpoint) {
-                        max-width: percentage($columns / $grid-columns);
-                    }
-                }
-            }
-        }
-
-        @each $class, $style in $styles {
-            &--#{$class} {
-                #{$root}__content {
-                    background-image: map_get($styles, $class);
-                }
-            }
-        }
-
-        &:before {
-            content: '';
-            width: 100%;
-            padding-top: 100%;
-            display: block;
-        }
-
-        &__content {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            position: absolute;
-            padding: 1em;
-            top: ($grid-gutter-width/2);
-            right: ($grid-gutter-width/2);
-            bottom: ($grid-gutter-width/2);
-            left: ($grid-gutter-width/2);
-            // box-shadow: 0 30px 60px 0 rgba(0,0,0,0.50);
-            border-radius: 4px;
-            text-align: center;
-            text-shadow: 0 3px 3px rgba(112,112,112,0.50);
-            z-index: 1;
-
-            &:before {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                z-index: -1;
-                content: '';
-                background-image: url(../images/star.png);
-                background-repeat: no-repeat;
-                background-position: center;
-                background-size: 100%;
-
-                @media
-                (-webkit-min-device-pixel-ratio: 2),
-                (min-resolution: 192dpi) {
-                    background-image: url(../images/star@2x.png);
-                }
-            }
-        }
-
-        &__title {
-            font-weight: 700;
-            line-height: 1.02;
-            font-size: inherit;
-            margin-bottom: 0.5em;
-            letter-spacing: 0;
-        }
-
-        &__amount {
-            font-weight: 700;
-            font-size: 80%;
-            letter-spacing: 0;
-            line-height: 1.02;
-        }
-    }
-</style>
