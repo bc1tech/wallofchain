@@ -3,12 +3,14 @@
         <h1 class="text-center">Frequently Asked Questions</h1>
         
         <div class="row">
-
             <div class="col-md-3">
                 <nav class="tab">
                     <ul class="tab__list">
-                        <li class="tab__li" v-for="category in categories" @click="selectedFaq = category" :class="{ 'tab__li--active': selectedFaq == category }">
-                            <span>{{ category }}</span>
+                        <li class="tab__li"
+                            v-for="(faq, index) in faqs"
+                            @click="selectCategory(index)"
+                            :class="{ 'tab__li--active': selectedFaq === index }">
+                            <span>{{ faq.category }}</span>
                         </li>
                     </ul>  
                 </nav>
@@ -16,116 +18,93 @@
 
             <div class="col-md-9">
                 <div class="accordion-wrapper">
-                    <div class="accordion" v-for="(faq, index) in filteredFaq">
-                        <input v-bind:id="faq.category + index | identify" name="faq" type="radio" class="accordion__input"/>
-                        <label  v-bind:for="faq.category + index | identify" class="accordion__label">{{ faq.title }} <i class="accordion__icon"></i></label>
+                    <div class="accordion"
+                         v-for="(item, index) in faq.list"
+                         :key="`${selectedFaq}-${index}`">
+                        <input :id="`${selectedFaq}-${index}`"
+                               :name="`list-${selectedFaq}`"
+                               type="radio"
+                               class="accordion__input" />
+                        <label :for="`${selectedFaq}-${index}`"
+                               class="accordion__label">
+                            {{ item.title }} <i class="accordion__icon"></i>
+                        </label>
                         <article class="accordion__content">
-                            <p class="accordion__copy">{{ faq.content }} </p>
+                            <p class="accordion__copy">{{ item.content }} </p>
                         </article>
                     </div>
                 </div>
             </div>
         </div>
-
-        
-
     </main>
 </template>
 <script>
     export default {
-        props: {},
         data() {
             return {
-                faqs: [
-                    {
-                        title: 'Titolo della domanda 0',
-                        category: 'Getting Started',
-                        content: 'Contenuto della risposta 0'
-                    },
-                    {
-                        title: 'Titolo della domanda 1',
-                        category: 'Getting Started',
-                        content: 'Contenuto della risposta 1'
-                    },
-                    {
-                        title: 'Titolo della domanda 2',
-                        category: 'Getting Started',
-                        content: 'Contenuto della risposta 2'
-                    },
-                    {
-                        title: 'Titolo della domanda 0',
-                        category: 'Understanding WALLOFFCHAIN',
-                        content: 'Contenuto della risposta 0'
-                    },
-                    {
-                        title: 'Titolo della domanda 1',
-                        category: 'Understanding WALLOFFCHAIN',
-                        content: 'Contenuto della risposta 1'
-                    },
-                    {
-                        title: 'Titolo della domanda 0',
-                        category: 'Buyng and selling',
-                        content: 'Contenuto della risposta 0'
-                    },
-                    {
-                        title: 'Titolo della domanda 1',
-                        category: 'Buyng and selling',
-                        content: 'Contenuto della risposta 1'
-                    },
-                    {
-                        title: 'Titolo della domanda 2',
-                        category: 'Buyng and selling',
-                        content: 'Contenuto della risposta 2'
-                    },
-                ],
-                categories: [],
-                selectedFaq: ''
-            }
+                faqs: [{
+                    category: 'Getting Started',
+                    list: [{
+                        title: 'Titolo della domanda 1-1',
+                        content: 'Contenuto della risposta 1-1',
+                    }, {
+                        title: 'Titolo della domanda 1-2',
+                        content: 'Contenuto della risposta 1-2',
+                    }, {
+                        title: 'Titolo della domanda 1-3',
+                        content: 'Contenuto della risposta 1-3',
+                    }],
+                }, {
+                    category: 'Understanding WALLOFFCHAIN',
+                    list: [{
+                        title: 'Titolo della domanda 2-1',
+                        content: 'Contenuto della risposta 2-1'
+                    }, {
+                        title: 'Titolo della domanda 2-2',
+                        content: 'Contenuto della risposta 2-2'
+                    }],
+                }, {
+                    category: 'Buying and selling',
+                    list: [{
+                        title: 'Titolo della domanda 3-1',
+                        content: 'Contenuto della risposta 1',
+                    }, {
+                        title: 'Titolo della domanda 3-2',
+                        content: 'Contenuto della risposta 3-2',
+                    }, {
+                        title: 'Titolo della domanda 3-3',
+                        content: 'Contenuto della risposta 3-3',
+                    }],
+                }],
+                selectedFaq: 0,
+            };
         },
         computed: {
-            filteredFaq() {
-                return this.faqs.filter(faq => {
-                    return faq.category.match(this.selectedFaq);
-                });
-            },
-        },
-        filters: {
-            identify : function (value) {
-                if (!value) return ''
-                value = value.toString()
-                return value.toLowerCase().replace(/ /g,'')
+            faq() {
+                return this.faqs[this.selectedFaq];
             },
         },
         methods: {
-            getCategories() {
-                let categoriesSet = new Set();
-                this.faqs.forEach((faq) => {
-                    categoriesSet.add(faq.category);
-                });
-                this.categories = Array.from(categoriesSet);
+            selectCategory(categoryId) {
+                this.selectedFaq = categoryId;
             },
         },
-        created() {
-            this.getCategories();
-            this.selectedFaq = this.categories[0];
-        }
     };
 </script>
 <style lang="scss">
-
     @import "../scss/variables";
     @import "~bootstrap/scss/functions";
     @import "~bootstrap/scss/variables";
     @import "~bootstrap/scss/mixins";
 
     .tab {
-
         &__list {
-            list-style-type: none;
-            padding: 0;
             display: flex;
             justify-content: space-between;
+            list-style-type: none;
             margin: 0 -.75rem;
+            padding: 0;
+
             @include media-breakpoint-up('md') {
                 flex-direction: column;
                 margin: 0;
@@ -133,7 +112,7 @@
         }
 
         &__li {
-            width: calc(100% - 1rem);
+            width: 90%;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -186,6 +165,7 @@
 
         &__label,
         &__input {
+            cursor: pointer;
             width: 100%;
         }
 
@@ -205,7 +185,7 @@
             border: 2px solid #fff;
             display: inline-block;
             border-radius: 20px;
-            margin-left: 1.75rem;
+            margin-left: 1em;
 
             &::before,
             &::after {
@@ -224,14 +204,12 @@
             }
 
             &::before {
-                
                 margin: auto;
             }
             
             &::after {
                 transform: rotate(90deg);
             }
-            
         }
 
         &__input {
@@ -259,9 +237,9 @@
         }
 
         &__content {
-            min-height: 0px;
-            max-height: 0px;
-            max-width: calc(100% - 48px);
+            min-height: 0;
+            max-height: 0;
+            max-width: 90%;
             position: relative;
             z-index: 10;
             overflow: hidden;
@@ -271,7 +249,7 @@
         &__copy {
             opacity: 0;
             margin-bottom: 1.25em;
-            transform: translate( 0 , 15% );
+            transform: translate(0 , 15% );
             transition: all .3s ease-in-out;
             
         }

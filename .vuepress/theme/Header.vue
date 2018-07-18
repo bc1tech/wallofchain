@@ -2,7 +2,7 @@
     <header class="navbar container">
         <button ref="toggler"
                 class="navbar__toggler btn btn--outline btn--thin"
-                :class="navOpen ? 'active' : ''"
+                :class="navOpen ? 'navbar__toggler--active' : ''"
                 @click="toggleNavbar">
             <span class="navbar__toggler-icon"></span>
         </button>
@@ -93,6 +93,7 @@
         }
 
         &__toggler {
+            $root: &;
             position: relative;
             padding: 0;
             margin-right: 1.25em;
@@ -133,11 +134,26 @@
                     top: 8px;
                     transition-timing-function: ease;
                     transition-duration: .15s;
-                    transition-property: transform,opacity;
+                    transition-property: transform, opacity;
                 }
 
                 &:after {
                     top: 16px;
+                }
+            }
+
+            &--active {
+                #{$root}-icon {
+                    transform: translate3d(0, 0.5em, 0) rotate(45deg);
+
+                    &:before {
+                        transform: rotate(-45deg) translate3d(-5.71429px, -6px, 0);
+                        opacity: 0;
+                    }
+
+                    &:after {
+                        transform: translate3d(0, -1.1em, 0) rotate(-90deg);
+                    }
                 }
             }
         }
@@ -191,11 +207,17 @@
         }
 
         &__link {
+            display: inline-block;
+            padding: 0 2em;
             text-transform: uppercase;
             font-size: 0.875rem;
             line-height: 1.285;
             letter-spacing: 0.214em;
             color: #fff;
+
+            @include media-breakpoint-up(lg) {
+                padding: 0;
+            }
             
             &::before {
                 content: attr(title);
@@ -210,6 +232,7 @@
                 content: '';
                 display: block;
                 position: relative;
+                top: 0.428em;
                 width: 20%;
                 margin: 0 auto;
                 height: 2px;
@@ -228,12 +251,8 @@
 
                 &::after {
                     opacity: 1;
-                    width: 20%;
+                    width: 60%;
                     transform: translateY(0);
-
-                    @include media-breakpoint-up(md) {
-                        width: 60%;
-                    }
                 }
             }
             
