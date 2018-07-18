@@ -8,6 +8,7 @@ require('chai')
   .should();
 
 const HEAD = 0;
+const INVALID_TOKEN_ID = 111;
 
 const OrderedLinkedList = artifacts.require('OrderedLinkedListMock.sol');
 const WallOfChainToken = artifacts.require('WallOfChainToken.sol');
@@ -105,7 +106,7 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
 
     describe('getNextNode of not existent node', function () {
       it('should be false', async function () {
-        const node = await this.list.getNextNode(111);
+        const node = await this.list.getNextNode(INVALID_TOKEN_ID);
         node[0].should.be.equal(false);
         node[1].should.be.bignumber.equal(HEAD);
       });
@@ -113,9 +114,53 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
 
     describe('getPreviousNode of not existent node', function () {
       it('should be false', async function () {
-        const node = await this.list.getPreviousNode(111);
+        const node = await this.list.getPreviousNode(INVALID_TOKEN_ID);
         node[0].should.be.equal(false);
         node[1].should.be.bignumber.equal(HEAD);
+      });
+    });
+
+    describe('insertAfter of not existent node', function () {
+      it('should fail', async function () {
+        await this.token.newToken(
+          beneficiary,
+          tokenDetails.value,
+          tokenDetails.firstName,
+          tokenDetails.lastName,
+          tokenDetails.pattern,
+          tokenDetails.icon,
+          { from: minter }
+        );
+
+        const newTokenId = await this.token.progressiveId();
+        await this.list.insertAfter(INVALID_TOKEN_ID, newTokenId);
+
+        const node = await this.list.getNode(newTokenId);
+        node[0].should.be.equal(false);
+        node[1].should.be.bignumber.equal(HEAD);
+        node[2].should.be.bignumber.equal(HEAD);
+      });
+    });
+
+    describe('insertBefore of not existent node', function () {
+      it('should fail', async function () {
+        await this.token.newToken(
+          beneficiary,
+          tokenDetails.value,
+          tokenDetails.firstName,
+          tokenDetails.lastName,
+          tokenDetails.pattern,
+          tokenDetails.icon,
+          { from: minter }
+        );
+
+        const newTokenId = await this.token.progressiveId();
+        await this.list.insertBefore(INVALID_TOKEN_ID, newTokenId);
+
+        const node = await this.list.getNode(newTokenId);
+        node[0].should.be.equal(false);
+        node[1].should.be.bignumber.equal(HEAD);
+        node[2].should.be.bignumber.equal(HEAD);
       });
     });
 
