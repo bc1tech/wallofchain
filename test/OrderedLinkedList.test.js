@@ -1,5 +1,4 @@
 import ether from './helpers/ether';
-// import assertRevert from './helpers/assertRevert';
 
 const BigNumber = web3.BigNumber;
 
@@ -7,6 +6,8 @@ require('chai')
   .use(require('chai-as-promised'))
   .use(require('chai-bignumber')(BigNumber))
   .should();
+
+const HEAD = 0;
 
 const OrderedLinkedList = artifacts.require('OrderedLinkedListMock.sol');
 const WallOfChainToken = artifacts.require('WallOfChainToken.sol');
@@ -45,7 +46,7 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
     });
   });
 
-  context('when list is not empty', function () {
+  context('when list is not empty (1 node)', function () {
     let tokenId;
 
     beforeEach(async function () {
@@ -60,7 +61,7 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
       );
 
       tokenId = await this.token.progressiveId();
-      await this.list.insertAfter(0, tokenId);
+      await this.list.insertAfter(HEAD, tokenId);
     });
 
     describe('listExists', function () {
@@ -81,6 +82,122 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
       it('should be true', async function () {
         const nodeExists = await this.list.nodeExists(tokenId);
         nodeExists.should.be.equal(true);
+      });
+    });
+
+    describe('getNode', function () {
+      it('PREV and NEXT should be HEAD', async function () {
+        const node = await this.list.getNode(tokenId);
+        node[0].should.be.equal(true);
+        node[1].should.be.bignumber.equal(HEAD);
+        node[2].should.be.bignumber.equal(HEAD);
+      });
+    });
+
+    context('adding more nodes (not ordered)', function () {
+      let firstTokenId;
+      let secondTokenId;
+
+      beforeEach(async function () {
+        await this.token.newToken(
+          beneficiary,
+          tokenDetails.value,
+          tokenDetails.firstName,
+          tokenDetails.lastName,
+          tokenDetails.pattern,
+          tokenDetails.icon,
+          { from: minter }
+        );
+
+        firstTokenId = await this.token.progressiveId();
+
+        await this.token.newToken(
+          beneficiary,
+          tokenDetails.value,
+          tokenDetails.firstName,
+          tokenDetails.lastName,
+          tokenDetails.pattern,
+          tokenDetails.icon,
+          { from: minter }
+        );
+
+        secondTokenId = await this.token.progressiveId();
+      });
+
+      describe('adding after (2 times)', function () {
+        let node;
+        let firstNode;
+        let secondNode;
+
+        beforeEach(async function () {
+          await this.list.insertAfter(tokenId, firstTokenId);
+          await this.list.insertAfter(firstTokenId, secondTokenId);
+          node = await this.list.getNode(tokenId);
+          firstNode = await this.list.getNode(firstTokenId);
+          secondNode = await this.list.getNode(secondTokenId);
+        });
+
+        it('node PREV should be HEAD', async function () {
+          node[1].should.be.bignumber.equal(HEAD);
+        });
+
+        it('node NEXT should be firstNode', async function () {
+          node[2].should.be.bignumber.equal(firstTokenId);
+        });
+
+        it('firstNode PREV should be node', async function () {
+          firstNode[1].should.be.bignumber.equal(tokenId);
+        });
+
+        it('firstNode NEXT should be secondNode', async function () {
+          firstNode[2].should.be.bignumber.equal(secondTokenId);
+        });
+
+        it('secondNode PREV should be firstNode', async function () {
+          secondNode[1].should.be.bignumber.equal(firstTokenId);
+        });
+
+        it('secondNode NEXT should be HEAD', async function () {
+          secondNode[2].should.be.bignumber.equal(HEAD);
+        });
+      });
+
+      describe('adding before (2 times)', function () {
+        let node;
+        let firstNode;
+        let secondNode;
+
+        beforeEach(async function () {
+          await this.list.insertBefore(tokenId, firstTokenId);
+          await this.list.insertBefore(firstTokenId, secondTokenId);
+          node = await this.list.getNode(tokenId);
+          firstNode = await this.list.getNode(firstTokenId);
+          secondNode = await this.list.getNode(secondTokenId);
+        });
+
+        it('node PREV should be firstNode', async function () {
+          node[1].should.be.bignumber.equal(firstTokenId);
+        });
+
+        it('node NEXT should be HEAD', async function () {
+          node[2].should.be.bignumber.equal(HEAD);
+        });
+
+        it('firstNode PREV should be secondNode', async function () {
+          firstNode[1].should.be.bignumber.equal(secondTokenId);
+        });
+
+        it('firstNode NEXT should be node', async function () {
+          firstNode[2].should.be.bignumber.equal(tokenId);
+        });
+
+        it('secondNode PREV should be HEAD', async function () {
+          secondNode[1].should.be.bignumber.equal(HEAD);
+        });
+
+        it('secondNode NEXT should be firstNode', async function () {
+          secondNode[2].should.be.bignumber.equal(firstTokenId);
+        });
       });
     });
   });

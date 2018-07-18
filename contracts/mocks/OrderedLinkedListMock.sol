@@ -30,13 +30,6 @@ contract OrderedLinkedListMock {
     return list.getNode(_node);
   }
 
-  /// @dev Returns the link of a node `n` in direction `d`.
-  /// @param _node id of the node to step from
-  /// @param _direction direction to step in
-  function getAdjacent(uint256 _node, bool _direction) public view returns (bool, uint256) {
-    return list.getAdjacent(_node, _direction);
-  }
-
   /// @dev Returns the link of a node `n` in direction `NEXT`.
   /// @param _node id of the node to step from
   function getNextNode(uint256 _node) public view returns (bool, uint256) {
@@ -54,14 +47,6 @@ contract OrderedLinkedListMock {
   //  @return next first node with a value less than _value
   function getSortedSpot(WallOfChainToken _token, uint256 _value) public view returns (uint256 next) {
     return list.getSortedSpot(_token, _value);
-  }
-
-  /// @dev Insert node `_new` beside existing node `_node` in direction `_direction`.
-  /// @param _node existing node
-  /// @param _new  new node to insert
-  /// @param _direction direction to insert node in
-  function insert(uint256 _node, uint256 _new, bool _direction) public {
-    list.insert(_node, _new, _direction);
   }
 
   /// @dev Insert node `_new` beside existing node `_node` in direction `NEXT`.
