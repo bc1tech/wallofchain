@@ -1,20 +1,12 @@
 <template>
     <transition name="fade" mode="out-in">
         <ui-loading v-if="loading"></ui-loading>
-        <div class="masonry-container wall"
-            v-else
-            v-masonry
-            transition-duration="0"
-            item-selector=".wall__item"
-            percent-position="true"
-            horizontal-order="true">
-            <div class="wall__item wall__sizer"></div>
-            <!-- <div class="wall__item wall__gutter"></div> -->
-            <div v-for="item in wall"
+        <div class="wall"
+            v-else>
+            <div v-for="(item, index) in wall"
                 :key="item.id"
-                v-masonry-tile
                 class="wall__item star"
-                :class="`star--${sizes[item.size][small ? 'classNameSmall' : 'className']} star--style-${item.style} ${itemClass}`">
+                :class="`star--style-${item.style} ${itemClass(index)}`">
                 <div class="star__content">
                     <span class="star__icon" :class="`icon-${item.icon}`"></span>
                     <h2 class="star__title">{{ item.title }}</h2>
@@ -25,11 +17,6 @@
     </transition>
 </template>
 <script>
-    import Vue from 'vue';
-    import { VueMasonryPlugin } from 'vue-masonry';
-
-    Vue.use(VueMasonryPlugin);
-
     const getWall = (params) => new Promise((resolve, reject) => {
         const { limit } = params;
 
@@ -44,7 +31,7 @@
 
         const wall = [];
 
-        for (let i = 0; i < (limit || 50); i++) {
+        for (let i = 0; i < (limit || 55); i++) {
             wall.push(generateStar(i));
         }
 
@@ -74,26 +61,31 @@
                 loading: false,
                 wall: [],
                 sizes: [{
-                    val: 0.2,
                     className: 'size-1',
                     classNameSmall: 'size-small-1'
                 }, {
-                    val: 0.3,
                     className: 'size-2',
                     classNameSmall: 'size-small-2'
                 }, {
-                    val: 0.5,
                     className: 'size-3',
                     classNameSmall: 'size-small-3'
                 }],
             };
         },
-        computed: {
-            itemClass() {
-                let itemClass = '';
+        methods: {
+            itemClass(index) {
+                let itemClass = 'star--';
+
+                if (index < 3) {
+                    itemClass += this.sizes[this.order === 'ASC' ? 2 : 0][this.small ? 'classNameSmall' : 'className'];
+                } else if(index < 7) {
+                    itemClass += this.sizes[1][this.small ? 'classNameSmall' : 'className'];
+                } else {
+                    itemClass += this.sizes[this.order === 'ASC' ? 0 : 2][this.small ? 'classNameSmall' : 'className'];
+                }
 
                 if (this.small) {
-                    itemClass = 'star--small';
+                    itemClass += ' star--small';
                 }
 
                 return itemClass;
@@ -124,27 +116,11 @@
                     return 0;
                 });
 
-                let maxAmount = wall[0].amount;
-                let minAmount = wall[wall.length - 1].amount;
-
-                const aAmount = maxAmount - minAmount;
-
                 wall.forEach((wallItem) => {
-                    const item = wallItem;
-                    let itemSize = 0;
-
-                    this.sizes.forEach((size, sizeIndex) => {
-                        if (item.amount - minAmount <= (aAmount * (1 - size.val))) {
-                            itemSize = sizeIndex;
-                        }
-                    });
-
-                    item.size = itemSize;
-                    this.wall.push(item);
+                    this.wall.push(wallItem);
                 });
 
                 this.loading = false;
-                this.$redrawVueMasonry();
             });
         },
     };

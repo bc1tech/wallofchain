@@ -9,17 +9,30 @@
                     </div>
                     <router-link to="/become-a-star.html" class="btn">Become a star</router-link>
                 </div>
-                <div class="col-lg-5 offset-lg-1 col-md-6">
-                    <ClientOnly>
-                        <wall :limit="2" small order="ASC" class="wall-featured" />
-                    </ClientOnly>
+                <div class="col-lg-6 col-md-6">
+                    <div class="wall wall-featured">
+                        <div class="wall__item star star--style-3 star--small star--size-small-2">
+                            <div class="star__content">
+                                <span class="star__icon icon-2"></span>
+                                <h2 class="star__title">Simone Tallarita</h2>
+                                <div class="star__amount">1 ETH</div>
+                            </div>
+                        </div>
+                        <div class="wall__item star star--style-1 star--small star--size-small-1">
+                            <div class="star__content">
+                                <span class="star__icon icon-0"></span>
+                                <h2 class="star__title">Vincenzo Capasso</h2>
+                                <div class="star__amount">2 ETH</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <section class="section container-lg">
             <h2 class="section__title section__title--center">Discover the wall of blockchain</h2>
             <ClientOnly>
-                <wall :limit="10" />
+                <wall :limit="13" />
             </ClientOnly>
         </section>
         <div class="text-center">
@@ -67,10 +80,11 @@
 
     .wall-featured {
         .star {
+            display: inline-block;
             z-index: 2;
 
             .star__content {
-                transform: translateX(10%) translateY(50%);
+                transform: translateX(10%);
             }
 
             &:last-child {

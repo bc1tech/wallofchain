@@ -5,7 +5,7 @@ $sizes: (
     ),
     size-small-1: (
             xs: 6,
-            lg: 8
+            lg: 7
     ),
     size-2: (
             xs: 3,
@@ -13,7 +13,7 @@ $sizes: (
     ),
     size-small-2: (
             xs: 4,
-            lg: 4
+            lg: 5
     ),
     size-3: (
             xs: 3,
@@ -21,14 +21,17 @@ $sizes: (
     ),
     size-small-3: (
             xs: 4,
-            lg: 4
+            lg: 5
     ),
 );
 
 $font-sizes: (
     size-1: 1.75rem,
+    size-small-1: 1.25rem,
     size-2: 1.375rem,
+    size-small-2: 1rem,
     size-3: 1rem,
+    size-small-3: 1rem,
 );
 
 $styles: (
@@ -182,10 +185,9 @@ $styles: (
 }
 
 .wall {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
     margin: 0 (($grid-gutter-width/2)*-1) 1.25em;
-
-    &__sizer {
-        width: 100%;
-        max-width: percentage(1 / $grid-columns);
-    }
 }
