@@ -1,10 +1,7 @@
 .icon {
-
     &--check {
         background-image: url(../svg/check.svg);
     }
-
-    
 }
 
 $list: gym, drink, food, car, basketball, setting, bowling, dog, ribbon, trumpet;
@@ -12,8 +9,8 @@ $list: gym, drink, food, car, basketball, setting, bowling, dog, ribbon, trumpet
 @for $i from 1 through length($list) {
     $item: nth($list, $i);
 
-    .icon-#{$i} {
-        &::before {
+    .icon-#{$i - 1} {
+        &:before {
             content: '';
             display: block;
             width: 100%;
