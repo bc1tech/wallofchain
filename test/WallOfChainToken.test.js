@@ -3,7 +3,7 @@ import assertRevert from './helpers/assertRevert';
 
 import ether from './helpers/ether';
 
-import shouldBeAnERC721RBACMintableToken from './ERC721/ERC721RBACMintableToken.behaviour';
+import shouldBehaveLikeRBACMintableERC721Token from './ERC721/ERC721RBACMintableToken.behaviour';
 
 const BigNumber = web3.BigNumber;
 
@@ -220,6 +220,6 @@ contract('WallOfChainToken', function (accounts) {
       await this.token.addMinter(minter, { from: creator });
     });
 
-    shouldBeAnERC721RBACMintableToken(accounts, creator, minter, name, symbol);
+    shouldBehaveLikeRBACMintableERC721Token(accounts, creator, minter, name, symbol);
   });
 });
