@@ -1,6 +1,6 @@
 <template>
     <main class="container">
-        <form class="form row">
+        <form class="form row" @submit.prevent="submit">
             <div class="col-lg-7">
                 <header class="form-header">
                     <h2 class="form-header__title">Buy your star</h2>
@@ -15,18 +15,61 @@
                         <span class="form__label">Insert your information*</span>
                     </div>
                     <div class="col-lg-6">
-                        <input class="form__input" type="text" name="First Name" placeholder="First Name" v-model="formData.firstName">
+                        <input class="form__input"
+                               :class="{'is-invalid': errors.has('firstName') }"
+                               type="text"
+                               name="firstName"
+                               placeholder="First Name"
+                               data-vv-as="fist name"
+                               v-validate="'required'"
+                               v-model="formData.firstName">
+                        <p class="form__helper"
+                           :class="errors.has('firstName') ? 'text-danger' : ''"
+                           v-show="errors.has('firstName')">
+                            {{ errors.first('firstName') }}
+                        </p>
                     </div>
                     <div class="col-lg-6">
-                        <input class="form__input" type="text" name="Last Name" placeholder="Last Name" v-model="formData.lastName">
+                        <input class="form__input"
+                               :class="{'is-invalid': errors.has('lastName') }"
+                               type="text"
+                               name="lastName"
+                               placeholder="Last Name"
+                               data-vv-as="last name"
+                               v-validate="'required'"
+                               v-model="formData.lastName">
+                        <p class="form__helper"
+                           :class="errors.has('lastName') ? 'text-danger' : ''"
+                           v-show="errors.has('lastName')">
+                            {{ errors.first('lastName') }}
+                        </p>
                     </div>
                     <div class="col-lg-6">
                         <label class="form__label">Value in ETH</label>
-                        <input class="form__input" type="number" name="Last Name" placeholder="Insert value" min="0" v-model="formData.value">
+                        <input class="form__input"
+                               :class="{'is-invalid': errors.has('valueEth') }"
+                               type="number"
+                               name="valueEth"
+                               placeholder="Insert value"
+                               step="any"
+                               min="0"
+                               @keypress="onlyNumbers($event)"
+                               data-vv-as="eth"
+                               v-validate="'required|min_value:0'"
+                               v-model="formData.value">
+                        <p class="form__helper"
+                           :class="errors.has('valueEth') ? 'text-danger' : ''"
+                           v-show="errors.has('valueEth')">
+                            {{ errors.first('valueEth') }}
+                        </p>
                     </div>
                     <div class="col-lg-6">
                         <label class="form__label">Gift This (optional)</label>
-                        <input class="form__input" type="text" name="Last Name" placeholder="Insert an address wallet of a friend"  v-model="formData.giftAddress">
+                        <input class="form__input"
+                               type="text"
+                               name="Last Name"
+                               placeholder="Insert an address wallet of a friend"
+                               v-model="formData.giftAddress">
                     </div>
                 </div>
 
@@ -38,11 +81,23 @@
                 <div class="row form__row">
                     <div class="col-lg-6">
                         <label class="form__label">Background colors</label>
-                        <ui-dropdown toggle="Select your gradient" type="gradient" :options="gradients" v-model="formData.gradient"></ui-dropdown>
+                        <ui-dropdown toggle="Select your gradient"
+                                     :class="{'is-invalid': errors.has('gradient') }"
+                                     type="gradient"
+                                     name="gradient"
+                                     :options="gradients"
+                                     v-validate="'required'"
+                                     v-model="formData.gradient"></ui-dropdown>
                     </div>
                     <div class="col-lg-6">
                         <label class="form__label">Icon</label>
-                        <ui-dropdown toggle="Select your icon" type="icon" :options="icons" v-model="formData.icon"></ui-dropdown>
+                        <ui-dropdown toggle="Select your icon"
+                                     :class="{'is-invalid': errors.has('icon') }"
+                                     type="icon"
+                                     name="icon"
+                                     :options="icons"
+                                     v-validate="'required'"
+                                     v-model="formData.icon"></ui-dropdown>
                     </div>
                 </div>
 
@@ -52,19 +107,19 @@
                 <div class="edit-star">
                     <h2 class="title">Edit your stars</h2>
 
-                    <div :class="`star star--edit star--style-${formData.gradient || 0}`">
+                    <div :class="`star star--edit star--style-${formData.gradient}`">
                         <div class="star__content">
-                            <span class="star__icon" :class="`icon-${ formData.icon || '' }`"></span>
-                            <h2 class="star__title">{{ formData.firstName }} {{ formData.lastName }}</h2>
+                            <span class="star__icon" :class="`icon-${formData.icon} ${formData.icon === '' ? 'placeholder' : ''}`">
+                                <span v-if="formData.icon === ''">Select icon</span>
+                            </span>
+                            <h2 class="star__title">{{ formData.firstName ? `${formData.firstName} ${formData.lastName}` : 'insert infos' }}</h2>
                             <div class="star__amount">{{ formData.value || 0 }} ETH</div>
                         </div>
                     </div>
 
                     <button type="submit" class="btn btn--no-border">Create your star</button>
-
                 </div>
             </div>
-
         </form>
     </main>
 </template>
@@ -85,6 +140,22 @@
                 // array with numbers from 0 to 9
                 icons: Array(10).fill(undefined).map((v, i) => i),
             };
+        },
+        methods: {
+            submit() {
+                this.$validator.validateAll().then((valid) => {
+                    if (valid) {
+                        console.log(this.formData);
+                    }
+                });
+            },
+            onlyNumbers(e) {
+                const evt = e || window.event;
+                const charCode = (evt.which) ? evt.which : evt.keyCode;
+                if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
+                    evt.preventDefault();
+                }
+            },
         },
     };
 </script>
@@ -155,6 +226,20 @@
             &::placeholder {
                 font-weight: 600;
             }
+            
+            &.is-invalid {
+                border-color: #dc3545;
+                color: #dc3545;
+
+                &::placeholder {
+                    color: #dc3545;
+                }
+            }
+        }
+
+        &__helper {
+            font-size: .875rem;
+            margin: -0.71425em 0 1.4285em;
         }
 
         &__label {

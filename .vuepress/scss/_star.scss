@@ -126,7 +126,8 @@ $styles: (
         position: relative;
         display: inline-block;
         width: 25%;
-        margin-bottom: 0.125em;
+        max-width: 5em;
+        margin-bottom: 0.8em;
         
         &:after {
             content: '';
@@ -160,6 +161,14 @@ $styles: (
     &--edit {
         #{$root}__content {
             font-size: 1.625em;
+        }
+        
+        .placeholder {
+            width: 100%;
+
+            &:after {
+                display: none;
+            }
         }
     }
 }

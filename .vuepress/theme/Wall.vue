@@ -1,10 +1,7 @@
 <template>
     <transition name="fade" mode="out-in">
-        <div v-if="loading" key="loader" class="loading">
-            <div class="loader" title="Loading"><div></div><div></div><div></div></div>
-        </div>
+        <ui-loading v-if="loading"></ui-loading>
         <div class="masonry-container wall"
-            key="wall"
             v-else
             v-masonry
             transition-duration="0"
@@ -19,7 +16,7 @@
                 class="wall__item star"
                 :class="`star--${sizes[item.size][small ? 'classNameSmall' : 'className']} star--style-${item.style} ${itemClass}`">
                 <div class="star__content">
-                    <span class="star__icon" :class="`star__icon--${item.icon}`"></span>
+                    <span class="star__icon" :class="`icon-${item.icon}`"></span>
                     <h2 class="star__title">{{ item.title }}</h2>
                     <div class="star__amount">{{ item.amount | number }} {{ item.currency }}</div>
                 </div>
@@ -41,7 +38,7 @@
             title: Math.random().toString(36).substring(7),
             amount: Math.random() * 10,
             currency: 'ETH',
-            icon: Math.floor(Math.random() * (10 - 1 + 1)) + 1,
+            icon: Math.floor(Math.random() * (9 - 1 + 1)) + 1,
             style: Math.floor(Math.random() * (10 - 1 + 1)) + 1,
         });
 

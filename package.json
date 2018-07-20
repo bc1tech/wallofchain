@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "bootstrap": "^4.1.1",
+    "vee-validate": "^2.1.0-beta.6",
     "vue-masonry": "^0.11.4"
   }
 }
