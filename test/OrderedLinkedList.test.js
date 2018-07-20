@@ -680,8 +680,8 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
       let firstTokenId;
       let secondTokenId;
 
-      let firstTokenValue = tokenDetails.value.add(1);
-      let secondTokenValue = tokenDetails.value.sub(1);
+      let firstTokenValue = tokenDetails.value.sub(1);
+      let secondTokenValue = tokenDetails.value.add(1);
 
       beforeEach(async function () {
         await this.token.newToken(

@@ -45,7 +45,7 @@ contract OrderedLinkedListMock {
   /// @dev Can be used before `insert` to build an ordered list
   /// @param _value value to seek
   //  @return next first node with a value less than _value
-  function getSortedSpot(WallOfChainToken _token, uint256 _value) public view returns (uint256 next) {
+  function getSortedSpot(StructureInterface _token, uint256 _value) public view returns (uint256 next) {
     return list.getSortedSpot(_token, _value);
   }
 

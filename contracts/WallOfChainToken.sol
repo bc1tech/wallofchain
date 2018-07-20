@@ -48,8 +48,8 @@ contract WallOfChainToken is ERC721RBACMintableToken {
     );
     progressiveId = tokenId;
 
-    uint256 position = list.getSortedSpot(this, _value);
-    list.insertAfter(position, tokenId);
+    uint256 position = list.getSortedSpot(StructureInterface(this), _value);
+    list.insertBefore(position, tokenId);
 
     return tokenId;
   }
@@ -79,7 +79,7 @@ contract WallOfChainToken is ERC721RBACMintableToken {
     icon = wall.icon;
   }
 
-  function getWallValue (uint256 tokenId) public view returns (uint256) {
+  function getValue (uint256 tokenId) public view returns (uint256) {
     require(exists(tokenId), "Token must exists");
     WallStructure storage wall = structureIndex[tokenId];
     return wall.value;

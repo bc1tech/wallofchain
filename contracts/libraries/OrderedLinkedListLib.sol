@@ -1,6 +1,10 @@
 pragma solidity ^0.4.24;
 
-import "../WallOfChainToken.sol";
+
+contract StructureInterface {
+  function getValue (uint256 structureId) public view returns (uint256);
+}
+
 
 /**
  * @title OrderedLinkedListLib
@@ -9,8 +13,6 @@ import "../WallOfChainToken.sol";
  * This utility library was forked from https://github.com/Modular-Network/ethereum-libraries/tree/master/LinkedListLib
  * It has been updated to add additional functionality and be more compatible with solidity 0.4.24 coding patterns.
 */
-
-
 library OrderedLinkedListLib {
 
   uint256 constant NULL = 0;
@@ -99,14 +101,14 @@ library OrderedLinkedListLib {
   }
 
   /// @dev Can be used before `insert` to build an ordered list
-  /// @dev This is adapted to our needs. If you want to order basing on other than token.value edit this function
+  /// @dev This is adapted to our needs. If you want to order basing on other than structure.value edit this function
   /// @param self stored linked list from contract
-  /// @param _token the token instance
+  /// @param _structure the structure instance
   /// @param _value value to seek
   //  @return next first node with a value less than _value
   function getSortedSpot(
     OrderedLinkedList storage self,
-    WallOfChainToken _token,
+    StructureInterface _structure,
     uint256 _value
   )
   internal view returns (uint256)
@@ -117,7 +119,7 @@ library OrderedLinkedListLib {
     bool exists;
     uint256 next;
     (exists, next) = getAdjacent(self, HEAD, NEXT);
-    while ((next != 0) && (_value < _token.getWallValue(next))) {
+    while ((next != 0) && ((_value < _structure.getValue(next)) != NEXT)) {
       next = self.list[next][NEXT];
     }
     return next;
