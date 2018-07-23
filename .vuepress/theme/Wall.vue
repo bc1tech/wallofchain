@@ -20,7 +20,9 @@
     import dapp from '../components/mixins/dapp';
 
     export default {
-        mixins: [dapp],
+        mixins: [
+            dapp
+        ],
         props: {
             small: {
                 type: Boolean,
@@ -81,11 +83,6 @@
             }
         },
         mounted() {
-            this.loading = true;
-            this.initDapp();
-
-            this.loading = false;
-
             for (let i = 0; i < (limit || 12); i++) {
                 let nodeIndex = this.instances.token.getNextNode(i);
 

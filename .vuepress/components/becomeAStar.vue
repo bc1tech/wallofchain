@@ -128,7 +128,9 @@
     import dapp from '../components/mixins/dapp';
 
     export default {
-        mixins: [dapp],
+        mixins: [
+            dapp
+        ],
         data() {
             return {
                 formData: {
@@ -150,8 +152,6 @@
                 getMessage: field => 'Insert a valid Ethereum wallet address.',
                 validate: value => this.web3.isAddress(value),
             });
-
-            this.initDapp();
         },
         methods: {
             submit() {

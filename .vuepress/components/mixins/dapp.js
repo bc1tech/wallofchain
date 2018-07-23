@@ -21,11 +21,11 @@ export default {
         };
     },
     computed: {},
+    created () {
+        this.initWeb3(true);
+        this.initContracts();
+    },
     methods: {
-        initDapp () {
-            this.initWeb3(true);
-            this.initContracts();
-        },
         initWeb3 (checkWeb3) {
             if (checkWeb3 && typeof web3 !== 'undefined') {
                 console.log('injected web3');
