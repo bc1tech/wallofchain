@@ -69,6 +69,7 @@
                                type="text"
                                name="Last Name"
                                placeholder="Insert an address wallet of a friend"
+                               v-validate="'eth_address'"
                                v-model="formData.giftAddress">
                     </div>
                 </div>
@@ -124,13 +125,16 @@
     </main>
 </template>
 <script>
+    import dapp from '../components/mixins/dapp';
+
     export default {
+        mixins: [dapp],
         data() {
             return {
                 formData: {
                     firstName: '',
                     lastName: '',
-                    value: '',
+                    value: 0,
                     giftAddress: '',
                     gradient: '',
                     icon: '',
@@ -141,11 +145,35 @@
                 icons: Array(10).fill(undefined).map((v, i) => i),
             };
         },
+        created() {
+            this.$validator.extend('eth_address', {
+                getMessage: field => 'Insert a valid Ethereum wallet address.',
+                validate: value => this.web3.isAddress(value),
+            });
+
+            this.initDapp();
+        },
         methods: {
             submit() {
                 this.$validator.validateAll().then((valid) => {
                     if (valid) {
+                        let firstName = this.formData.firstName;
+                        let lastName = this.formData.lastName;
+                        let value = new this.web3.BigNumber(this.formData.value);
+                        let giftAddress = this.formData.giftAddress || this.web3.eth.coinbase;
+                        let gradient = this.formData.gradient;
+                        let icon = this.formData.icon;
                         console.log(this.formData);
+                        this.instances.market.buyToken.call(
+                            giftAddress,
+                            firstName,
+                            lastName,
+                            gradient,
+                            icon,
+                            {
+                                value: value,
+                            }
+                        );
                     }
                 });
             },
@@ -226,7 +254,7 @@
             &::placeholder {
                 font-weight: 600;
             }
-            
+
             &.is-invalid {
                 border-color: #dc3545;
                 color: #dc3545;
@@ -260,7 +288,7 @@
     .edit-star {
         position: relative;
         height: 100%;
-        
+
         @include media-breakpoint-up(lg) {
             padding-left: 25px;
             padding-bottom: 80px;

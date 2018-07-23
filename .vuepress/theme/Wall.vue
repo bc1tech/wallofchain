@@ -80,18 +80,18 @@
                 });
             }
         },
-        async mounted() {
+        mounted() {
             this.loading = true;
-            await this.initDapp();
+            this.initDapp();
 
             this.loading = false;
 
             for (let i = 0; i < (limit || 12); i++) {
-                let nodeIndex = await this.instances.token.getNextNode(i);
+                let nodeIndex = this.instances.token.getNextNode(i);
 
                 if (nodeIndex[0]) {
                     let tokenID = nodeIndex[1];
-                    let rawStar = await this.instances.token.getWall(tokenID);
+                    let rawStar = this.instances.token.getWall(tokenID);
 
                     /* function getWall returns an array as below
                         [

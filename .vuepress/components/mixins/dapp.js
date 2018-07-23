@@ -14,10 +14,6 @@ export default {
                 installed: false,
                 netId: null,
             },
-            contracts: {
-                token: null,
-                market: null,
-            },
             instances: {
                 token: null,
                 market: null,
@@ -26,9 +22,9 @@ export default {
     },
     computed: {},
     methods: {
-        async initDapp () {
+        initDapp () {
             this.initWeb3(true);
-            await this.initContracts();
+            this.initContracts();
         },
         initWeb3 (checkWeb3) {
             if (checkWeb3 && typeof web3 !== 'undefined') {
@@ -49,14 +45,9 @@ export default {
                 this.web3 = new Web3(this.web3Provider);
             }
         },
-        async initContracts () {
-            this.contracts.token = this.web3.eth.contract(TokenArtifact.abi);
-            this.contracts.token.setProvider(this.web3Provider);
-            this.instances.token = await this.contracts.token.at(config.blockchain.tokenAddress);
-
-            this.contracts.market = this.web3.eth.contract(MarketArtifact.abi);
-            this.contracts.market.setProvider(this.web3Provider);
-            this.instances.market = await this.contracts.market.at(config.blockchain.marketAddress);
+        initContracts () {
+            this.instances.token = this.web3.eth.contract(TokenArtifact.abi).at(config.blockchain.tokenAddress);
+            this.instances.market = this.web3.eth.contract(MarketArtifact.abi).at(config.blockchain.marketAddress);
         },
     },
 };
