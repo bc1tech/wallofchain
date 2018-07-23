@@ -83,7 +83,7 @@
             }
         },
         mounted() {
-            for (let i = 0; i < (limit || 12); i++) {
+            for (let i = 0; i < (this.limit || 12); i++) {
                 let nodeIndex = this.instances.token.getNextNode(i);
 
                 if (nodeIndex[0]) {
