@@ -2,11 +2,11 @@
     <transition name="fade" mode="out-in">
         <ui-loading v-if="loading"></ui-loading>
         <div class="wall"
-            v-else>
+             v-else>
             <div v-for="(item, index) in wall"
-                :key="item.id"
-                class="wall__item star"
-                :class="`star--style-${item.style} ${itemClass(index)}`">
+                 :key="item.id"
+                 class="wall__item star"
+                 :class="`star--style-${item.style} ${itemClass(index)}`">
                 <div class="star__content">
                     <span class="star__icon" :class="`icon-${item.icon}`"></span>
                     <h2 class="star__title">{{ item.title }}</h2>
@@ -17,30 +17,10 @@
     </transition>
 </template>
 <script>
-    const getWall = (params) => new Promise((resolve, reject) => {
-        const { limit } = params;
-
-        const generateStar = id => ({
-            id,
-            title: Math.random().toString(36).substring(7),
-            amount: Math.random() * 10,
-            currency: 'ETH',
-            icon: Math.floor(Math.random() * (9 - 1 + 1)) + 1,
-            style: Math.floor(Math.random() * (10 - 1 + 1)) + 1,
-        });
-
-        const wall = [];
-
-        for (let i = 0; i < (limit || 55); i++) {
-            wall.push(generateStar(i));
-        }
-
-        setTimeout(() => {
-            resolve(wall);
-        }, 1000);
-    });
+    import dapp from '../components/mixins/dapp';
 
     export default {
+        mixins: [dapp],
         props: {
             small: {
                 type: Boolean,
@@ -53,7 +33,7 @@
             },
             limit: {
                 type: Number,
-                default: 0,
+                default: 3,
             },
         },
         data() {
@@ -100,28 +80,43 @@
                 });
             }
         },
-        mounted() {
+        async mounted() {
             this.loading = true;
+            await this.initDapp();
 
-            getWall({
-                limit: this.limit,
-            }).then((wall) => {
-                wall.sort((a, b) => {
-                    if (a.amount < b.amount) {
-                        return this.order === 'ASC' ? -1 : 1;
-                    } else if (a.amount > b.amount) {
-                        return this.order === 'ASC' ? 1 : -1;
-                    }
+            this.loading = false;
 
-                    return 0;
-                });
+            for (let i = 0; i < (limit || 12); i++) {
+                let nodeIndex = await this.instances.token.getNextNode(i);
 
-                wall.forEach((wallItem) => {
+                if (nodeIndex[0]) {
+                    let tokenID = nodeIndex[1];
+                    let rawStar = await this.instances.token.getWall(tokenID);
+
+                    /* function getWall returns an array as below
+                        [
+                            address tokenOwner,
+                            uint256 value,
+                            string firstName,
+                            string lastName,
+                            uint256 pattern,
+                            uint256 icon
+                        ]
+                     */
+
+                    let wallItem = {
+                        id: tokenID,
+                        tokenOwner: rawStar[0],
+                        amount: this.web3.fromWei(rawStar[1]),
+                        title: `${rawStar[2]} ${rawStar[1]}`,
+                        currency: 'ETH',
+                        style: rawStar[4].valueOf() + 1,
+                        icon: rawStar[5].valueOf() + 1,
+                    };
+
                     this.wall.push(wallItem);
-                });
-
-                this.loading = false;
-            });
+                }
+            }
         },
     };
 </script>
