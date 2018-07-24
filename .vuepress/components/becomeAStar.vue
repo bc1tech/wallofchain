@@ -55,7 +55,7 @@
                                min="0"
                                @keypress="onlyNumbers($event)"
                                data-vv-as="eth"
-                               v-validate="'required|min_value:0'"
+                               v-validate="'min_value:0'"
                                v-model="formData.value">
                         <p class="form__helper"
                            :class="errors.has('valueEth') ? 'text-danger' : ''"
