@@ -41,6 +41,7 @@
         data() {
             return {
                 loading: false,
+                progressiveId: 0,
                 wall: [],
                 sizes: [{
                     className: 'size-1',
@@ -74,42 +75,50 @@
             },
             web3Ready() {
                 this.instances.token.progressiveId((err, progressiveId) => {
-                    for (let i = 0; i <= (this.limit || progressiveId); i++) {
-                        this.instances.token.getNextNode(i, (err, nodeIndex) => {
-                            if (nodeIndex[0]) {
-                                let tokenID = nodeIndex[1];
-                                this.instances.token.getWall(tokenID, (err, rawStar) => {
-                                    /* function getWall returns an array as below
-                                        [
-                                            address tokenOwner,
-                                            uint256 value,
-                                            string firstName,
-                                            string lastName,
-                                            uint256 pattern,
-                                            uint256 icon
-                                        ]
-                                     */
+                    this.progressiveId = progressiveId.valueOf();
+                    if (this.progressiveId > 0) {
+                        this.getNextStar(0);
+                    }
+                });
+            },
+            getNextStar(tokenID) {
+                this.instances.token.getNextNode(tokenID, (err, nodeIndex) => {
+                    if (nodeIndex[0]) {
+                        let tokenID = nodeIndex[1];
+                        this.instances.token.getWall(tokenID, (err, rawStar) => {
+                            /* function getWall returns an array as below
+                                [
+                                    address tokenOwner,
+                                    uint256 value,
+                                    string firstName,
+                                    string lastName,
+                                    uint256 pattern,
+                                    uint256 icon
+                                ]
+                             */
 
-                                    if (rawStar) {
-                                        let wallItem = {
-                                            id: tokenID.valueOf(),
-                                            tokenOwner: rawStar[0],
-                                            amount: this.web3.fromWei(rawStar[1]),
-                                            title: `${rawStar[2]} ${rawStar[3]}`,
-                                            currency: 'ETH',
-                                            style: rawStar[4].valueOf(),
-                                            icon: rawStar[5].valueOf(),
-                                        };
+                            if (rawStar) {
+                                let wallItem = {
+                                    id: tokenID.valueOf(),
+                                    tokenOwner: rawStar[0],
+                                    amount: this.web3.fromWei(rawStar[1]),
+                                    title: `${rawStar[2]} ${rawStar[3]}`,
+                                    currency: 'ETH',
+                                    style: rawStar[4].valueOf(),
+                                    icon: rawStar[5].valueOf(),
+                                };
 
-                                        this.wall.push(wallItem);
-                                        this.loading = false;
-                                    }
-                                });
+                                this.wall.push(wallItem);
+                                this.loading = false;
+                            }
+
+                            if (this.wall.length < this.progressiveId) {
+                                this.getNextStar(tokenID);
                             }
                         });
                     }
                 });
-            },
+            }
         },
         filters: {
             number(num, maxDecimals = 4, minDecimals = 0) {
