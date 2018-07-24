@@ -17,7 +17,7 @@
     </transition>
 </template>
 <script>
-    import dapp from './mixins/dapp';
+    import dapp from '../mixins/dapp';
 
     export default {
         mixins: [
@@ -72,6 +72,42 @@
 
                 return itemClass;
             },
+            web3Ready() {
+                for (let i = 0; i < (this.limit || 12); i++) {
+                    let nodeIndex = this.instances.token.getNextNode(i);
+
+                    if (nodeIndex[0]) {
+                        let tokenID = nodeIndex[1];
+                        this.instances.token.getWall(tokenID, (err, rawStar) => {
+                            /* function getWall returns an array as below
+                                [
+                                    address tokenOwner,
+                                    uint256 value,
+                                    string firstName,
+                                    string lastName,
+                                    uint256 pattern,
+                                    uint256 icon
+                                ]
+                             */
+
+                            if (rawStar) {
+                                let wallItem = {
+                                    id: tokenID.valueOf(),
+                                    tokenOwner: rawStar[0],
+                                    amount: this.web3.fromWei(rawStar[1]),
+                                    title: `${rawStar[2]} ${rawStar[1]}`,
+                                    currency: 'ETH',
+                                    style: rawStar[4].valueOf(),
+                                    icon: rawStar[5].valueOf(),
+                                };
+
+                                this.wall.push(wallItem);
+                                this.loading = false;
+                            }
+                        });
+                    }
+                }
+            },
         },
         filters: {
             number(num, maxDecimals = 4, minDecimals = 0) {
@@ -83,37 +119,7 @@
             }
         },
         mounted() {
-            for (let i = 0; i < (this.limit || 12); i++) {
-                let nodeIndex = this.instances.token.getNextNode(i);
-
-                if (nodeIndex[0]) {
-                    let tokenID = nodeIndex[1];
-                    this.instances.token.getWall(tokenID, (err, rawStar) => {
-                        /* function getWall returns an array as below
-                            [
-                                address tokenOwner,
-                                uint256 value,
-                                string firstName,
-                                string lastName,
-                                uint256 pattern,
-                                uint256 icon
-                            ]
-                         */
-
-                        let wallItem = {
-                            id: tokenID,
-                            tokenOwner: rawStar[0],
-                            amount: this.web3.fromWei(rawStar[1]),
-                            title: `${rawStar[2]} ${rawStar[1]}`,
-                            currency: 'ETH',
-                            style: rawStar[4].valueOf() + 1,
-                            icon: rawStar[5].valueOf() + 1,
-                        };
-
-                        this.wall.push(wallItem);
-                    });
-                }
-            }
+            this.loading = true;
         },
     };
 </script>
