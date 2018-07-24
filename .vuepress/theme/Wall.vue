@@ -17,7 +17,7 @@
     </transition>
 </template>
 <script>
-    import dapp from '../components/mixins/dapp';
+    import dapp from './mixins/dapp';
 
     export default {
         mixins: [
