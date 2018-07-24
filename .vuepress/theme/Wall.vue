@@ -35,7 +35,7 @@
             },
             limit: {
                 type: Number,
-                default: 3,
+                default: 12,
             },
         },
         data() {
@@ -73,40 +73,42 @@
                 return itemClass;
             },
             web3Ready() {
-                for (let i = 0; i < (this.limit || 12); i++) {
-                    let nodeIndex = this.instances.token.getNextNode(i);
+                this.instances.token.progressiveId((err, progressiveId) => {
+                    for (let i = 0; i <= (this.limit || progressiveId); i++) {
+                        this.instances.token.getNextNode(i, (err, nodeIndex) => {
+                            if (nodeIndex[0]) {
+                                let tokenID = nodeIndex[1];
+                                this.instances.token.getWall(tokenID, (err, rawStar) => {
+                                    /* function getWall returns an array as below
+                                        [
+                                            address tokenOwner,
+                                            uint256 value,
+                                            string firstName,
+                                            string lastName,
+                                            uint256 pattern,
+                                            uint256 icon
+                                        ]
+                                     */
 
-                    if (nodeIndex[0]) {
-                        let tokenID = nodeIndex[1];
-                        this.instances.token.getWall(tokenID, (err, rawStar) => {
-                            /* function getWall returns an array as below
-                                [
-                                    address tokenOwner,
-                                    uint256 value,
-                                    string firstName,
-                                    string lastName,
-                                    uint256 pattern,
-                                    uint256 icon
-                                ]
-                             */
+                                    if (rawStar) {
+                                        let wallItem = {
+                                            id: tokenID.valueOf(),
+                                            tokenOwner: rawStar[0],
+                                            amount: this.web3.fromWei(rawStar[1]),
+                                            title: `${rawStar[2]} ${rawStar[3]}`,
+                                            currency: 'ETH',
+                                            style: rawStar[4].valueOf(),
+                                            icon: rawStar[5].valueOf(),
+                                        };
 
-                            if (rawStar) {
-                                let wallItem = {
-                                    id: tokenID.valueOf(),
-                                    tokenOwner: rawStar[0],
-                                    amount: this.web3.fromWei(rawStar[1]),
-                                    title: `${rawStar[2]} ${rawStar[1]}`,
-                                    currency: 'ETH',
-                                    style: rawStar[4].valueOf(),
-                                    icon: rawStar[5].valueOf(),
-                                };
-
-                                this.wall.push(wallItem);
-                                this.loading = false;
+                                        this.wall.push(wallItem);
+                                        this.loading = false;
+                                    }
+                                });
                             }
                         });
                     }
-                }
+                });
             },
         },
         filters: {

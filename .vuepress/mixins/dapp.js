@@ -28,6 +28,10 @@ export default {
                 token: null,
                 market: null,
             },
+            network: {
+                expectedId: null,
+                expectedName: '',
+            },
             waitTimeout: 0,
         };
     },
@@ -45,9 +49,9 @@ export default {
     },
     methods: {
         initWeb3 (checkWeb3) {
-            if (checkWeb3 && typeof window.Web3 !== 'undefined') {
+            if (checkWeb3 && typeof web3 !== 'undefined') {
                 console.log('injected web3');
-                this.web3Provider = window.Web3.currentProvider;
+                this.web3Provider = web3.currentProvider;
                 this.web3 = new window.Web3(this.web3Provider);
                 this.metamask.installed = true;
                 this.web3.version.getNetwork((err, netId) => {
@@ -61,6 +65,11 @@ export default {
                 // set the provider you want from Web3.providers
                 this.web3Provider = new window.Web3.providers.HttpProvider(config.blockchain.web3Provider);
                 this.web3 = new window.Web3(this.web3Provider);
+            }
+
+            this.network = {
+                expectedId: config.blockchain.networkId,
+                expectedName: config.blockchain.networkName,
             }
         },
         initContracts () {

@@ -5,8 +5,11 @@
                 <header class="form-header">
                     <h2 class="form-header__title">Buy your star</h2>
                     <p class="form-header__copy">Insert your information to buy a spot in the Wall of Chain</p>
-                    <p class="form-header__copy">
+                    <p class="form-header__copy" v-if="!metamask.installed">
                         <strong>Attention:</strong> you need the <a href="https://metamask.io/" title="MetaMask" target="_blank" class="form-header__link">MetaMask</a> extension.
+                    </p>
+                    <p class="form-header__copy" v-else-if="metamask.netId !== network.expectedId">
+                        <strong>Attention:</strong> you are on the wrong Network.<br>Please switch your MetaMask on {{ network.expectedName }}.
                     </p>
                 </header>
 
@@ -125,7 +128,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn--no-border">Create your star</button>
+                    <button type="submit" class="btn btn--no-border" :disabled="!metamask.installed">Create your star</button>
                 </div>
             </div>
         </form>
@@ -159,6 +162,10 @@
         methods: {
             submit() {
                 this.$validator.validateAll().then((valid) => {
+                    if (this.metamask.netId !== this.network.expectedId) {
+                        alert(`You are on the wrong Network.\nPlease switch your MetaMask on ${ this.network.expectedName }.`);
+                        return;
+                    }
                     if (valid) {
                         let firstName = this.formData.firstName;
                         let lastName = this.formData.lastName;
@@ -166,7 +173,7 @@
                         let giftAddress = this.formData.giftAddress || this.web3.eth.coinbase;
                         let gradient = this.formData.gradient;
                         let icon = this.formData.icon;
-                        console.log(this.formData);
+
                         this.instances.market.buyToken(
                             giftAddress,
                             firstName,
