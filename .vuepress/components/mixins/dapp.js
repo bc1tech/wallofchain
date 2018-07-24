@@ -21,7 +21,7 @@ export default {
         };
     },
     computed: {},
-    created () {
+    mounted () {
         this.initWeb3(true);
         this.initContracts();
     },
