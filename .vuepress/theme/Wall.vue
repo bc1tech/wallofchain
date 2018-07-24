@@ -88,30 +88,30 @@
 
                 if (nodeIndex[0]) {
                     let tokenID = nodeIndex[1];
-                    let rawStar = this.instances.token.getWall(tokenID);
+                    this.instances.token.getWall(tokenID, (err, rawStar) => {
+                        /* function getWall returns an array as below
+                            [
+                                address tokenOwner,
+                                uint256 value,
+                                string firstName,
+                                string lastName,
+                                uint256 pattern,
+                                uint256 icon
+                            ]
+                         */
 
-                    /* function getWall returns an array as below
-                        [
-                            address tokenOwner,
-                            uint256 value,
-                            string firstName,
-                            string lastName,
-                            uint256 pattern,
-                            uint256 icon
-                        ]
-                     */
+                        let wallItem = {
+                            id: tokenID,
+                            tokenOwner: rawStar[0],
+                            amount: this.web3.fromWei(rawStar[1]),
+                            title: `${rawStar[2]} ${rawStar[1]}`,
+                            currency: 'ETH',
+                            style: rawStar[4].valueOf() + 1,
+                            icon: rawStar[5].valueOf() + 1,
+                        };
 
-                    let wallItem = {
-                        id: tokenID,
-                        tokenOwner: rawStar[0],
-                        amount: this.web3.fromWei(rawStar[1]),
-                        title: `${rawStar[2]} ${rawStar[1]}`,
-                        currency: 'ETH',
-                        style: rawStar[4].valueOf() + 1,
-                        icon: rawStar[5].valueOf() + 1,
-                    };
-
-                    this.wall.push(wallItem);
+                        this.wall.push(wallItem);
+                    });
                 }
             }
         },

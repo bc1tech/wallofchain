@@ -133,6 +133,8 @@
         ],
         data() {
             return {
+                trxHash: '',
+                trxLink: '',
                 formData: {
                     firstName: '',
                     lastName: '',
@@ -159,12 +161,12 @@
                     if (valid) {
                         let firstName = this.formData.firstName;
                         let lastName = this.formData.lastName;
-                        let value = new this.web3.BigNumber(this.formData.value);
+                        let value = this.web3.toWei(this.formData.value, 'ether');
                         let giftAddress = this.formData.giftAddress || this.web3.eth.coinbase;
                         let gradient = this.formData.gradient;
                         let icon = this.formData.icon;
                         console.log(this.formData);
-                        this.instances.market.buyToken.call(
+                        this.instances.market.buyToken(
                             giftAddress,
                             firstName,
                             lastName,
@@ -172,6 +174,28 @@
                             icon,
                             {
                                 value: value,
+                                from: this.web3.eth.coinbase,
+                            },
+                            (err, trxHash) => {
+                                if (!err) {
+                                    this.trxHash = trxHash;
+                                    this.trxLink = this.etherscanLink + "/tx/" + this.trxHash;
+                                    this.instances.market.TokenPurchase(
+                                        {
+                                            purchaser: this.web3.eth.coinbase,
+                                            beneficiary: giftAddress,
+                                        },
+                                        (err, event) => {
+                                            if (!err) {
+                                                console.log(event);
+                                                alert("Your Star is ready!");
+                                            } else {
+                                                alert("Some error occurred. Maybe transaction failed for some reasons. Check your transaction id.");
+                                            }
+                                        });
+                                } else {
+                                    alert("Some error occurred. Maybe you rejected the transaction or you have MetaMask locked!");
+                                }
                             }
                         );
                     }
