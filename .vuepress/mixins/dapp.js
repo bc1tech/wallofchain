@@ -39,7 +39,6 @@ export default {
         Web3().then(() => {
             this.waitTimeout = setTimeout(() => {
                 this.initWeb3(true);
-                this.initContracts();
                 this.web3Ready();
             }, 500);
         });
@@ -70,7 +69,9 @@ export default {
             this.network = {
                 expectedId: config.blockchain.networkId,
                 expectedName: config.blockchain.networkName,
-            }
+            };
+
+            this.initContracts();
         },
         initContracts () {
             this.instances.token = this.web3.eth.contract(TokenArtifact.abi).at(config.blockchain.tokenAddress);
