@@ -4,7 +4,7 @@
     }
 }
 
-$list: gym, drink, food, car, basketball, setting, bowling, dog, ribbon, trumpet;
+$list: ped, gym, drink, food, car, basketball, setting, bowling, dog, ribbon, trumpet;
 
 @for $i from 1 through length($list) {
     $item: nth($list, $i);

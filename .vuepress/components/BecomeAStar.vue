@@ -156,7 +156,7 @@
                 // array with numbers from 0 to 10
                 gradients: Array(11).fill(undefined).map((v, i) => i),
                 // array with numbers from 0 to 9
-                icons: Array(10).fill(undefined).map((v, i) => i),
+                icons: Array(10).fill(undefined).map((v, i) => i + 1),
             };
         },
         methods: {
