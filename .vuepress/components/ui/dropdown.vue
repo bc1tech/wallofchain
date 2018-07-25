@@ -1,6 +1,6 @@
 <template>
     <div class="dropdown" :class="`dropdown--${type} ${ open ? 'dropdown--open' : ''}`">
-        <span @click="toggleDropdown" title="Select your gradient" class="dropdown__el">
+        <span @click="toggleDropdown" :title="`Select your ` + type" class="dropdown__el">
             {{ selectedOption !== '' ? `${type.substr(0,1).toUpperCase()}${type.substr(1)} ${selectedOption}` : toggle }}
         </span>
         <ul class="dropdown__menu">
@@ -124,6 +124,7 @@
             position: absolute;
             left: -9999px;
             width: 100%;
+            z-index: 1;
             background: rgba(255,255,255,0.20);
             border: 1px solid rgba(255,255,255,0.40);
             border-radius: 12px;
