@@ -1,7 +1,7 @@
 <template>
     <div class="dropdown" :class="`dropdown--${type} ${ open ? 'dropdown--open' : ''}`">
         <span @click="toggleDropdown" title="Select your gradient" class="dropdown__el">
-            {{ selectedOption !== '' ? `${type.substr(0,1).toUpperCase()}${type.substr(1)} ${selectedOption + 1}` : toggle }}
+            {{ selectedOption !== '' ? `${type.substr(0,1).toUpperCase()}${type.substr(1)} ${selectedOption}` : toggle }}
         </span>
         <ul class="dropdown__menu">
             <li class="dropdown__child"
