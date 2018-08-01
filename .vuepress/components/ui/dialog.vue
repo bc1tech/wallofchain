@@ -15,7 +15,6 @@
         </div>
         </div>
 </template>
-
 <script>
     export default {
         data() {
@@ -36,7 +35,6 @@
         },
     };
 </script>
-
 <style lang="scss">
 
     @import "../../scss/variables";
@@ -51,26 +49,24 @@
         bottom: 0;
         left: 0;
         z-index: $zindex-modal;
-        display: none;
+        visibility: hidden;
         overflow: hidden;
         background-color: rgba(20, 24, 55, 0.85);
 
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         &.fade {
-        opacity: 0;
-        transition: opacity .15s linear;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity .25s, visibility 0s .25s;
 
             &.show {
-                display: flex;
-                align-items: center;
-                justify-content: center;
+                visibility: visible;
                 opacity: 1;
+                transition: opacity .25s;
             }
-        }
-
-        .modal-open & {
-            overflow-x: hidden;
-            overflow-y: auto;
         }
 
         &__title {
@@ -107,7 +103,7 @@
 
             .modal.fade & {
                 @include transition($modal-transition);
-                transform: translate(0, -25%);
+                transform: translate(0, -10%);
             }
             .modal.show & {
                 transform: translate(0, 0);
