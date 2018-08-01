@@ -132,7 +132,27 @@
                 </div>
             </div>
         </form>
-        <ui-dialog ref="dialog"></ui-dialog>
+
+        <ui-dialog ref="okay">
+            <template slot="title">
+                Great :)
+            </template>
+            Naw your star is on oure WallOfChain
+            <template slot="footer">
+                <router-link to="/" @click="toggleModal('okay', true)" class="btn btn-secondary" data-dismiss="modal">Comeback home</router-link>
+            </template>
+        </ui-dialog>
+
+        <ui-dialog ref="metamask">
+            <template slot="title">
+                Become a star
+            </template>
+            You’ll need a safe place to store your Wall of Chain! The perfect place is in a secure wallet like MetaMask. This will also act as your login to the game (no extra password needed).
+            <template slot="footer">
+                <button type="button" @click="toggleModal('metamask', true)" class="btn btn-secondary" data-dismiss="modal">INSTALL METAMASK</button>
+                <button type="button" @click="toggleModal('metamask', true)" class="btn btn--unstyled">Close</button>
+            </template>
+        </ui-dialog>
     </main>
 </template>
 <script>
@@ -197,7 +217,8 @@
                                         (err, event) => {
                                             if (!err) {
                                                 console.log(event);
-                                                alert("Your Star is ready!");
+
+                                                this.toggleModal('okay');
                                             } else {
                                                 alert("Some error occurred. Maybe transaction failed for some reasons. Check your transaction id.");
                                             }
@@ -223,8 +244,12 @@
                     validate: value => this.web3.isAddress(value),
                 });
             },
-            openModal() {
-                this.$refs.dialog.open();
+            toggleModal(modal, close) {
+                if (close) {
+                    this.$refs[modal].close();
+                } else {
+                    this.$refs[modal].open();
+                }
             },
         },
     };

@@ -1,27 +1,26 @@
 <template>
-    <div class="modal fade" :class="{'show' : isOpen }" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal fade" :class="{'show' : isOpen }" tabindex="-1" role="dialog" :aria-hidden="isOpen ? 'true' : 'false'">
         <div class="modal__dialog modal__dialog--xl" role="document">
             <div class="modal__content">
                 <div class="modal__body">
-                    <h2 class="modal__title">GREAT! :)</h2>
-                    <p class="modal__copy">You’ll need a safe place to store your Wall of Chain! The perfect place is in a secure wallet like MetaMask. This will also act as your login to the game (no extra password needed).</p>
-                    <!-- <p class="modal__copy">Naw your star is on oure WallOfChain</p> -->
+                    <h2 class="modal__title" v-if="$slots.title">
+                        <slot name="title"></slot>
+                    </h2>
+                    <p class="modal__copy"><slot></slot></p>
                 </div>
                 <div class="modal__footer">
-                    <button type="button" @click="close()" class="btn btn-secondary" data-dismiss="modal">Comeback home</button>
-                    <!-- <button type="button" @click="close()" class="btn btn-secondary" data-dismiss="modal">INSTALL METAMASK</button> -->
-                    <!-- <button type="button" @click="close()" class="btn btn--unstyled">Close</button> -->
+                    <slot name="footer"></slot>
                 </div>
             </div>
         </div>
         </div>
 </template>
 
-    <script>
+<script>
     export default {
         data() {
             return {
-                isOpen: false
+                isOpen: false,
             };
         },
         methods: {
@@ -30,8 +29,11 @@
             },
             close() {
                 this.isOpen = false;
-            }
-        }
+            },
+        },
+        beforeDestroy() {
+            this.isOpen = false;
+        },
     };
 </script>
 
