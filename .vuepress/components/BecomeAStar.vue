@@ -132,6 +132,7 @@
                 </div>
             </div>
         </form>
+        <ui-dialog ref="dialog"></ui-dialog>
     </main>
 </template>
 <script>
@@ -221,6 +222,9 @@
                     getMessage: field => 'Insert a valid Ethereum wallet address.',
                     validate: value => this.web3.isAddress(value),
                 });
+            },
+            openModal() {
+                this.$refs.dialog.open();
             },
         },
     };
