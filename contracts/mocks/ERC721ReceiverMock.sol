@@ -29,7 +29,10 @@ contract ERC721ReceiverMock is ERC721Receiver {
   public
   returns(bytes4)
   {
-    require(!reverts, "The ERC721ReceiverMock contract reverts");
+    require(
+      !reverts,
+      "The ERC721ReceiverMock contract reverts"
+    );
     emit Received(
       _operator,
       _from,

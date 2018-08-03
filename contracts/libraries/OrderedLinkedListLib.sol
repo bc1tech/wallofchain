@@ -26,7 +26,13 @@ library OrderedLinkedListLib {
 
   /// @dev returns true if the list exists
   /// @param self stored linked list from contract
-  function listExists(OrderedLinkedList storage self) internal view returns (bool) {
+  function listExists(
+    OrderedLinkedList storage self
+  )
+    internal
+    view
+    returns (bool)
+  {
     // if the head nodes previous or next pointers both point to itself, then there are no items in the list
     if (self.list[HEAD][PREV] != HEAD || self.list[HEAD][NEXT] != HEAD) {
       return true;
@@ -38,7 +44,14 @@ library OrderedLinkedListLib {
   /// @dev returns true if the node exists
   /// @param self stored linked list from contract
   /// @param _node a node to search for
-  function nodeExists(OrderedLinkedList storage self, uint256 _node) internal view returns (bool) {
+  function nodeExists(
+    OrderedLinkedList storage self,
+    uint256 _node
+  )
+    internal
+    view
+    returns (bool)
+  {
     if (self.list[_node][PREV] == HEAD && self.list[_node][NEXT] == HEAD) {
       if (self.list[HEAD][NEXT] == _node) {
         return true;
@@ -52,7 +65,13 @@ library OrderedLinkedListLib {
 
   /// @dev Returns the number of elements in the list
   /// @param self stored linked list from contract
-  function sizeOf(OrderedLinkedList storage self) internal view returns (uint256 numElements) {
+  function sizeOf(
+    OrderedLinkedList storage self
+  )
+    internal
+    view
+    returns (uint256 numElements)
+  {
     bool exists;
     uint256 i;
     (exists, i) = getAdjacent(self, HEAD, NEXT);
@@ -66,7 +85,14 @@ library OrderedLinkedListLib {
   /// @dev Returns the links of a node as a tuple
   /// @param self stored linked list from contract
   /// @param _node id of the node to get
-  function getNode(OrderedLinkedList storage self, uint256 _node) internal view returns (bool, uint256, uint256) {
+  function getNode(
+    OrderedLinkedList storage self,
+    uint256 _node
+  )
+    internal
+    view
+    returns (bool, uint256, uint256)
+  {
     if (!nodeExists(self, _node)) {
       return (false, 0, 0);
     } else {
@@ -78,7 +104,15 @@ library OrderedLinkedListLib {
   /// @param self stored linked list from contract
   /// @param _node id of the node to step from
   /// @param _direction direction to step in
-  function getAdjacent(OrderedLinkedList storage self, uint256 _node, bool _direction) internal view returns (bool, uint256) {
+  function getAdjacent(
+    OrderedLinkedList storage self,
+    uint256 _node,
+    bool _direction
+  )
+    internal
+    view
+    returns (bool, uint256)
+  {
     if (!nodeExists(self, _node)) {
       return (false, 0);
     } else {
@@ -89,14 +123,28 @@ library OrderedLinkedListLib {
   /// @dev Returns the link of a node `_node` in direction `NEXT`.
   /// @param self stored linked list from contract
   /// @param _node id of the node to step from
-  function getNextNode(OrderedLinkedList storage self, uint256 _node) internal view returns (bool, uint256) {
+  function getNextNode(
+    OrderedLinkedList storage self,
+    uint256 _node
+  )
+    internal
+    view
+    returns (bool, uint256)
+  {
     return getAdjacent(self, _node, NEXT);
   }
 
   /// @dev Returns the link of a node `_node` in direction `PREV`.
   /// @param self stored linked list from contract
   /// @param _node id of the node to step from
-  function getPreviousNode(OrderedLinkedList storage self, uint256 _node) internal view returns (bool, uint256) {
+  function getPreviousNode(
+    OrderedLinkedList storage self,
+    uint256 _node
+  )
+    internal
+    view
+    returns (bool, uint256)
+  {
     return getAdjacent(self, _node, PREV);
   }
 
@@ -152,7 +200,7 @@ library OrderedLinkedListLib {
     uint256 _new,
     bool _direction
   )
-  internal returns (bool)
+    internal returns (bool)
   {
     if (!nodeExists(self, _new) && nodeExists(self, _node)) {
       uint256 c = self.list[_node][_direction];
@@ -178,7 +226,14 @@ library OrderedLinkedListLib {
   /// @param self stored linked list from contract
   /// @param _node existing node
   /// @param _new  new node to insert
-  function insertAfter(OrderedLinkedList storage self, uint256 _node, uint256 _new) internal returns (bool) {
+  function insertAfter(
+    OrderedLinkedList storage self,
+    uint256 _node,
+    uint256 _new
+  )
+    internal
+    returns (bool)
+  {
     return insert(
       self,
       _node,
@@ -191,7 +246,14 @@ library OrderedLinkedListLib {
   /// @param self stored linked list from contract
   /// @param _node existing node
   /// @param _new  new node to insert
-  function insertBefore(OrderedLinkedList storage self, uint256 _node, uint256 _new) internal returns (bool) {
+  function insertBefore(
+    OrderedLinkedList storage self,
+    uint256 _node,
+    uint256 _new
+  )
+    internal
+    returns (bool)
+  {
     return insert(
       self,
       _node,
@@ -203,7 +265,13 @@ library OrderedLinkedListLib {
   /// @dev removes an entry from the linked list
   /// @param self stored linked list from contract
   /// @param _node node to remove from the list
-  function remove(OrderedLinkedList storage self, uint256 _node) internal returns (uint256) {
+  function remove(
+    OrderedLinkedList storage self,
+    uint256 _node
+  )
+    internal
+    returns (uint256)
+  {
     if ((_node == NULL) || (!nodeExists(self, _node))) {
       return 0;
     }
@@ -222,7 +290,14 @@ library OrderedLinkedListLib {
   /// @param self stored linked list from contract
   /// @param _node new entry to push to the head
   /// @param _direction push to the head (NEXT) or tail (PREV)
-  function push(OrderedLinkedList storage self, uint256 _node, bool _direction) internal returns (bool) {
+  function push(
+    OrderedLinkedList storage self,
+    uint256 _node,
+    bool _direction
+  )
+    internal
+    returns (bool)
+  {
     return insert(
       self,
       HEAD,
@@ -234,7 +309,13 @@ library OrderedLinkedListLib {
   /// @dev pops the first entry from the linked list
   /// @param self stored linked list from contract
   /// @param _direction pop from the head (NEXT) or the tail (PREV)
-  function pop(OrderedLinkedList storage self, bool _direction) internal returns (uint256) {
+  function pop(
+    OrderedLinkedList storage self,
+    bool _direction
+  )
+    internal
+    returns (uint256)
+  {
     bool exists;
     uint256 adj;
 

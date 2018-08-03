@@ -35,8 +35,14 @@ contract WallOfChainMarket {
    * @param _token Address of the token being sold
    */
   constructor(address _wallet, WallOfChainToken _token) public {
-    require(_wallet != address(0), "Wallet can't be the zero address");
-    require(_token != address(0), "Token can't be the zero address");
+    require(
+      _wallet != address(0),
+      "Wallet can't be the zero address"
+    );
+    require(
+      _token != address(0),
+      "Token can't be the zero address"
+    );
 
     wallet = _wallet;
     token = _token;
@@ -52,8 +58,8 @@ contract WallOfChainMarket {
     uint256 _pattern,
     uint256 _icon
   )
-  public
-  payable
+    public
+    payable
   {
     uint256 weiAmount = msg.value;
 
@@ -92,10 +98,13 @@ contract WallOfChainMarket {
   function _preValidatePurchase(
     address _beneficiary
   )
-  internal
-  pure
+    internal
+    pure
   {
-    require(_beneficiary != address(0), "Beneficiary can't be the zero address");
+    require(
+      _beneficiary != address(0),
+      "Beneficiary can't be the zero address"
+    );
   }
 
   /**
@@ -109,8 +118,8 @@ contract WallOfChainMarket {
     uint256 _pattern,
     uint256 _icon
   )
-  internal
-  returns (uint256)
+    internal
+    returns (uint256)
   {
     return token.newToken(
       _beneficiary,

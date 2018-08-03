@@ -34,8 +34,8 @@ contract WallOfChainToken is ERC721RBACMintableToken {
     uint256 _pattern,
     uint256 _icon
   )
-  public
-  returns (uint256)
+    public
+    returns (uint256)
   {
     uint256 tokenId = progressiveId.add(1);
     _mint(_beneficiary, tokenId);
@@ -55,18 +55,21 @@ contract WallOfChainToken is ERC721RBACMintableToken {
   }
 
   function getWall (uint256 tokenId)
-  public
-  view
-  returns (
-    address tokenOwner,
-    uint256 value,
-    string firstName,
-    string lastName,
-    uint256 pattern,
-    uint256 icon
-  )
+    public
+    view
+    returns (
+      address tokenOwner,
+      uint256 value,
+      string firstName,
+      string lastName,
+      uint256 pattern,
+      uint256 icon
+    )
   {
-    require(exists(tokenId), "Token must exists");
+    require(
+      exists(tokenId),
+      "Token must exists"
+    );
 
     WallStructure storage wall = structureIndex[tokenId];
 
@@ -80,7 +83,10 @@ contract WallOfChainToken is ERC721RBACMintableToken {
   }
 
   function getValue (uint256 tokenId) public view returns (uint256) {
-    require(exists(tokenId), "Token must exists");
+    require(
+      exists(tokenId),
+      "Token must exists"
+    );
     WallStructure storage wall = structureIndex[tokenId];
     return wall.value;
   }
@@ -89,7 +95,13 @@ contract WallOfChainToken is ERC721RBACMintableToken {
     return list.getNextNode(_tokenId);
   }
 
-  function getPreviousNode(uint256 _tokenId) public view returns (bool, uint256) {
+  function getPreviousNode(
+    uint256 _tokenId
+  )
+    public
+    view
+    returns (bool, uint256)
+  {
     return list.getPreviousNode(_tokenId);
   }
 

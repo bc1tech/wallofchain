@@ -26,7 +26,13 @@ contract OrderedLinkedListMock {
 
   /// @dev Returns the links of a node as and array
   /// @param _node id of the node to get
-  function getNode(uint256 _node) public view returns (bool, uint256, uint256) {
+  function getNode(
+    uint256 _node
+  )
+    public
+    view
+    returns (bool, uint256, uint256)
+  {
     return list.getNode(_node);
   }
 
@@ -45,7 +51,14 @@ contract OrderedLinkedListMock {
   /// @dev Can be used before `insert` to build an ordered list
   /// @param _value value to seek
   //  @return next first node with a value less than _value
-  function getSortedSpot(StructureInterface _token, uint256 _value) public view returns (uint256 next) {
+  function getSortedSpot(
+    StructureInterface _token,
+    uint256 _value
+  )
+    public
+    view
+    returns (uint256 next)
+  {
     return list.getSortedSpot(_token, _value);
   }
 
