@@ -1,7 +1,8 @@
 <template>
     <main class="container">
-        <form class="form row" @submit.prevent="submit">
-            <div class="col-lg-7">
+        <form class="form loading-parent row" @submit.prevent="submit">
+            <ui-loading v-if="loading" overlay></ui-loading>
+            <div class="col-lg-7 loading-hide" :class="{ 'loading-hide--active': loading }">
                 <header class="form-header">
                     <h2 class="form-header__title">Buy your star</h2>
                     <p class="form-header__copy">Insert your information to buy a spot in the Wall of Chain</p>
@@ -116,7 +117,7 @@
 
             </div>
 
-            <div class="col-lg-5">
+            <div class="col-lg-5 loading-hide" :class="{ 'loading-hide--active': loading }">
                 <div class="edit-star">
                     <h2 class="title">Edit your star</h2>
 
@@ -160,6 +161,7 @@
         ],
         data() {
             return {
+                loading: true,
                 trxHash: '',
                 trxLink: '',
                 formData: {
@@ -189,6 +191,8 @@
                         return;
                     }
                     if (valid) {
+                        this.loading = true;
+
                         const firstName = this.formData.firstName;
                         const lastName = this.formData.lastName;
                         const value = this.web3.toWei(this.formData.value, 'ether');
@@ -212,6 +216,8 @@
                                 from: this.web3.eth.coinbase,
                             },
                             (err, trxHash) => {
+                                this.loading = false;
+
                                 if (!err) {
                                     this.trxHash = trxHash;
                                     this.trxLink = this.etherscanLink + "/tx/" + this.trxHash;
@@ -245,6 +251,8 @@
                 }
             },
             web3Ready() {
+                this.loading = false;
+
                 this.$validator.extend('eth_address', {
                     getMessage: field => 'Insert a valid Ethereum wallet address.',
                     validate: value => this.web3.isAddress(value),
