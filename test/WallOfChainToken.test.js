@@ -1,9 +1,7 @@
-import { advanceBlock } from './helpers/advanceToBlock';
-import assertRevert from './helpers/assertRevert';
-
-import ether from './helpers/ether';
-
-import shouldBehaveLikeRBACMintableERC721Token from './ERC721/ERC721RBACMintableToken.behaviour';
+const { ether } = require('./helpers/ether');
+const { assertRevert } = require('./helpers/assertRevert');
+const { advanceBlock } = require('./helpers/advanceToBlock');
+const { shouldBehaveLikeRBACMintableERC721Token } = require('./ERC721/ERC721RBACMintableToken.behaviour');
 
 const BigNumber = web3.BigNumber;
 

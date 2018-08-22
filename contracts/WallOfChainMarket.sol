@@ -58,8 +58,8 @@ contract WallOfChainMarket {
     uint256 _pattern,
     uint256 _icon
   )
-    public
-    payable
+  public
+  payable
   {
     uint256 weiAmount = msg.value;
 
@@ -98,8 +98,8 @@ contract WallOfChainMarket {
   function _preValidatePurchase(
     address _beneficiary
   )
-    internal
-    pure
+  internal
+  pure
   {
     require(
       _beneficiary != address(0),
@@ -118,8 +118,8 @@ contract WallOfChainMarket {
     uint256 _pattern,
     uint256 _icon
   )
-    internal
-    returns (uint256)
+  internal
+  returns (uint256)
   {
     return token.newToken(
       _beneficiary,

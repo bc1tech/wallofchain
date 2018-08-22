@@ -29,9 +29,9 @@ contract OrderedLinkedListMock {
   function getNode(
     uint256 _node
   )
-    public
-    view
-    returns (bool, uint256, uint256)
+  public
+  view
+  returns (bool, uint256, uint256)
   {
     return list.getNode(_node);
   }
@@ -55,9 +55,9 @@ contract OrderedLinkedListMock {
     StructureInterface _token,
     uint256 _value
   )
-    public
-    view
-    returns (uint256 next)
+  public
+  view
+  returns (uint256 next)
   {
     return list.getSortedSpot(_token, _value);
   }

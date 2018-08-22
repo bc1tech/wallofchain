@@ -1,4 +1,4 @@
-import ether from './helpers/ether';
+const { ether } = require('./helpers/ether');
 
 const BigNumber = web3.BigNumber;
 
@@ -680,8 +680,8 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
       let firstTokenId;
       let secondTokenId;
 
-      let firstTokenValue = tokenDetails.value.sub(1);
-      let secondTokenValue = tokenDetails.value.add(1);
+      const firstTokenValue = tokenDetails.value.sub(1);
+      const secondTokenValue = tokenDetails.value.add(1);
 
       beforeEach(async function () {
         await this.token.newToken(
@@ -695,7 +695,7 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
         );
 
         tokenId = await this.token.progressiveId();
-        let position = await this.list.getSortedSpot(this.token.address, tokenId);
+        const position = await this.list.getSortedSpot(this.token.address, tokenId);
         await this.list.insertAfter(position, tokenId);
 
         await this.token.newToken(

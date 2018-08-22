@@ -15,9 +15,9 @@ contract WallOfChainTokenMock is WallOfChainToken {
     address _to,
     uint256 _tokenId
   )
-    public
-    canMint
-    hasMintPermission
+  public
+  canMint
+  hasMintPermission
   {
     _mint(_to, _tokenId);
   }

@@ -29,9 +29,9 @@ library OrderedLinkedListLib {
   function listExists(
     OrderedLinkedList storage self
   )
-    internal
-    view
-    returns (bool)
+  internal
+  view
+  returns (bool)
   {
     // if the head nodes previous or next pointers both point to itself, then there are no items in the list
     if (self.list[HEAD][PREV] != HEAD || self.list[HEAD][NEXT] != HEAD) {
@@ -48,9 +48,9 @@ library OrderedLinkedListLib {
     OrderedLinkedList storage self,
     uint256 _node
   )
-    internal
-    view
-    returns (bool)
+  internal
+  view
+  returns (bool)
   {
     if (self.list[_node][PREV] == HEAD && self.list[_node][NEXT] == HEAD) {
       if (self.list[HEAD][NEXT] == _node) {
@@ -68,9 +68,9 @@ library OrderedLinkedListLib {
   function sizeOf(
     OrderedLinkedList storage self
   )
-    internal
-    view
-    returns (uint256 numElements)
+  internal
+  view
+  returns (uint256 numElements)
   {
     bool exists;
     uint256 i;
@@ -89,9 +89,9 @@ library OrderedLinkedListLib {
     OrderedLinkedList storage self,
     uint256 _node
   )
-    internal
-    view
-    returns (bool, uint256, uint256)
+  internal
+  view
+  returns (bool, uint256, uint256)
   {
     if (!nodeExists(self, _node)) {
       return (false, 0, 0);
@@ -109,9 +109,9 @@ library OrderedLinkedListLib {
     uint256 _node,
     bool _direction
   )
-    internal
-    view
-    returns (bool, uint256)
+  internal
+  view
+  returns (bool, uint256)
   {
     if (!nodeExists(self, _node)) {
       return (false, 0);
@@ -127,9 +127,9 @@ library OrderedLinkedListLib {
     OrderedLinkedList storage self,
     uint256 _node
   )
-    internal
-    view
-    returns (bool, uint256)
+  internal
+  view
+  returns (bool, uint256)
   {
     return getAdjacent(self, _node, NEXT);
   }
@@ -141,9 +141,9 @@ library OrderedLinkedListLib {
     OrderedLinkedList storage self,
     uint256 _node
   )
-    internal
-    view
-    returns (bool, uint256)
+  internal
+  view
+  returns (bool, uint256)
   {
     return getAdjacent(self, _node, PREV);
   }
@@ -200,7 +200,7 @@ library OrderedLinkedListLib {
     uint256 _new,
     bool _direction
   )
-    internal returns (bool)
+  internal returns (bool)
   {
     if (!nodeExists(self, _new) && nodeExists(self, _node)) {
       uint256 c = self.list[_node][_direction];
@@ -231,8 +231,8 @@ library OrderedLinkedListLib {
     uint256 _node,
     uint256 _new
   )
-    internal
-    returns (bool)
+  internal
+  returns (bool)
   {
     return insert(
       self,
@@ -251,8 +251,8 @@ library OrderedLinkedListLib {
     uint256 _node,
     uint256 _new
   )
-    internal
-    returns (bool)
+  internal
+  returns (bool)
   {
     return insert(
       self,
@@ -269,8 +269,8 @@ library OrderedLinkedListLib {
     OrderedLinkedList storage self,
     uint256 _node
   )
-    internal
-    returns (uint256)
+  internal
+  returns (uint256)
   {
     if ((_node == NULL) || (!nodeExists(self, _node))) {
       return 0;
@@ -295,8 +295,8 @@ library OrderedLinkedListLib {
     uint256 _node,
     bool _direction
   )
-    internal
-    returns (bool)
+  internal
+  returns (bool)
   {
     return insert(
       self,
@@ -313,8 +313,8 @@ library OrderedLinkedListLib {
     OrderedLinkedList storage self,
     bool _direction
   )
-    internal
-    returns (uint256)
+  internal
+  returns (uint256)
   {
     bool exists;
     uint256 adj;
