@@ -136,7 +136,7 @@
 
         <ui-dialog ref="okay">
             <template slot="title">Great :)</template>
-            Naw your star is on oure WallOfChain
+            Now your star is on our WallOfChain!!
             <template slot="footer">
                 <router-link to="/" @click="toggleModal('okay', true)" class="btn btn-secondary">Go back home</router-link>
             </template>
@@ -217,8 +217,6 @@
                                     from: this.web3.eth.coinbase,
                                 },
                                 (err, trxHash) => {
-                                    this.loading = false;
-
                                     if (!err) {
                                         this.trxHash = trxHash;
                                         this.trxLink = this.etherscanLink + "/tx/" + this.trxHash;
@@ -230,13 +228,14 @@
                                             (err, event) => {
                                                 if (!err) {
                                                     console.log(event);
-
+                                                    this.loading = false;
                                                     this.toggleModal('okay');
                                                 } else {
                                                     alert("Some error occurred. Maybe transaction failed for some reasons. Check your transaction id.");
                                                 }
                                             });
                                     } else {
+                                        this.loading = false;
                                         alert("Some error occurred. Maybe you rejected the transaction or you have MetaMask locked!");
                                     }
                                 }
