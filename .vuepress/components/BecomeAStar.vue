@@ -205,41 +205,47 @@
                             icon = 0;
                         }
 
-                        this.instances.market.buyToken(
-                            giftEth,
-                            firstName,
-                            lastName,
-                            gradient,
-                            icon,
-                            {
-                                value: value,
-                                from: this.web3.eth.coinbase,
-                            },
-                            (err, trxHash) => {
-                                this.loading = false;
+                        try {
+                            this.instances.market.buyToken(
+                                giftEth,
+                                firstName,
+                                lastName,
+                                gradient,
+                                icon,
+                                {
+                                    value: value,
+                                    from: this.web3.eth.coinbase,
+                                },
+                                (err, trxHash) => {
+                                    this.loading = false;
 
-                                if (!err) {
-                                    this.trxHash = trxHash;
-                                    this.trxLink = this.etherscanLink + "/tx/" + this.trxHash;
-                                    this.instances.market.TokenPurchase(
-                                        {
-                                            purchaser: this.web3.eth.coinbase,
-                                            beneficiary: giftEth,
-                                        },
-                                        (err, event) => {
-                                            if (!err) {
-                                                console.log(event);
+                                    if (!err) {
+                                        this.trxHash = trxHash;
+                                        this.trxLink = this.etherscanLink + "/tx/" + this.trxHash;
+                                        this.instances.market.TokenPurchase(
+                                            {
+                                                purchaser: this.web3.eth.coinbase,
+                                                beneficiary: giftEth,
+                                            },
+                                            (err, event) => {
+                                                if (!err) {
+                                                    console.log(event);
 
-                                                this.toggleModal('okay');
-                                            } else {
-                                                alert("Some error occurred. Maybe transaction failed for some reasons. Check your transaction id.");
-                                            }
-                                        });
-                                } else {
-                                    alert("Some error occurred. Maybe you rejected the transaction or you have MetaMask locked!");
+                                                    this.toggleModal('okay');
+                                                } else {
+                                                    alert("Some error occurred. Maybe transaction failed for some reasons. Check your transaction id.");
+                                                }
+                                            });
+                                    } else {
+                                        alert("Some error occurred. Maybe you rejected the transaction or you have MetaMask locked!");
+                                    }
                                 }
-                            }
-                        );
+                            );
+                        } catch(e) {
+                            console.warn(e);
+                            alert(`Some error occurred. ${e.message}`);
+                            this.loading = false;
+                        }
                     }
                 });
             },
