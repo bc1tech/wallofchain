@@ -116,22 +116,37 @@
 
             <div class="col-lg-5">
                 <div class="edit-star">
-                    <h2 class="title">Edit your stars</h2>
+                    <h2 class="title">Edit your star</h2>
 
-                    <div :class="`star star--edit star--style-${formData.gradient}`">
+                    <div :class="`star star--edit star--style-${formData.gradient || 0}`">
                         <div class="star__content">
-                        <span class="star__icon" :class="`icon-${formData.icon} ${formData.icon === '' ? 'placeholder' : ''}`">
-                            <span v-if="formData.icon === ''">Select icon</span>
-                        </span>
+                            <span class="star__icon" :class="`icon-${formData.icon === '' ? 'ped' : formData.icon }`"></span>
                             <h2 class="star__title">{{ formData.firstName ? `${formData.firstName} ${formData.lastName}` : 'insert infos' }}</h2>
                             <div class="star__amount">{{ formData.value || 0 }} ETH</div>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn--no-border" :disabled="!metamask.installed">Create your star</button>
+                    <button type="submit" class="btn btn--no-border">Create your star</button>
                 </div>
             </div>
         </form>
+
+        <ui-dialog ref="okay">
+            <template slot="title">Great :)</template>
+            Naw your star is on oure WallOfChain
+            <template slot="footer">
+                <router-link to="/" @click="toggleModal('okay', true)" class="btn btn-secondary">Go back home</router-link>
+            </template>
+        </ui-dialog>
+
+        <ui-dialog ref="metamask">
+            <template slot="title">Become a star</template>
+            You’ll need a safe place to store your Wall of Chain! The perfect place is in a secure wallet like MetaMask. This will also act as your login to the game (no extra password needed).
+            <template slot="footer">
+                <a href="https://metamask.io/" target="_blank" class="btn btn-secondary">INSTALL METAMASK</a>
+                <button type="button" @click="toggleModal('metamask', true)" class="btn btn--unstyled">Close</button>
+            </template>
+        </ui-dialog>
     </main>
 </template>
 <script>
@@ -150,8 +165,8 @@
                     lastName: '',
                     value: 0,
                     giftAddress: '',
-                    gradient: '0',
-                    icon: '0',
+                    gradient: '',
+                    icon: '',
                 },
                 // array with numbers from 0 to 10
                 gradients: Array(11).fill(undefined).map((v, i) => i),
@@ -161,6 +176,11 @@
         },
         methods: {
             submit() {
+                if (!this.metamask.installed) {
+                    this.toggleModal('metamask');
+                    return false;
+                }
+
                 this.$validator.validateAll().then((valid) => {
                     if (this.metamask.netId !== this.network.expectedId) {
                         alert(`You are on the wrong Network.\nPlease switch your MetaMask on ${ this.network.expectedName }.`);
@@ -196,7 +216,8 @@
                                         (err, event) => {
                                             if (!err) {
                                                 console.log(event);
-                                                alert("Your Star is ready!");
+
+                                                this.toggleModal('okay');
                                             } else {
                                                 alert("Some error occurred. Maybe transaction failed for some reasons. Check your transaction id.");
                                             }
@@ -221,6 +242,13 @@
                     getMessage: field => 'Insert a valid Ethereum wallet address.',
                     validate: value => this.web3.isAddress(value),
                 });
+            },
+            toggleModal(modal, close) {
+                if (close) {
+                    this.$refs[modal].close();
+                } else {
+                    this.$refs[modal].open();
+                }
             },
         },
     };

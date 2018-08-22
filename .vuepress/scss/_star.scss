@@ -165,14 +165,6 @@ $styles: (
         #{$root}__content {
             font-size: 1.625em;
         }
-        
-        .placeholder {
-            width: 100%;
-
-            &:after {
-                display: none;
-            }
-        }
     }
 }
 

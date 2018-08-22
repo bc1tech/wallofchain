@@ -85,4 +85,11 @@
     &--no-border {
         border: 0;
     }
+
+    &--unstyled {
+        border: 0;
+        background-image: none;
+        background-size: 0;
+        background-color: transparent;
+    }
 }

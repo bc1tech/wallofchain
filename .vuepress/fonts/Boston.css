@@ -1,11 +1,11 @@
 @font-face {
     font-family:'Boston';
-    src: url('Boston Regular.eot');
-	src: url('Boston Regular.eot?#iefix') format('embedded-opentype'),
-		url('Boston Regular.woff2') format('woff2'),
-		url('Boston Regular.woff') format('woff'),
-		url('Boston Regular.ttf') format('truetype'),
-		url('Boston Regular.svg#Boston Regular') format('svg');
+    src: url('BostonRegular.eot');
+	src: url('BostonRegular.eot?#iefix') format('embedded-opentype'),
+		url('BostonRegular.woff2') format('woff2'),
+		url('BostonRegular.woff') format('woff'),
+		url('BostonRegular.ttf') format('truetype'),
+		url('BostonRegular.svg#BostonRegular') format('svg');
     font-weight: 400;
     font-style: normal;
     font-stretch: normal;

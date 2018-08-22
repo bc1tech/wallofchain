@@ -1,0 +1,13 @@
+@font-face {
+    font-family:'Boston';
+    src: url('BostonItalic.eot');
+	src: url('BostonItalic.eot?#iefix') format('embedded-opentype'),
+		url('BostonItalic.woff2') format('woff2'),
+		url('BostonItalic.woff') format('woff'),
+		url('BostonItalic.ttf') format('truetype'),
+		url('BostonItalic.svg#n RegularIt') format('svg');
+    font-weight: 400;
+    font-style: italic;
+    font-stretch: normal;
+    unicode-range: U+0020-00FE;
+}
