@@ -29,14 +29,6 @@
         position: relative;
         transition: opacity .25s ease-in-out;
 
-        &--active {
-            opacity: 0.5;
-            
-            &:before {
-                display: block;
-            }
-        }
-
         &:before {
             display: none;
             content: '';
@@ -46,6 +38,14 @@
             width: 100%;
             height: 100%;
             z-index: 1;
+        }
+
+        &--active {
+            opacity: 0.5;
+
+            &:before {
+                display: block;
+            }
         }
     }
 </style>
