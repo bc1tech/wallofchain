@@ -77,12 +77,12 @@
                 this.instances.token.progressiveId((err, progressiveId) => {
                     this.progressiveId = progressiveId.valueOf();
                     if (this.progressiveId > 0) {
-                        this.getNextStar(0);
+                        this.getPreviousStar(0);
                     }
                 });
             },
-            getNextStar(tokenID) {
-                this.instances.token.getNextNode(tokenID, (err, nodeIndex) => {
+            getPreviousStar(tokenID) {
+                this.instances.token.getPreviousNode(tokenID, (err, nodeIndex) => {
                     if (nodeIndex[0]) {
                         let tokenID = nodeIndex[1];
                         this.instances.token.getWall(tokenID, (err, rawStar) => {
@@ -113,7 +113,7 @@
                             }
 
                             if (this.wall.length < this.progressiveId) {
-                                this.getNextStar(tokenID);
+                                this.getPreviousStar(tokenID);
                             }
                         });
                     }
