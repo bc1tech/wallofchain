@@ -37,8 +37,16 @@ export default {
     },
     mounted () {
         Web3().then(() => {
-            this.waitTimeout = setTimeout(() => {
-                this.initWeb3(true);
+            this.waitTimeout = setTimeout(async () => {
+                await this.initWeb3(true);
+
+                this.network = {
+                    expectedId: config.blockchain.networkId,
+                    expectedName: config.blockchain.networkName,
+                };
+
+                this.initContracts();
+
                 this.web3Ready();
             }, 500);
         });
@@ -48,30 +56,30 @@ export default {
     },
     methods: {
         initWeb3 (checkWeb3) {
-            if (checkWeb3 && typeof web3 !== 'undefined') {
-                console.log('injected web3');
-                this.web3Provider = web3.currentProvider;
-                this.web3 = new window.Web3(this.web3Provider);
-                this.metamask.installed = true;
-                this.web3.version.getNetwork((err, netId) => {
-                    this.metamask.netId = netId;
-                    if (netId !== config.blockchain.networkId) {
-                        this.initWeb3(false);
-                    }
-                });
-            } else {
-                console.log('provided web3');
-                // set the provider you want from Web3.providers
-                this.web3Provider = new window.Web3.providers.HttpProvider(config.blockchain.web3Provider);
-                this.web3 = new window.Web3(this.web3Provider);
-            }
+            return new Promise((resolve) => {
+                if (checkWeb3 && typeof web3 !== 'undefined') {
+                    console.log('injected web3');
+                    this.web3Provider = web3.currentProvider;
+                    this.web3 = new window.Web3(this.web3Provider);
+                    this.metamask.installed = true;
+                    this.web3.version.getNetwork((err, netId) => {
+                        this.metamask.netId = netId;
 
-            this.network = {
-                expectedId: config.blockchain.networkId,
-                expectedName: config.blockchain.networkName,
-            };
+                        if (netId !== config.blockchain.networkId) {
+                            this.initWeb3(false).then(resolve);
+                        } else {
+                            resolve();
+                        }
+                    });
+                } else {
+                    console.log('provided web3');
+                    // set the provider you want from Web3.providers
+                    this.web3Provider = new window.Web3.providers.HttpProvider(config.blockchain.web3Provider);
+                    this.web3 = new window.Web3(this.web3Provider);
 
-            this.initContracts();
+                    resolve();
+                }
+            });
         },
         initContracts () {
             this.instances.token = this.web3.eth.contract(TokenArtifact.abi).at(config.blockchain.tokenAddress);
