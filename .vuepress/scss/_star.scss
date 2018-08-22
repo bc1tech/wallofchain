@@ -8,30 +8,48 @@ $sizes: (
             lg: 7
     ),
     size-2: (
-            xs: 3,
+            xs: 6,
             lg: 3
     ),
     size-small-2: (
-            xs: 4,
+            xs: 5,
             lg: 5
     ),
     size-3: (
-            xs: 3,
+            xs: 6,
             lg: 2
     ),
     size-small-3: (
-            xs: 4,
+            xs: 5,
             lg: 5
     ),
 );
 
 $font-sizes: (
-    size-1: 1.75rem,
-    size-small-1: 1.25rem,
-    size-2: 1.375rem,
-    size-small-2: 1rem,
-    size-3: 1rem,
-    size-small-3: 1rem,
+    size-1: (
+            xs: 1.375rem,
+            lg: 1.75rem
+    ),
+    size-small-1: (
+            xs: 1.25rem,
+            lg: 1.25rem
+    ),
+    size-2: (
+            xs: 1.375rem,
+            lg: 1.375rem
+    ),
+    size-small-2: (
+            xs: 1rem,
+            lg: 1rem
+    ),
+    size-3: (
+            xs: 1.375rem,
+            lg: 1rem
+    ),
+    size-small-3: (
+            xs: 1rem,
+            lg: 1rem
+    ),
 );
 
 $styles: (
@@ -61,7 +79,11 @@ $styles: (
             // max-width: percentage($size / $grid-columns);
 
             #{$root}__content {
-                font-size: map_get($font-sizes, $class);
+                @each $breakpoint, $font-size in map_get($font-sizes, $class) {
+                    @include media-breakpoint-up($breakpoint) {
+                        font-size: $font-size;
+                    }
+                }
             }
 
             @each $breakpoint, $columns in $size {

@@ -6,9 +6,9 @@
             <div v-for="(item, index) in wall"
                  :key="item.id"
                  class="wall__item star"
-                 :class="`star--style-${item.style} ${itemClass(index)}`">
+                 :class="`star--style-${!parseFloat(item.amount) ? '0' : item.style} ${itemClass(index)}`">
                 <div class="star__content">
-                    <span class="star__icon" :class="`icon-${item.icon}`"></span>
+                    <span class="star__icon" :class="`icon-${!parseFloat(item.amount) ? 'ped' : item.icon}`"></span>
                     <h2 class="star__title">{{ item.title }}</h2>
                     <div class="star__amount">{{ item.amount | number }} {{ item.currency }}</div>
                 </div>

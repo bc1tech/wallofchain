@@ -67,19 +67,19 @@
                         </p>
                     </div>
                     <div class="col-lg-6">
-                        <label class="form__label">Gift This (optional)</label>
+                        <label class="form__label">Gift this (optional)</label>
                         <input class="form__input"
-                               :class="{'is-invalid': errors.has('giftAddress') }"
+                               :class="{'is-invalid': errors.has('giftEth') }"
                                type="text"
-                               name="giftAddress"
-                               placeholder="Insert an address wallet of a friend"
-                               data-vv-as="address wallet"
+                               name="giftEth"
+                               placeholder="Insert an ETH compatible wallet"
+                               data-vv-as="ETH wallet"
                                v-validate="'eth_address'"
-                               v-model="formData.giftAddress">
+                               v-model="formData.giftEth">
                         <p class="form__helper"
-                           :class="errors.has('giftAddress') ? 'text-danger' : ''"
-                           v-show="errors.has('giftAddress')">
-                            {{ errors.first('giftAddress') }}
+                           :class="errors.has('giftEth') ? 'text-danger' : ''"
+                           v-show="errors.has('giftEth')">
+                            {{ errors.first('giftEth') }}
                         </p>
                     </div>
                 </div>
@@ -97,7 +97,8 @@
                                      type="gradient"
                                      name="gradient"
                                      :options="gradients"
-                                     v-validate="'required'"
+                                     :disabled="formData.value === '0' || !formData.value"
+                                     v-validate="formData.value ? 'required' : ''"
                                      v-model="formData.gradient"></ui-dropdown>
                     </div>
                     <div class="col-lg-6">
@@ -107,7 +108,8 @@
                                      type="icon"
                                      name="icon"
                                      :options="icons"
-                                     v-validate="'required'"
+                                     :disabled="formData.value === '0' || !formData.value"
+                                     v-validate="formData.value ? 'required' : ''"
                                      v-model="formData.icon"></ui-dropdown>
                     </div>
                 </div>
@@ -118,9 +120,9 @@
                 <div class="edit-star">
                     <h2 class="title">Edit your star</h2>
 
-                    <div :class="`star star--edit star--style-${formData.gradient || 0}`">
+                    <div :class="`star star--edit star--style-${(formData.value === '0' || !formData.value) ? 0 : (formData.gradient || 0)}`">
                         <div class="star__content">
-                            <span class="star__icon" :class="`icon-${formData.icon === '' ? 'ped' : formData.icon }`"></span>
+                            <span class="star__icon" :class="`icon-${((formData.value === '0' || !formData.value) || formData.icon === '') ? 'ped' : formData.icon }`"></span>
                             <h2 class="star__title">{{ formData.firstName ? `${formData.firstName} ${formData.lastName}` : 'insert infos' }}</h2>
                             <div class="star__amount">{{ formData.value || 0 }} ETH</div>
                         </div>
@@ -164,7 +166,7 @@
                     firstName: '',
                     lastName: '',
                     value: 0,
-                    giftAddress: '',
+                    giftEth: '',
                     gradient: '',
                     icon: '',
                 },
@@ -187,15 +189,20 @@
                         return;
                     }
                     if (valid) {
-                        let firstName = this.formData.firstName;
-                        let lastName = this.formData.lastName;
-                        let value = this.web3.toWei(this.formData.value, 'ether');
-                        let giftAddress = this.formData.giftAddress || this.web3.eth.coinbase;
+                        const firstName = this.formData.firstName;
+                        const lastName = this.formData.lastName;
+                        const value = this.web3.toWei(this.formData.value, 'ether');
+                        const giftEth = this.formData.giftEth || this.web3.eth.coinbase;
                         let gradient = this.formData.gradient;
                         let icon = this.formData.icon;
 
+                        if (value === '0' || !value) {
+                            gradient = 0;
+                            icon = 0;
+                        }
+
                         this.instances.market.buyToken(
-                            giftAddress,
+                            giftEth,
                             firstName,
                             lastName,
                             gradient,
@@ -211,7 +218,7 @@
                                     this.instances.market.TokenPurchase(
                                         {
                                             purchaser: this.web3.eth.coinbase,
-                                            beneficiary: giftAddress,
+                                            beneficiary: giftEth,
                                         },
                                         (err, event) => {
                                             if (!err) {

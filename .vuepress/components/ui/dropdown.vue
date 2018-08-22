@@ -1,5 +1,5 @@
 <template>
-    <div class="dropdown" :class="`dropdown--${type} ${ open ? 'dropdown--open' : ''}`">
+    <div class="dropdown" :class="`dropdown--${type} ${ open ? 'dropdown--open' : ''} ${ disabled ? 'dropdown--disabled' : ''}`">
         <span @click="toggleDropdown" :title="`Select your ` + type" class="dropdown__el">
             {{ selectedOption !== '' ? `${type.substr(0,1).toUpperCase()}${type.substr(1)} ${selectedOption + 1}` : toggle }}
         </span>
@@ -33,6 +33,9 @@
                 type: [String, Number],
                 required: true,
             },
+            disabled: {
+                type: Boolean,
+            },
         },
         data() {
             return {
@@ -40,9 +43,18 @@
                 selectedOption: this.value || '',
             };
         },
+        watch: {
+            disabled(disabled) {
+                if (disabled) {
+                    this.open = false;
+                }
+            },
+        },
         methods: {
             toggleDropdown() {
-                this.open = !this.open;
+                if (!this.disabled) {
+                    this.open = !this.open;
+                }
             },
             selectOption(option) {
                 this.selectedOption = option;
@@ -84,6 +96,17 @@
 
             #{$root}__menu {
                 left: 0;
+            }
+        }
+
+        &--disabled {
+            #{$root}__el {
+                cursor: default;
+                opacity: .5;
+
+                &:hover {
+                    border-color: rgba(255,255,255,0.40);
+                }
             }
         }
 
