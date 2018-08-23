@@ -43,8 +43,8 @@ contract WallOfChainToken is ERC721RBACMintableToken {
       _value,
       _firstName,
       _lastName,
-      _pattern,
-      _icon
+      _value == 0 ? 0 : _pattern,
+      _value == 0 ? 0 : _icon
     );
     progressiveId = tokenId;
 
@@ -86,8 +86,8 @@ contract WallOfChainToken is ERC721RBACMintableToken {
       value,
       _firstName,
       _lastName,
-      _pattern,
-      _icon
+      value == 0 ? 0 : _pattern,
+      value == 0 ? 0 : _icon
     );
 
     return _tokenId;

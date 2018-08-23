@@ -219,6 +219,96 @@ contract('WallOfChainToken', function (accounts) {
         expectedToken[1].should.be.bignumber.equal(newTokenId);
       });
     });
+
+    describe('if sending 0 wei', function () {
+      beforeEach(async function () {
+        await this.token.newToken(
+          beneficiary,
+          0,
+          this.structure.firstName,
+          this.structure.lastName,
+          this.structure.pattern,
+          this.structure.icon,
+          { from: minter }
+        );
+
+        tokenId = await this.token.progressiveId();
+      });
+
+      describe('check metadata', function () {
+        let tokenStructure;
+
+        beforeEach(async function () {
+          tokenStructure = await this.token.getWall(tokenId);
+        });
+
+        it('has zero value', async function () {
+          const value = tokenStructure[1];
+          value.should.be.bignumber.equal(0);
+        });
+
+        it('has a default pattern', async function () {
+          const pattern = tokenStructure[4];
+          pattern.should.be.bignumber.equal(0);
+        });
+
+        it('has a default icon', async function () {
+          const icon = tokenStructure[5];
+          icon.should.be.bignumber.equal(0);
+        });
+      });
+
+      describe('get wall value', function () {
+        it('is the right value', async function () {
+          const currentTokenValue = await this.token.getValue(tokenId);
+          currentTokenValue.should.be.bignumber.equal(0);
+        });
+      });
+
+      describe('edit sending 0 wei', function () {
+        beforeEach(async function () {
+          await this.token.editToken(
+            tokenId,
+            0,
+            this.newStructure.firstName,
+            this.newStructure.lastName,
+            this.newStructure.pattern,
+            this.newStructure.icon,
+            { from: minter }
+          );
+        });
+
+        describe('check metadata', function () {
+          let tokenStructure;
+
+          beforeEach(async function () {
+            tokenStructure = await this.token.getWall(tokenId);
+          });
+
+          it('has zero value', async function () {
+            const value = tokenStructure[1];
+            value.should.be.bignumber.equal(0);
+          });
+
+          it('has a default pattern', async function () {
+            const pattern = tokenStructure[4];
+            pattern.should.be.bignumber.equal(0);
+          });
+
+          it('has a default icon', async function () {
+            const icon = tokenStructure[5];
+            icon.should.be.bignumber.equal(0);
+          });
+        });
+
+        describe('get wall value', function () {
+          it('is the right value', async function () {
+            const currentTokenValue = await this.token.getValue(tokenId);
+            currentTokenValue.should.be.bignumber.equal(0);
+          });
+        });
+      });
+    });
   });
 
   context('editing an existing token', function () {
@@ -357,6 +447,19 @@ contract('WallOfChainToken', function (accounts) {
           this.newStructure.icon,
           { from: minter }
         );
+      });
+
+      describe('check metadata', function () {
+        let tokenStructure;
+
+        beforeEach(async function () {
+          tokenStructure = await this.token.getWall(tokenId);
+        });
+
+        it('has the previous value', async function () {
+          const value = tokenStructure[1];
+          value.should.be.bignumber.equal(this.structure.value.add(this.newStructure.value));
+        });
       });
 
       describe('get wall value', function () {
