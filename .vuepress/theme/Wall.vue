@@ -1,19 +1,17 @@
 <template>
     <transition name="fade" mode="out-in">
         <ui-loading v-if="loading"></ui-loading>
-        <div class="wall"
-             v-else>
-            <div v-for="(item, index) in wall"
-                 :key="item.id"
-                 class="wall__item star"
-                 :class="`star--style-${!parseFloat(item.amount) ? '0' : item.style} ${itemClass(index)}`">
-                <div class="star__content">
-                    <span class="star__icon" :class="`icon-${!parseFloat(item.amount) ? 'ped' : item.icon}`"></span>
-                    <h2 class="star__title">{{ item.title }}</h2>
-                    <div class="star__amount">{{ item.amount | number }} {{ item.currency }}</div>
-                </div>
-            </div>
-        </div>
+        <transition-group name="list" class="wall" tag="div" v-else>
+            <ui-star v-for="(item, index) in wall"
+                     :key="item.id"
+                     :index="index"
+                     :amount="item.amount"
+                     :currency="item.currency"
+                     :icon="item.icon"
+                     :styleType="item.styleType"
+                     :title="item.title"
+                     class="wall__item" />
+        </transition-group>
     </transition>
 </template>
 <script>
@@ -28,11 +26,6 @@
                 type: Boolean,
                 default: false,
             },
-            order: {
-                type: String,
-                default: 'DESC',
-                validator: (val) => val === 'ASC' || val === 'DESC',
-            },
             limit: {
                 type: Number,
                 default: 12,
@@ -43,36 +36,9 @@
                 loading: false,
                 progressiveId: 0,
                 wall: [],
-                sizes: [{
-                    className: 'size-1',
-                    classNameSmall: 'size-small-1'
-                }, {
-                    className: 'size-2',
-                    classNameSmall: 'size-small-2'
-                }, {
-                    className: 'size-3',
-                    classNameSmall: 'size-small-3'
-                }],
             };
         },
         methods: {
-            itemClass(index) {
-                let itemClass = 'star--';
-
-                if (index < 3) {
-                    itemClass += this.sizes[this.order === 'ASC' ? 2 : 0][this.small ? 'classNameSmall' : 'className'];
-                } else if(index < 7) {
-                    itemClass += this.sizes[1][this.small ? 'classNameSmall' : 'className'];
-                } else {
-                    itemClass += this.sizes[this.order === 'ASC' ? 0 : 2][this.small ? 'classNameSmall' : 'className'];
-                }
-
-                if (this.small) {
-                    itemClass += ' star--small';
-                }
-
-                return itemClass;
-            },
             web3Ready() {
                 this.instances.token.progressiveId((err, progressiveId) => {
                     this.progressiveId = progressiveId.valueOf();
@@ -104,7 +70,7 @@
                                     amount: this.web3.fromWei(rawStar[1]),
                                     title: `${rawStar[2]} ${rawStar[3]}`,
                                     currency: 'ETH',
-                                    style: rawStar[4].valueOf(),
+                                    styleType: rawStar[4].valueOf(),
                                     icon: rawStar[5].valueOf(),
                                 };
 
@@ -120,17 +86,17 @@
                 });
             }
         },
-        filters: {
-            number(num, maxDecimals = 4, minDecimals = 0) {
-                const value = parseFloat(num);
-                return value.toLocaleString('en', {
-                    maximumFractionDigits: maxDecimals,
-                    minimumFractionDigits: minDecimals,
-                });
-            }
-        },
         mounted() {
             this.loading = true;
         },
     };
 </script>
+<style>
+    .list-enter-active, .list-leave-active {
+        transition: all .85s ease-in-out;
+    }
+    .list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
+        opacity: 0;
+        transform: scale(.25);
+    }
+</style>
