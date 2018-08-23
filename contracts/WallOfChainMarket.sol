@@ -31,6 +31,18 @@ contract WallOfChainMarket {
   );
 
   /**
+   * Event for token edit logging
+   * @param beneficiary who has the tokens
+   * @param value weis added in edit
+   * @param tokenId the token id edited
+   */
+  event TokenEdit(
+    address indexed beneficiary,
+    uint256 value,
+    uint256 tokenId
+  );
+
+  /**
    * @param _wallet Address where collected funds will be forwarded to
    * @param _token Address of the token being sold
    */
@@ -87,6 +99,44 @@ contract WallOfChainMarket {
     _forwardFunds();
   }
 
+  /**
+   * @dev low level token edit
+   */
+  function editToken(
+    uint256 tokenId,
+    string _firstName,
+    string _lastName,
+    uint256 _pattern,
+    uint256 _icon
+  )
+  public
+  payable
+  {
+    address tokenOwner = token.ownerOf(tokenId);
+    require(msg.sender == tokenOwner, "Sender must be token owner");
+
+    // update state
+    uint256 weiAmount = msg.value;
+    weiRaised = weiRaised.add(weiAmount);
+
+    uint256 currentTokenId = _processEdit(
+      tokenId,
+      weiAmount,
+      _firstName,
+      _lastName,
+      _pattern,
+      _icon
+    );
+
+    emit TokenEdit(
+      tokenOwner,
+      weiAmount,
+      currentTokenId
+    );
+
+    _forwardFunds();
+  }
+
   // -----------------------------------------
   // Internal interface (extensible)
   // -----------------------------------------
@@ -132,9 +182,35 @@ contract WallOfChainMarket {
   }
 
   /**
+   * @dev Executed when a edit has been validated and is ready to be executed.
+   */
+  function _processEdit(
+    uint256 _tokenId,
+    uint256 _weiAmount,
+    string _firstName,
+    string _lastName,
+    uint256 _pattern,
+    uint256 _icon
+  )
+  internal
+  returns (uint256)
+  {
+    return token.editToken(
+      _tokenId,
+      _weiAmount,
+      _firstName,
+      _lastName,
+      _pattern,
+      _icon
+    );
+  }
+
+  /**
    * @dev Determines how ETH is stored/forwarded on purchases.
    */
   function _forwardFunds() internal {
-    wallet.transfer(msg.value);
+    if (msg.value > 0) {
+      wallet.transfer(msg.value);
+    }
   }
 }

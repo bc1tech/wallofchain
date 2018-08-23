@@ -54,6 +54,41 @@ contract WallOfChainToken is ERC721RBACMintableToken {
     return tokenId;
   }
 
+  function editToken (
+    uint256 _tokenId,
+    uint256 _value,
+    string _firstName,
+    string _lastName,
+    uint256 _pattern,
+    uint256 _icon
+  )
+  public
+  hasMintPermission
+  returns (uint256)
+  {
+    require(
+      exists(_tokenId),
+      "Token must exists"
+    );
+
+    uint256 value = getValue(_tokenId);
+    value = value.add(_value); // add the new value sent
+
+    structureIndex[_tokenId] = WallStructure(
+      value,
+      _firstName,
+      _lastName,
+      _pattern,
+      _icon
+    );
+
+    list.remove(_tokenId);
+    uint256 position = list.getSortedSpot(StructureInterface(this), value);
+    list.insertBefore(position, _tokenId);
+
+    return _tokenId;
+  }
+
   function getWall (uint256 tokenId)
   public
   view

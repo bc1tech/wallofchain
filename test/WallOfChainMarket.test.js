@@ -14,7 +14,7 @@ const WallOfChainToken = artifacts.require('WallOfChainToken.sol');
 const ROLE_MINTER = 'minter';
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
-contract('WallOfChainMarket', function ([_, wallet, purchaser, beneficiary]) {
+contract('WallOfChainMarket', function ([_, wallet, purchaser, beneficiary, anotherAccount]) {
   const name = 'WallOfChainToken';
   const symbol = 'WOC';
 
@@ -132,6 +132,65 @@ contract('WallOfChainMarket', function ([_, wallet, purchaser, beneficiary]) {
         tokenDetails.pattern,
         tokenDetails.icon,
         { value: value, from: purchaser }
+      );
+      const post = web3.eth.getBalance(wallet);
+      post.minus(pre).should.be.bignumber.equal(value);
+    });
+  });
+
+  describe('token edit', function () {
+    let tokenId;
+    beforeEach(async function () {
+      await this.crowdsale.buyToken(
+        beneficiary,
+        tokenDetails.firstName,
+        tokenDetails.lastName,
+        tokenDetails.pattern,
+        tokenDetails.icon,
+        { value: value, from: purchaser }
+      );
+
+      tokenId = await this.token.progressiveId();
+    });
+
+    it('should log edit', async function () {
+      const { logs } = await this.crowdsale.editToken(
+        tokenId,
+        tokenDetails.firstName,
+        tokenDetails.lastName,
+        tokenDetails.pattern,
+        tokenDetails.icon,
+        { value: value, from: beneficiary }
+      );
+      const event = logs.find(e => e.event === 'TokenEdit');
+      should.exist(event);
+      event.args.beneficiary.should.equal(beneficiary);
+      event.args.value.should.be.bignumber.equal(value);
+      event.args.tokenId.should.be.bignumber.equal(tokenId);
+    });
+
+    it('should fail if caller is not token owner', async function () {
+      await assertRevert(
+        this.crowdsale.editToken(
+          tokenId,
+          tokenDetails.firstName,
+          tokenDetails.lastName,
+          tokenDetails.pattern,
+          tokenDetails.icon,
+          { value: value, from: anotherAccount }
+        )
+      );
+    });
+
+    it('should forward funds to wallet', async function () {
+      const pre = web3.eth.getBalance(wallet);
+      await this.crowdsale.editToken(
+        tokenId,
+        tokenDetails.firstName,
+        tokenDetails.lastName,
+        tokenDetails.pattern,
+        tokenDetails.icon,
+        { value: value, from: beneficiary }
       );
       const post = web3.eth.getBalance(wallet);
       post.minus(pre).should.be.bignumber.equal(value);
