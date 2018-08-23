@@ -291,19 +291,6 @@ contract('WallOfChainToken', function (accounts) {
       });
     });
 
-    describe('get wall value', function () {
-      it('is the right value', async function () {
-        const tokenValue = await this.token.getValue(tokenId);
-        tokenValue.should.be.bignumber.equal(this.structure.value.add(this.newStructure.value));
-      });
-
-      describe('if token id not exists', function () {
-        it('reverts', async function () {
-          await assertRevert(this.token.getValue(999));
-        });
-      });
-    });
-
     describe('progressive id', function () {
       it('should not increase', async function () {
         const oldProgressiveId = await this.token.progressiveId();
@@ -355,60 +342,154 @@ contract('WallOfChainToken', function (accounts) {
       });
     });
 
-    describe('check getNextNode and getPreviousNode', function () {
-      let newTokenId;
+    describe('if sending 0 wei', function () {
+      let tokenValue;
+
       beforeEach(async function () {
-        const tokenValue = await this.token.getValue(tokenId);
-        await this.token.newToken(
-          beneficiary,
-          tokenValue.add(1),
-          this.structure.firstName,
-          this.structure.lastName,
-          this.structure.pattern,
-          this.structure.icon,
-          { from: minter }
-        );
+        tokenValue = await this.token.getValue(tokenId);
 
-        newTokenId = await this.token.progressiveId();
-      });
-
-      it('getNextNode should be newTokenId', async function () {
-        const expectedToken = await this.token.getNextNode(tokenId);
-        expectedToken[0].should.be.equal(true);
-        expectedToken[1].should.be.bignumber.equal(newTokenId);
-      });
-
-      it('getPreviousNode should be HEAD', async function () {
-        const expectedToken = await this.token.getPreviousNode(tokenId);
-        expectedToken[0].should.be.equal(true);
-        expectedToken[1].should.be.bignumber.equal(0);
-      });
-
-      it('should be reordered after edit', async function () {
         await this.token.editToken(
           tokenId,
-          new BigNumber(2),
+          0,
           this.newStructure.firstName,
           this.newStructure.lastName,
           this.newStructure.pattern,
           this.newStructure.icon,
           { from: minter }
         );
-        let expectedToken = await this.token.getNextNode(newTokenId);
-        expectedToken[0].should.be.equal(true);
-        expectedToken[1].should.be.bignumber.equal(tokenId);
+      });
 
-        expectedToken = await this.token.getNextNode(tokenId);
-        expectedToken[0].should.be.equal(true);
-        expectedToken[1].should.be.bignumber.equal(0);
+      describe('get wall value', function () {
+        it('is the right value', async function () {
+          const currentTokenValue = await this.token.getValue(tokenId);
+          currentTokenValue.should.be.bignumber.equal(tokenValue);
+        });
 
-        expectedToken = await this.token.getPreviousNode(newTokenId);
-        expectedToken[0].should.be.equal(true);
-        expectedToken[1].should.be.bignumber.equal(0);
+        describe('if token id not exists', function () {
+          it('reverts', async function () {
+            await assertRevert(this.token.getValue(999));
+          });
+        });
+      });
 
-        expectedToken = await this.token.getPreviousNode(tokenId);
-        expectedToken[0].should.be.equal(true);
-        expectedToken[1].should.be.bignumber.equal(newTokenId);
+      describe('check getNextNode and getPreviousNode', function () {
+        let newTokenId;
+        beforeEach(async function () {
+          await this.token.newToken(
+            beneficiary,
+            tokenValue.add(1),
+            this.structure.firstName,
+            this.structure.lastName,
+            this.structure.pattern,
+            this.structure.icon,
+            { from: minter }
+          );
+
+          newTokenId = await this.token.progressiveId();
+        });
+
+        it('getNextNode should be newTokenId', async function () {
+          const expectedToken = await this.token.getNextNode(tokenId);
+          expectedToken[0].should.be.equal(true);
+          expectedToken[1].should.be.bignumber.equal(newTokenId);
+        });
+
+        it('getPreviousNode should be HEAD', async function () {
+          const expectedToken = await this.token.getPreviousNode(tokenId);
+          expectedToken[0].should.be.equal(true);
+          expectedToken[1].should.be.bignumber.equal(0);
+        });
+
+        it('should be the same after edit', async function () {
+          await this.token.editToken(
+            tokenId,
+            0,
+            this.newStructure.firstName,
+            this.newStructure.lastName,
+            this.newStructure.pattern,
+            this.newStructure.icon,
+            { from: minter }
+          );
+          let expectedToken = await this.token.getNextNode(tokenId);
+          expectedToken[0].should.be.equal(true);
+          expectedToken[1].should.be.bignumber.equal(newTokenId);
+
+          expectedToken = await this.token.getPreviousNode(tokenId);
+          expectedToken[0].should.be.equal(true);
+          expectedToken[1].should.be.bignumber.equal(0);
+        });
+      });
+    });
+
+    describe('if sending more than 0 wei', function () {
+      describe('get wall value', function () {
+        it('is the right value', async function () {
+          const tokenValue = await this.token.getValue(tokenId);
+          tokenValue.should.be.bignumber.equal(this.structure.value.add(this.newStructure.value));
+        });
+
+        describe('if token id not exists', function () {
+          it('reverts', async function () {
+            await assertRevert(this.token.getValue(999));
+          });
+        });
+      });
+
+      describe('check getNextNode and getPreviousNode', function () {
+        let newTokenId;
+        beforeEach(async function () {
+          const tokenValue = await this.token.getValue(tokenId);
+          await this.token.newToken(
+            beneficiary,
+            tokenValue.add(1),
+            this.structure.firstName,
+            this.structure.lastName,
+            this.structure.pattern,
+            this.structure.icon,
+            { from: minter }
+          );
+
+          newTokenId = await this.token.progressiveId();
+        });
+
+        it('getNextNode should be newTokenId', async function () {
+          const expectedToken = await this.token.getNextNode(tokenId);
+          expectedToken[0].should.be.equal(true);
+          expectedToken[1].should.be.bignumber.equal(newTokenId);
+        });
+
+        it('getPreviousNode should be HEAD', async function () {
+          const expectedToken = await this.token.getPreviousNode(tokenId);
+          expectedToken[0].should.be.equal(true);
+          expectedToken[1].should.be.bignumber.equal(0);
+        });
+
+        it('should be reordered after edit', async function () {
+          await this.token.editToken(
+            tokenId,
+            new BigNumber(2),
+            this.newStructure.firstName,
+            this.newStructure.lastName,
+            this.newStructure.pattern,
+            this.newStructure.icon,
+            { from: minter }
+          );
+          let expectedToken = await this.token.getNextNode(newTokenId);
+          expectedToken[0].should.be.equal(true);
+          expectedToken[1].should.be.bignumber.equal(tokenId);
+
+          expectedToken = await this.token.getNextNode(tokenId);
+          expectedToken[0].should.be.equal(true);
+          expectedToken[1].should.be.bignumber.equal(0);
+
+          expectedToken = await this.token.getPreviousNode(newTokenId);
+          expectedToken[0].should.be.equal(true);
+          expectedToken[1].should.be.bignumber.equal(0);
+
+          expectedToken = await this.token.getPreviousNode(tokenId);
+          expectedToken[0].should.be.equal(true);
+          expectedToken[1].should.be.bignumber.equal(newTokenId);
+        });
       });
     });
   });

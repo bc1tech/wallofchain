@@ -72,7 +72,15 @@ contract WallOfChainToken is ERC721RBACMintableToken {
     );
 
     uint256 value = getValue(_tokenId);
-    value = value.add(_value); // add the new value sent
+
+    if (_value > 0) {
+      value = value.add(_value); // add the new value sent
+
+      // reorder the list
+      list.remove(_tokenId);
+      uint256 position = list.getSortedSpot(StructureInterface(this), value);
+      list.insertBefore(position, _tokenId);
+    }
 
     structureIndex[_tokenId] = WallStructure(
       value,
@@ -81,10 +89,6 @@ contract WallOfChainToken is ERC721RBACMintableToken {
       _pattern,
       _icon
     );
-
-    list.remove(_tokenId);
-    uint256 position = list.getSortedSpot(StructureInterface(this), value);
-    list.insertBefore(position, _tokenId);
 
     return _tokenId;
   }
