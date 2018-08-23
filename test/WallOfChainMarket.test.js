@@ -123,18 +123,44 @@ contract('WallOfChainMarket', function ([_, wallet, purchaser, beneficiary, anot
       balance.should.be.bignumber.equal(1);
     });
 
-    it('should forward funds to wallet', async function () {
-      const pre = web3.eth.getBalance(wallet);
-      await this.crowdsale.buyToken(
-        beneficiary,
-        tokenDetails.firstName,
-        tokenDetails.lastName,
-        tokenDetails.pattern,
-        tokenDetails.icon,
-        { value: value, from: purchaser }
-      );
-      const post = web3.eth.getBalance(wallet);
-      post.minus(pre).should.be.bignumber.equal(value);
+    describe('if sending more than 0 wei', function () {
+      it('should forward funds to wallet and increase weiRaised', async function () {
+        const preBalance = web3.eth.getBalance(wallet);
+        const preRaised = await this.crowdsale.weiRaised();
+        await this.crowdsale.buyToken(
+          beneficiary,
+          tokenDetails.firstName,
+          tokenDetails.lastName,
+          tokenDetails.pattern,
+          tokenDetails.icon,
+          { value: value, from: purchaser }
+        );
+        const postBalance = web3.eth.getBalance(wallet);
+        postBalance.minus(preBalance).should.be.bignumber.equal(value);
+
+        const postRaised = await this.crowdsale.weiRaised();
+        postRaised.minus(preRaised).should.be.bignumber.equal(value);
+      });
+    });
+
+    describe('if sending 0 wei', function () {
+      it('balance and weiRaised should not increase', async function () {
+        const preBalance = web3.eth.getBalance(wallet);
+        const preRaised = await this.crowdsale.weiRaised();
+        await this.crowdsale.buyToken(
+          beneficiary,
+          tokenDetails.firstName,
+          tokenDetails.lastName,
+          tokenDetails.pattern,
+          tokenDetails.icon,
+          { value: 0, from: purchaser }
+        );
+        const postBalance = web3.eth.getBalance(wallet);
+        postBalance.should.be.bignumber.equal(preBalance);
+
+        const postRaised = await this.crowdsale.weiRaised();
+        postRaised.should.be.bignumber.equal(preRaised);
+      });
     });
   });
 
@@ -182,18 +208,44 @@ contract('WallOfChainMarket', function ([_, wallet, purchaser, beneficiary, anot
       );
     });
 
-    it('should forward funds to wallet', async function () {
-      const pre = web3.eth.getBalance(wallet);
-      await this.crowdsale.editToken(
-        tokenId,
-        tokenDetails.firstName,
-        tokenDetails.lastName,
-        tokenDetails.pattern,
-        tokenDetails.icon,
-        { value: value, from: beneficiary }
-      );
-      const post = web3.eth.getBalance(wallet);
-      post.minus(pre).should.be.bignumber.equal(value);
+    describe('if sending more than 0 wei', function () {
+      it('should forward funds to wallet and increase weiRaised', async function () {
+        const preBalance = web3.eth.getBalance(wallet);
+        const preRaised = await this.crowdsale.weiRaised();
+        await this.crowdsale.editToken(
+          tokenId,
+          tokenDetails.firstName,
+          tokenDetails.lastName,
+          tokenDetails.pattern,
+          tokenDetails.icon,
+          { value: value, from: beneficiary }
+        );
+        const postBalance = web3.eth.getBalance(wallet);
+        postBalance.minus(preBalance).should.be.bignumber.equal(value);
+
+        const postRaised = await this.crowdsale.weiRaised();
+        postRaised.minus(preRaised).should.be.bignumber.equal(value);
+      });
+    });
+
+    describe('if sending 0 wei', function () {
+      it('balance and weiRaised should not increase', async function () {
+        const preBalance = web3.eth.getBalance(wallet);
+        const preRaised = await this.crowdsale.weiRaised();
+        await this.crowdsale.editToken(
+          tokenId,
+          tokenDetails.firstName,
+          tokenDetails.lastName,
+          tokenDetails.pattern,
+          tokenDetails.icon,
+          { value: 0, from: beneficiary }
+        );
+        const postBalance = web3.eth.getBalance(wallet);
+        postBalance.should.be.bignumber.equal(preBalance);
+
+        const postRaised = await this.crowdsale.weiRaised();
+        postRaised.should.be.bignumber.equal(preRaised);
+      });
     });
   });
 });
