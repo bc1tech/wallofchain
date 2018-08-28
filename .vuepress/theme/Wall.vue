@@ -28,7 +28,7 @@
             },
             limit: {
                 type: Number,
-                default: 12,
+                default: 0,
             },
         },
         data() {
@@ -38,11 +38,17 @@
                 wall: [],
             };
         },
+        computed: {
+            isAtLimit() {
+                return this.limit ? this.wall.length < this.limit : true;
+            },
+        },
         methods: {
             web3Ready() {
                 this.instances.token.progressiveId((err, progressiveId) => {
                     this.progressiveId = progressiveId.valueOf();
-                    if (this.progressiveId > 0) {
+                    if (this.progressiveId > 0 &&
+                        this.isAtLimit) {
                         this.getPreviousStar(0);
                     }
                 });
@@ -78,7 +84,8 @@
                                 this.loading = false;
                             }
 
-                            if (this.wall.length < this.progressiveId) {
+                            if (this.wall.length < this.progressiveId &&
+                                this.isAtLimit) {
                                 this.getPreviousStar(tokenID);
                             }
                         });
