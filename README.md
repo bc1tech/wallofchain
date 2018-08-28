@@ -3,11 +3,18 @@
 [![Build Status](https://travis-ci.org/paneedesign/wallofchain.svg?branch=master)](https://travis-ci.org/paneedesign/wallofchain)
 [![Coverage Status](https://coveralls.io/repos/github/paneedesign/wallofchain/badge.svg?branch=master)](https://coveralls.io/github/paneedesign/wallofchain?branch=master)
  
- 
+
+Became a star into the Blockchain.
+
+Buy a spot in the Wall of Chain.
+
+Website: [wallofchain.com](https://wallofchain.com/)
+
+
 ## Installation
 
 
-Install truffle, compiler and linter.
+Install truffle compiler and linter.
 
 ```bash
 npm install -g truffle      // Version 4.1.13+ required.
@@ -42,7 +49,7 @@ npm run lint:all:fix
 
 
 
-## Compile, migrate and test the contracts.
+## Compile and test the contracts.
  
 
 Open the Truffle console
@@ -57,12 +64,6 @@ Compile
 compile 
 ```
 
-Migrate
-
-```bash
-migrate
-```
-
 Test
 
 ```bash
@@ -74,7 +75,7 @@ test
 ## Run server
 
 
-Run the `liteserver` development server for front-end hot reloading. For now, smart contract changes must be manually recompiled and migrated.
+Run the `liteserver` development server.
 
 ```bash
 npm run dev
@@ -100,9 +101,9 @@ truffle-flattener contracts/Migrations.sol >> dist/Migrations.sol
  
 
 
-## TODO
+## DAPP
  
-DAPP is coming...
+[DAPP Source](https://github.com/paneedesign/wallofchain/tree/site)
  
 
  
@@ -114,4 +115,4 @@ OpenZeppelin [Doc](https://openzeppelin.org/api/docs/open-zeppelin.html) [Github
 
 Truffle [Doc](http://truffleframework.com/docs) [Github](https://github.com/trufflesuite/truffle)
 
-Web3.js [Doc 0.20.4](https://github.com/ethereum/wiki/wiki/JavaScript-API) [Doc 1.0](http://web3js.readthedocs.io/en/1.0) [Github](https://github.com/ethereum/web3.js)
+Web3.js [Doc 0.20.6](https://github.com/ethereum/wiki/wiki/JavaScript-API) [Doc 1.0](http://web3js.readthedocs.io/en/1.0) [Github](https://github.com/ethereum/web3.js)
