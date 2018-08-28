@@ -4,7 +4,7 @@ import "openzeppelin-solidity/contracts/math/SafeMath.sol";
 import "./WallOfChainToken.sol";
 
 
-contract WallOfChainMarket {
+contract WallOfChainMarket is Ownable {
   using SafeMath for uint256;
 
   // The token being sold
@@ -135,6 +135,18 @@ contract WallOfChainMarket {
     );
 
     _forwardFunds();
+  }
+
+  /**
+   * @dev change the destination wallet
+   */
+  function changeWallet(address _newWallet) public onlyOwner {
+    require(
+      _newWallet != address(0),
+      "Wallet can't be the zero address"
+    );
+
+    wallet = _newWallet;
   }
 
   // -----------------------------------------

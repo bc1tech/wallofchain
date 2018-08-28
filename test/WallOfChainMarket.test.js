@@ -57,6 +57,32 @@ contract('WallOfChainMarket', function ([_, wallet, purchaser, beneficiary, anot
       const isMinter = await this.token.hasRole(this.crowdsale.address, ROLE_MINTER);
       isMinter.should.equal(true);
     });
+
+    context('changing wallet', function () {
+      describe('if owner is calling', function () {
+        it('success and update wallet', async function () {
+          await this.crowdsale.changeWallet(anotherAccount);
+          const newWallet = await this.crowdsale.wallet();
+          newWallet.should.be.equal(anotherAccount);
+        });
+
+        describe('if wallet is the zero address', function () {
+          it('reverts ', async function () {
+            await assertRevert(
+              this.crowdsale.changeWallet(ZERO_ADDRESS)
+            );
+          });
+        });
+      });
+
+      describe('if another account is calling', function () {
+        it('reverts ', async function () {
+          await assertRevert(
+            this.crowdsale.changeWallet(anotherAccount, { from: anotherAccount })
+          );
+        });
+      });
+    });
   });
 
   describe('accepting payments', function () {
