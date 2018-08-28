@@ -64,7 +64,7 @@ contract WallOfChainMarket is Ownable {
    * @dev low level token purchase ***DO NOT OVERRIDE***
    */
   function buyToken(
-    address beneficiary,
+    address _beneficiary,
     string _firstName,
     string _lastName,
     uint256 _pattern,
@@ -75,13 +75,13 @@ contract WallOfChainMarket is Ownable {
   {
     uint256 weiAmount = msg.value;
 
-    _preValidatePurchase(beneficiary);
+    _preValidatePurchase(_beneficiary);
 
     // update state
     weiRaised = weiRaised.add(weiAmount);
 
     uint256 lastTokenId = _processPurchase(
-      beneficiary,
+      _beneficiary,
       weiAmount,
       _firstName,
       _lastName,
@@ -91,7 +91,7 @@ contract WallOfChainMarket is Ownable {
 
     emit TokenPurchase(
       msg.sender,
-      beneficiary,
+      _beneficiary,
       weiAmount,
       lastTokenId
     );
@@ -103,7 +103,7 @@ contract WallOfChainMarket is Ownable {
    * @dev low level token edit
    */
   function editToken(
-    uint256 tokenId,
+    uint256 _tokenId,
     string _firstName,
     string _lastName,
     uint256 _pattern,
@@ -112,7 +112,7 @@ contract WallOfChainMarket is Ownable {
   public
   payable
   {
-    address tokenOwner = token.ownerOf(tokenId);
+    address tokenOwner = token.ownerOf(_tokenId);
     require(msg.sender == tokenOwner, "Sender must be token owner");
 
     // update state
@@ -120,7 +120,7 @@ contract WallOfChainMarket is Ownable {
     weiRaised = weiRaised.add(weiAmount);
 
     uint256 currentTokenId = _processEdit(
-      tokenId,
+      _tokenId,
       weiAmount,
       _firstName,
       _lastName,

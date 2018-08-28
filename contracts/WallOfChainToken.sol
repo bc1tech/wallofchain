@@ -93,7 +93,7 @@ contract WallOfChainToken is ERC721RBACMintableToken {
     return _tokenId;
   }
 
-  function getWall (uint256 tokenId)
+  function getWall (uint256 _tokenId)
   public
   view
   returns (
@@ -106,13 +106,13 @@ contract WallOfChainToken is ERC721RBACMintableToken {
   )
   {
     require(
-      exists(tokenId),
+      exists(_tokenId),
       "Token must exists"
     );
 
-    WallStructure storage wall = structureIndex[tokenId];
+    WallStructure storage wall = structureIndex[_tokenId];
 
-    tokenOwner = ownerOf(tokenId);
+    tokenOwner = ownerOf(_tokenId);
 
     value = wall.value;
     firstName = wall.firstName;
@@ -121,12 +121,12 @@ contract WallOfChainToken is ERC721RBACMintableToken {
     icon = wall.icon;
   }
 
-  function getValue (uint256 tokenId) public view returns (uint256) {
+  function getValue (uint256 _tokenId) public view returns (uint256) {
     require(
-      exists(tokenId),
+      exists(_tokenId),
       "Token must exists"
     );
-    WallStructure storage wall = structureIndex[tokenId];
+    WallStructure storage wall = structureIndex[_tokenId];
     return wall.value;
   }
 
@@ -147,10 +147,10 @@ contract WallOfChainToken is ERC721RBACMintableToken {
   /**
    * @dev Only contract owner or token owner can burn
    */
-  function burn(uint256 tokenId) public {
-    address tokenOwner = msg.sender == owner ? ownerOf(tokenId) : msg.sender;
-    super._burn(tokenOwner, tokenId);
-    list.remove(tokenId);
-    delete structureIndex[tokenId];
+  function burn(uint256 _tokenId) public {
+    address tokenOwner = msg.sender == owner ? ownerOf(_tokenId) : msg.sender;
+    super._burn(tokenOwner, _tokenId);
+    list.remove(_tokenId);
+    delete structureIndex[_tokenId];
   }
 }
