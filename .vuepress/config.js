@@ -3,8 +3,8 @@ module.exports = {
     description: 'Become a star into the blockchain',
     dest: 'dist',
     blockchain: {
-        tokenAddress: "0x3bB3285410d726D4d4F6C7D5D60514c1D69E2Aa1",
-        marketAddress: "0xc33EAB9D435bFc32C7Bf2D77c9e2eC336D7A6173",
+        tokenAddress: "0x0758c759432F02597BFd083d917aF5282aE00D3F",
+        marketAddress: "0x3a1A57E264C512E5c97Cc47456d449737a163632",
         web3Provider: "https://rinkeby.infura.io",
         etherscanLink: "https://rinkeby.etherscan.io",
         networkId: "4",
