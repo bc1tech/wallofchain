@@ -1,17 +1,22 @@
 <template>
     <transition name="fade" mode="out-in">
         <ui-loading v-if="loading"></ui-loading>
-        <transition-group name="list" class="wall" tag="div" v-else>
-            <ui-star v-for="(item, index) in wall"
-                     :key="item.id"
-                     :index="index"
-                     :amount="item.amount"
-                     :currency="item.currency"
-                     :icon="item.icon"
-                     :styleType="item.styleType"
-                     :title="item.title"
-                     class="wall__item" />
-        </transition-group>
+        <div key="wall" v-else>
+            <transition-group name="list" class="wall" tag="div">
+                <ui-star v-for="(item, index) in wall"
+                         :key="item.id"
+                         :index="index"
+                         :amount="item.amount"
+                         :currency="item.currency"
+                         :icon="item.icon"
+                         :styleType="item.styleType"
+                         :title="item.title"
+                         class="wall__item" />
+            </transition-group>
+            <div class="text-center" v-if="loadMore && !loadingMore && wall.length < totalSupply">
+                <a href="#" @click.prevent="getMore" class="btn btn--outline">More position</a>
+            </div>
+        </div>
     </transition>
 </template>
 <script>
@@ -26,34 +31,50 @@
                 type: Boolean,
                 default: false,
             },
-            limit: {
-                type: Number,
-                default: 0,
+            loadMore: {
+                type: Boolean,
+                default: false,
             },
         },
         data() {
             return {
                 loading: false,
+                loadingMore: this.loadMore,
+                totalSupply: 0,
                 progressiveId: 0,
+                lastId: 0,
+                limit: 13,
                 wall: [],
             };
         },
         computed: {
-            isAtLimit() {
-                return this.limit ? this.wall.length < this.limit : true;
+            canGetMore() {
+                return this.wall.length < this.totalSupply && this.wall.length < this.limit;
             },
         },
         methods: {
             web3Ready() {
-                this.instances.token.progressiveId((err, progressiveId) => {
-                    this.progressiveId = progressiveId.valueOf();
-                    if (this.progressiveId > 0 &&
-                        this.isAtLimit) {
-                        this.getPreviousStar(0);
-                    }
+                this.instances.token.totalSupply((err, totalSupply) => {
+                    this.totalSupply = parseInt(totalSupply.valueOf());
+
+                    this.instances.token.progressiveId((err, progressiveId) => {
+                        this.progressiveId = parseInt(progressiveId.valueOf());
+
+                        if (this.progressiveId > 0) {
+                            this.getPreviousStar(0);
+                        }
+                    });
                 });
             },
+            getMore() {
+                if (this.wall.length < this.progressiveId) {
+                    this.limit = this.limit + 12;
+                    this.getPreviousStar(this.lastId);
+                }
+            },
             getPreviousStar(tokenID) {
+                this.loadingMore = true;
+
                 this.instances.token.getPreviousNode(tokenID, (err, nodeIndex) => {
                     if (nodeIndex[0]) {
                         let tokenID = nodeIndex[1];
@@ -69,9 +90,11 @@
                                 ]
                              */
 
+                            this.lastId = parseInt(tokenID.valueOf());
+
                             if (rawStar) {
                                 let wallItem = {
-                                    id: tokenID.valueOf(),
+                                    id: this.lastId,
                                     tokenOwner: rawStar[0],
                                     amount: this.web3.fromWei(rawStar[1]),
                                     title: `${rawStar[2]} ${rawStar[3]}`,
@@ -85,8 +108,10 @@
                             }
 
                             if (this.wall.length < this.progressiveId &&
-                                this.isAtLimit) {
-                                this.getPreviousStar(tokenID);
+                                this.canGetMore) {
+                                this.getPreviousStar(this.lastId);
+                            } else {
+                                this.loadingMore = false;
                             }
                         });
                     }

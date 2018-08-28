@@ -31,7 +31,7 @@
         </div>
         <section class="section container-lg">
             <h2 class="section__title section__title--center">Discover the wall of blockchain</h2>
-            <wall :limit="13" />
+            <wall />
         </section>
         <div class="text-center">
             <router-link to="/wall.html" class="btn btn--outline">Show other position</router-link>
