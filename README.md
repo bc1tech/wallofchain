@@ -14,11 +14,10 @@ Website: [wallofchain.com](https://wallofchain.com/)
 ## Installation
 
 
-Install truffle compiler and linter.
+Install truffle.
 
 ```bash
 npm install -g truffle      // Version 4.1.13+ required.
-npm install -g solium       // Version 1.1.8+ required.
 ```
 
 
@@ -38,7 +37,7 @@ npm install
 Use Solium
 
 ```bash
-solium -d contracts
+npm run lint:sol
 ```
 
 Lint and fix all
