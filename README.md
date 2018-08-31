@@ -17,7 +17,7 @@ Website: [wallofchain.com](https://wallofchain.com/)
 Install truffle.
 
 ```bash
-npm install -g truffle      // Version 4.1.13+ required.
+npm install -g truffle      // Version 4.1.14+ required.
 ```
 
 
@@ -40,10 +40,16 @@ Use Solium
 npm run lint:sol
 ```
 
-Lint and fix all
+Use ESLint
 
 ```bash
-npm run lint:all:fix
+npm run lint:js
+```
+
+Use both and fix
+
+```bash
+npm run lint:fix
 ```
 
 
