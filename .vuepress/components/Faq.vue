@@ -63,30 +63,26 @@
                         'Some wallets allow the possibilty to directly aquire Ethereum currency, while others may require you to make a purchase from an exchange. After your purchase, you can transfer your Ethereum from the exchange wallet to your digital one.\n' +
                         'Keep in mind it’s not the shortest process: you’ll need to verify your identity, which will probably take a day or two.\n' +
                         'Worry not – your star awaits for you.',
-                    }, {
-                        title: 'Titolo della domanda 1-3',
-                        content: 'Contenuto della risposta 1-3',
                     }],
                 }, {
-                    category: 'Understanding WALLOFFCHAIN',
+                    category: 'Transactions',
                     list: [{
-                        title: 'Titolo della domanda 2-1',
-                        content: 'Contenuto della risposta 2-1'
+                        title: 'What is Etherscan?',
+                        content: 'Etherscan is an interface for the Ethereum Network. It has a memory of everything that’s happened on the blockchian. In this way, you can a 100% sure that your transactions were successful.'
                     }, {
-                        title: 'Titolo della domanda 2-2',
-                        content: 'Contenuto della risposta 2-2'
-                    }],
-                }, {
-                    category: 'Buying and selling',
-                    list: [{
-                        title: 'Titolo della domanda 3-1',
-                        content: 'Contenuto della risposta 1',
+                        title: 'My transaction failed',
+                        content: 'It is possible that the setting level of the gas limit was too low.'
                     }, {
-                        title: 'Titolo della domanda 3-2',
-                        content: 'Contenuto della risposta 3-2',
+                        title: 'My transaction failed, but my gas was charged',
+                        content: 'Gas is essencial to process requests on the blockchain. In this sense, even a failed transaction still rapresents a transaction.\n' +
+                        'This fee is payed to the Ethereum network and miners, and not to WallOfChain.'
                     }, {
-                        title: 'Titolo della domanda 3-3',
-                        content: 'Contenuto della risposta 3-3',
+                        title: 'My transaction timed out',
+                        content: 'It’s possible that the Ethereum network may be too busy to process the transaction. It usually happens when gas prices are too high, or there is a spike in network congestion.'
+                    }, {
+                        title: 'Ok, but what is gas?',
+                        content: 'Gas is a short term used to describe the cost of a transaction or contract in Ethereum.\n' +
+                        'Each transaction takes a lot of computational power, and is splitted beneath multiple computers. This power is covered by gas.'
                     }],
                 }],
                 selectedFaq: 0,
