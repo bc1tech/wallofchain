@@ -43,13 +43,26 @@
         data() {
             return {
                 faqs: [{
-                    category: 'Getting Started',
+                    category: 'Starters',
                     list: [{
-                        title: 'Titolo della domanda 1-1',
-                        content: 'Contenuto della risposta 1-1',
+                        title: 'What is needed to aquire a star?',
+                        content: 'A computer with Firefox/Chrome\n' +
+                        'We suggest using these two browsers, as they ensure maximum compatibility.\n' +
+                        'Mobile navigation is also garanteed.\n' +
+                        'Navigation from multiple computers is also allowed.\n' +
+                        '\n' +
+                        '    A digital wallet\n' +
+                        '        To buy a star, you will need a digital wallet, specifically Metamask.\n' +
+                        '        As your digital wallet acts as a real one, you’ll need to put money in        it in order to do your first purchase.\n' +
+                        'WallOfChain does not have any control over your wallet, that belongs only to you. Please do not share with others your seeds words: they can restore your account in the case it’s deleted, but they can also garantee access to your entire account.\n' +
+                        'Your wallet is univocally identified by a wallet address. You can share it with other, and it’s used to convey assetts to your wallet.',
                     }, {
-                        title: 'Titolo della domanda 1-2',
-                        content: 'Contenuto della risposta 1-2',
+                        title: 'Ethereum',
+                        content: 'Ethereum is a digital currency – its value, like any other currency, fluctuates with the market.\n' +
+                        'In order to convert your actual currency in Ethereum, you can use the Coinbase.\n' +
+                        'Some wallets allow the possibilty to directly aquire Ethereum currency, while others may require you to make a purchase from an exchange. After your purchase, you can transfer your Ethereum from the exchange wallet to your digital one.\n' +
+                        'Keep in mind it’s not the shortest process: you’ll need to verify your identity, which will probably take a day or two.\n' +
+                        'Worry not – your star awaits for you.',
                     }, {
                         title: 'Titolo della domanda 1-3',
                         content: 'Contenuto della risposta 1-3',
