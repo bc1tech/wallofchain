@@ -1,12 +1,10 @@
 <template>
     <main>
         <div class="container hero">
-            <div class="row">
+            <div class="row align-items-center">
                 <div class="col-lg-6 col-md-6">
-                    <div class="row">
-                        <h1 class="col-lg-10 hero__title">Become a part of the blockchain hall of fame. Become a star now</h1>
-                        <p class="col hero__copy">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor si amet, consectetur adipiscing elit</p>
-                    </div>
+                    <h1 class="hero__title">Get a star.<br>Be the star.</h1>
+                    <p class="hero__copy">Become a part of the blockchain hall of fame.<br>Collect a star and let it shine. It will hang on our wall luminescent, bright and strong – there is your name on it.</p>
                     <router-link to="/become-a-star.html" class="btn">Become a star</router-link>
                 </div>
                 <div class="col-lg-6 col-md-6">

@@ -1,26 +1,29 @@
 <template>
     <main class="container">
         <div class="row">
-            <div class="col-md">
+            <div class="col-md d-flex">
 
                 <div class="box">
                     <span class="box__star">
                         <span class="box__star-content">1</span>
                     </span>
-                    <h2 class="box__title">What is WallOfChain?</h2>
-                    <p class="box__copy">Lorem ipsum dolor sit amen, consecteur adipiscing elit, sed do eiusmod tempor incididunt et dolore magna aliqua. Lorem ipsum dolor sit amen, consecteur adipiscing elit</p>
+                    <h2 class="box__title">What is wall of chain?</h2>
+                    <p class="box__copy">WallOfChain is a collectible token on Ethereum Blockchain.</p>
+                    <p class="box__copy">It is made by the same technologies currently used by the Ethereum technology.</p>
+                    <p class="box__copy">When you aquire a star, it is uniquely owned by you. It carries your name, and cannot be replicated. You can let it shine brighter and let it grow while using our platform.</p>
                 </div>
 
             </div>
             
-            <div class="col-md">
+            <div class="col-md d-flex">
 
                 <div class="box">
                     <span class="box__star">
                         <span class="box__star-content">2</span>
                     </span>
-                    <h2 class="box__title">Why chose WallOfChain?</h2>
-                    <p class="box__copy">Lorem ipsum dolor sit amen, consecteur adipiscing elit, sed do eiusmod tempor incididunt et dolore magna aliqua. Lorem ipsum dolor sit amen, consecteur adipiscing elit</p>
+                    <h2 class="box__title">Why choose WallOfChain?</h2>
+                    <p class="box__copy">Owning a star speaks greatly of your character. Owning a star created with Ethereum technology speaks of a person with a fine eye for detail, and a grasp of the next future markets.</p>
+                    <p class="box__copy">WallOfChain hangs your star on the wall, for everyone to see.</p>
                 </div>
 
             </div>
