@@ -185,7 +185,7 @@
                     return false;
                 }
 
-                this.$validator.validateAll().then((valid) => {
+                this.$validator.validateAll().then(async (valid) => {
                     if (this.metamask.netId !== this.network.expectedId) {
                         alert(`You are on the wrong Network.\nPlease switch your MetaMask on ${ this.network.expectedName }.`);
                         return;
@@ -193,53 +193,60 @@
                     if (valid) {
                         this.loading = true;
 
-                        const firstName = this.formData.firstName;
-                        const lastName = this.formData.lastName;
-                        const value = this.web3.toWei(this.formData.value, 'ether');
-                        const giftEth = this.formData.giftEth || this.web3.eth.coinbase;
-                        let gradient = this.formData.gradient;
-                        let icon = this.formData.icon;
-
-                        if (value === '0' || !value) {
-                            gradient = 0;
-                            icon = 0;
-                        }
-
                         try {
-                            this.instances.market.buyToken(
-                                giftEth,
-                                firstName,
-                                lastName,
-                                gradient,
-                                icon,
-                                {
-                                    value: value,
-                                    from: this.web3.eth.coinbase,
-                                },
-                                (err, trxHash) => {
-                                    if (!err) {
-                                        this.trxHash = trxHash;
-                                        this.trxLink = this.etherscanLink + "/tx/" + this.trxHash;
-                                        this.instances.market.TokenPurchase(
-                                            {
-                                                purchaser: this.web3.eth.coinbase,
-                                                beneficiary: giftEth,
-                                            },
-                                            (err, event) => {
-                                                if (!err) {
-                                                    console.log(event);
-                                                    this.loading = false;
-                                                    this.toggleModal('okay');
-                                                } else {
-                                                    alert("Some error occurred. Maybe transaction failed for some reasons. Check your transaction id.");
-                                                }
-                                            });
-                                    } else {
-                                        this.loading = false;
-                                        alert("Some error occurred. Maybe you rejected the transaction or you have MetaMask locked!");
-                                    }
+                            if (!this.legacy) {
+                                await this.web3Provider.enable();
+                            }
+
+                            setTimeout(() => {
+                                const firstName = this.formData.firstName;
+                                const lastName = this.formData.lastName;
+                                const value = this.web3.toWei(this.formData.value, 'ether');
+                                const giftEth = this.formData.giftEth || this.web3.eth.coinbase;
+                                let gradient = this.formData.gradient;
+                                let icon = this.formData.icon;
+
+                                if (value === '0' || !value) {
+                                    gradient = 0;
+                                    icon = 0;
                                 }
-                            );
+
+                                this.instances.market.buyToken(
+                                    giftEth,
+                                    firstName,
+                                    lastName,
+                                    gradient,
+                                    icon,
+                                    {
+                                        value: value,
+                                        from: this.web3.eth.coinbase,
+                                    },
+                                    (err, trxHash) => {
+                                        if (!err) {
+                                            this.trxHash = trxHash;
+                                            this.trxLink = this.etherscanLink + "/tx/" + this.trxHash;
+                                            this.instances.market.TokenPurchase(
+                                                {
+                                                    purchaser: this.web3.eth.coinbase,
+                                                    beneficiary: giftEth,
+                                                },
+                                                (err, event) => {
+                                                    if (!err) {
+                                                        console.log(event);
+                                                        this.loading = false;
+                                                        this.toggleModal('okay');
+                                                    } else {
+                                                        alert("Some error occurred. Maybe transaction failed for some reasons. Check your transaction id.");
+                                                    }
+                                                });
+                                        } else {
+                                            this.loading = false;
+                                            alert("Some error occurred. Maybe you rejected the transaction or you have MetaMask locked!");
+                                        }
+                                    }
+                                );
+                            }, 500)
+
                         } catch(e) {
                             console.warn(e);
                             alert(`Some error occurred. ${e.message}`);

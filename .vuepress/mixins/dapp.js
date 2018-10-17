@@ -17,6 +17,7 @@ const Web3 = () => {
 export default {
     data() {
         return {
+            legacy: false,
             web3: null,
             web3Provider: null,
             etherscanLink: config.blockchain.etherscanLink,
@@ -57,14 +58,20 @@ export default {
     methods: {
         initWeb3 (checkWeb3) {
             return new Promise((resolve) => {
-                if (checkWeb3 && typeof web3 !== 'undefined') {
-                    console.log('injected web3');
-                    this.web3Provider = web3.currentProvider;
+                if (checkWeb3 && (typeof window.ethereum !== 'undefined' || typeof window.web3 !== 'undefined')) {
+                    if (window.ethereum) {
+                        console.log('injected web3');
+                        this.web3Provider = window.ethereum;
+                    } else {
+                        console.log('injected web3 (legacy)');
+                        this.web3Provider = window.web3.currentProvider;
+                        this.legacy = true;
+                    }
                     this.web3 = new window.Web3(this.web3Provider);
+
                     this.metamask.installed = true;
                     this.web3.version.getNetwork((err, netId) => {
                         this.metamask.netId = netId;
-
                         if (netId !== config.blockchain.networkId) {
                             this.initWeb3(false).then(resolve);
                         } else {
