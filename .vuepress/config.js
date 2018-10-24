@@ -1,6 +1,7 @@
 module.exports = {
     title: 'Wall of Chain',
     description: 'Become a part of the blockchain hall of fame. Collect a star and let it shine. It will hang on our wall luminescent, bright and strong – there is your name on it.',
+    dest: 'dist',
     head: [
         ['script', { src: 'assets/js/web3.min.js' }],
     ],
