@@ -7,14 +7,14 @@
                     <span class="box__star">
                         <span class="box__star-content">1</span>
                     </span>
-                    <h2 class="box__title">What is wall of chain?</h2>
+                    <h2 class="box__title">What is WallOfChain?</h2>
                     <p class="box__copy">WallOfChain is a collectible token on Ethereum Blockchain.</p>
                     <p class="box__copy">It is made by the same technologies currently used by the Ethereum technology.</p>
                     <p class="box__copy">When you aquire a star, it is uniquely owned by you. It carries your name, and cannot be replicated. You can let it shine brighter and let it grow while using our platform.</p>
                 </div>
 
             </div>
-            
+
             <div class="col-md d-flex">
 
                 <div class="box">
@@ -27,7 +27,7 @@
                 </div>
 
             </div>
-            
+
         </div>
 
         <div class="project-footer">

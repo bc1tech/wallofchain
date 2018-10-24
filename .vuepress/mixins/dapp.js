@@ -3,17 +3,6 @@ import config from '../config';
 import TokenArtifact from '../abi/WallOfChainToken.json';
 import MarketArtifact from '../abi/WallOfChainMarket.json';
 
-// Needs to be async since a dependency of it (Buffer) needs the global `global` variable
-// and webpack isn't providing it – I don't know why and I'm suppose to be on vacation.
-const Web3 = () => {
-    // Don't try this at home, kids!
-    // Little hacky fix for Buffer's error.
-    window.global = window;
-
-    return import('web3');
-};
-
-
 export default {
     data() {
         return {
@@ -30,27 +19,16 @@ export default {
                 market: null,
             },
             network: {
-                expectedId: null,
-                expectedName: '',
+                expectedId: config.blockchain.networkId,
+                expectedName: config.blockchain.networkName,
             },
             waitTimeout: 0,
         };
     },
-    mounted () {
-        Web3().then(() => {
-            this.waitTimeout = setTimeout(async () => {
-                await this.initWeb3(true);
-
-                this.network = {
-                    expectedId: config.blockchain.networkId,
-                    expectedName: config.blockchain.networkName,
-                };
-
-                this.initContracts();
-
-                this.web3Ready();
-            }, 500);
-        });
+    async mounted () {
+        await this.initWeb3(true);
+        this.initContracts();
+        this.web3Ready();
     },
     beforeDestroy() {
         clearTimeout(this.waitTimeout);
@@ -58,31 +36,32 @@ export default {
     methods: {
         initWeb3 (checkWeb3) {
             return new Promise((resolve) => {
-                if (checkWeb3 && (typeof window.ethereum !== 'undefined' || typeof window.web3 !== 'undefined')) {
-                    if (window.ethereum) {
+                if (checkWeb3 && (typeof ethereum !== 'undefined' || typeof web3 !== 'undefined')) {
+                    if (ethereum) {
                         console.log('injected web3');
-                        this.web3Provider = window.ethereum;
+                        this.web3Provider = ethereum;
                     } else {
                         console.log('injected web3 (legacy)');
-                        this.web3Provider = window.web3.currentProvider;
+                        this.web3Provider = web3.currentProvider;
                         this.legacy = true;
                     }
-                    this.web3 = new window.Web3(this.web3Provider);
 
+                    this.web3 = new Web3(this.web3Provider);
                     this.metamask.installed = true;
-                    this.web3.version.getNetwork((err, netId) => {
+                    this.web3.version.getNetwork(async (err, netId) => {
+                        if (err) {
+                            console.log(err);
+                        }
                         this.metamask.netId = netId;
                         if (netId !== config.blockchain.networkId) {
-                            this.initWeb3(false).then(resolve);
-                        } else {
-                            resolve();
+                            await this.initWeb3(false);
                         }
+                        resolve();
                     });
                 } else {
                     console.log('provided web3');
-                    // set the provider you want from Web3.providers
-                    this.web3Provider = new window.Web3.providers.HttpProvider(config.blockchain.web3Provider);
-                    this.web3 = new window.Web3(this.web3Provider);
+                    this.web3Provider = new Web3.providers.HttpProvider(config.blockchain.web3Provider);
+                    this.web3 = new Web3(this.web3Provider);
 
                     resolve();
                 }
