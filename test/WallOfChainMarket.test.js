@@ -1,18 +1,17 @@
-const { ether } = require('./helpers/ether');
-const { assertRevert } = require('./helpers/assertRevert');
+const { ether } = require('openzeppelin-solidity/test/helpers/ether');
+const shouldFail = require('openzeppelin-solidity/test/helpers/shouldFail');
+const { ZERO_ADDRESS } = require('openzeppelin-solidity/test/helpers/constants');
+
+const { shouldBehaveLikeTokenRecover } = require('eth-token-recover/test/TokenRecover.behaviour');
 
 const BigNumber = web3.BigNumber;
 
 const should = require('chai')
-  .use(require('chai-as-promised'))
   .use(require('chai-bignumber')(BigNumber))
   .should();
 
 const WallOfChainMarket = artifacts.require('WallOfChainMarket.sol');
 const WallOfChainToken = artifacts.require('WallOfChainToken.sol');
-
-const ROLE_MINTER = 'minter';
-const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
 contract('WallOfChainMarket', function ([_, wallet, purchaser, beneficiary, anotherAccount]) {
   const name = 'WallOfChainToken';
@@ -37,7 +36,7 @@ contract('WallOfChainMarket', function ([_, wallet, purchaser, beneficiary, anot
   context('creating a valid market', function () {
     describe('if wallet is the zero address', function () {
       it('reverts ', async function () {
-        await assertRevert(
+        await shouldFail.reverting(
           WallOfChainMarket.new(ZERO_ADDRESS, this.token.address)
         );
       });
@@ -45,7 +44,7 @@ contract('WallOfChainMarket', function ([_, wallet, purchaser, beneficiary, anot
 
     describe('if token is the zero address', function () {
       it('reverts ', async function () {
-        await assertRevert(
+        await shouldFail.reverting(
           WallOfChainMarket.new(wallet, ZERO_ADDRESS)
         );
       });
@@ -54,7 +53,7 @@ contract('WallOfChainMarket', function ([_, wallet, purchaser, beneficiary, anot
 
   describe('after creation', function () {
     it('should have minter role on token', async function () {
-      const isMinter = await this.token.hasRole(this.crowdsale.address, ROLE_MINTER);
+      const isMinter = await this.token.isMinter(this.crowdsale.address);
       isMinter.should.equal(true);
     });
 
@@ -68,7 +67,7 @@ contract('WallOfChainMarket', function ([_, wallet, purchaser, beneficiary, anot
 
         describe('if wallet is the zero address', function () {
           it('reverts ', async function () {
-            await assertRevert(
+            await shouldFail.reverting(
               this.crowdsale.changeWallet(ZERO_ADDRESS)
             );
           });
@@ -77,7 +76,7 @@ contract('WallOfChainMarket', function ([_, wallet, purchaser, beneficiary, anot
 
       describe('if another account is calling', function () {
         it('reverts ', async function () {
-          await assertRevert(
+          await shouldFail.reverting(
             this.crowdsale.changeWallet(anotherAccount, { from: anotherAccount })
           );
         });
@@ -94,11 +93,11 @@ contract('WallOfChainMarket', function ([_, wallet, purchaser, beneficiary, anot
         tokenDetails.pattern,
         tokenDetails.icon,
         { value: value, from: purchaser }
-      ).should.be.fulfilled;
+      );
     });
 
     it('should reject payments if beneficiary is the zero address', async function () {
-      await assertRevert(
+      await shouldFail.reverting(
         this.crowdsale.buyToken(
           ZERO_ADDRESS,
           tokenDetails.firstName,
@@ -111,7 +110,7 @@ contract('WallOfChainMarket', function ([_, wallet, purchaser, beneficiary, anot
     });
 
     it('should reject payments through default payable function', async function () {
-      await assertRevert(
+      await shouldFail.reverting(
         this.crowdsale.send(value)
       );
     });
@@ -222,7 +221,7 @@ contract('WallOfChainMarket', function ([_, wallet, purchaser, beneficiary, anot
     });
 
     it('should fail if caller is not token owner', async function () {
-      await assertRevert(
+      await shouldFail.reverting(
         this.crowdsale.editToken(
           tokenId,
           tokenDetails.firstName,
@@ -273,5 +272,13 @@ contract('WallOfChainMarket', function ([_, wallet, purchaser, beneficiary, anot
         postRaised.should.be.bignumber.equal(preRaised);
       });
     });
+  });
+
+  context('like a TokenRecover', function () {
+    beforeEach(async function () {
+      this.instance = this.crowdsale;
+    });
+
+    shouldBehaveLikeTokenRecover([_, anotherAccount]);
   });
 });

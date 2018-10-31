@@ -1,13 +1,17 @@
 pragma solidity ^0.4.24;
 
-import "./token/ERC721RBACMintableToken.sol";
-import "./libraries/OrderedLinkedListLib.sol";
+import "openzeppelin-solidity/contracts/access/roles/MinterRole.sol";
+import "openzeppelin-solidity/contracts/token/ERC721/ERC721Full.sol";
+import "eth-token-recover/contracts/TokenRecover.sol";
+import "solidity-linked-list/contracts/StructuredLinkedList.sol";
 
 
-contract WallOfChainToken is ERC721RBACMintableToken {
-  using OrderedLinkedListLib for OrderedLinkedListLib.OrderedLinkedList;
+contract WallOfChainToken is ERC721Full, TokenRecover, MinterRole {
+  using StructuredLinkedList for StructuredLinkedList.List;
 
-  OrderedLinkedListLib.OrderedLinkedList list;
+  event MintFinished();
+
+  StructuredLinkedList.List list;
 
   struct WallStructure {
     uint256 value;
@@ -17,14 +21,34 @@ contract WallOfChainToken is ERC721RBACMintableToken {
     uint256 icon;
   }
 
+  bool public mintingFinished = false;
+
   uint256 public progressiveId = 0;
 
   // Mapping from token ID to the structures
   mapping(uint256 => WallStructure) structureIndex;
 
+  modifier canGenerate() {
+    require(
+      !mintingFinished,
+      "Minting is finished"
+    );
+    _;
+  }
+
   constructor(string _name, string _symbol) public
-  ERC721RBACMintableToken(_name, _symbol)
+  ERC721Full(_name, _symbol)
   {}
+
+  /**
+   * @dev Function to stop minting new tokens.
+   * @return True if the operation was successful.
+   */
+  function finishMinting() public onlyOwner canGenerate returns (bool) {
+    mintingFinished = true;
+    emit MintFinished();
+    return true;
+  }
 
   function newToken(
     address _beneficiary,
@@ -35,6 +59,8 @@ contract WallOfChainToken is ERC721RBACMintableToken {
     uint256 _icon
   )
   public
+  canGenerate
+  onlyMinter
   returns (uint256)
   {
     uint256 tokenId = progressiveId.add(1);
@@ -63,11 +89,11 @@ contract WallOfChainToken is ERC721RBACMintableToken {
     uint256 _icon
   )
   public
-  hasMintPermission
+  onlyMinter
   returns (uint256)
   {
     require(
-      exists(_tokenId),
+      _exists(_tokenId),
       "Token must exists"
     );
 
@@ -106,7 +132,7 @@ contract WallOfChainToken is ERC721RBACMintableToken {
   )
   {
     require(
-      exists(_tokenId),
+      _exists(_tokenId),
       "Token must exists"
     );
 
@@ -123,7 +149,7 @@ contract WallOfChainToken is ERC721RBACMintableToken {
 
   function getValue (uint256 _tokenId) public view returns (uint256) {
     require(
-      exists(_tokenId),
+      _exists(_tokenId),
       "Token must exists"
     );
     WallStructure storage wall = structureIndex[_tokenId];
@@ -148,7 +174,7 @@ contract WallOfChainToken is ERC721RBACMintableToken {
    * @dev Only contract owner or token owner can burn
    */
   function burn(uint256 _tokenId) public {
-    address tokenOwner = msg.sender == owner ? ownerOf(_tokenId) : msg.sender;
+    address tokenOwner = isOwner() ? ownerOf(_tokenId) : msg.sender;
     super._burn(tokenOwner, _tokenId);
     list.remove(_tokenId);
     delete structureIndex[_tokenId];

@@ -1,18 +1,18 @@
-const { ether } = require('./helpers/ether');
-const { assertRevert } = require('./helpers/assertRevert');
-const { advanceBlock } = require('./helpers/advanceToBlock');
-const { shouldBehaveLikeRBACMintableERC721Token } = require('./ERC721/ERC721RBACMintableToken.behaviour');
+const { advanceBlock } = require('openzeppelin-solidity/test/helpers/advanceToBlock');
+const { ether } = require('openzeppelin-solidity/test/helpers/ether');
+const shouldFail = require('openzeppelin-solidity/test/helpers/shouldFail');
+const { ZERO_ADDRESS } = require('openzeppelin-solidity/test/helpers/constants');
+
+const { shouldBehaveLikeTokenRecover } = require('eth-token-recover/test/TokenRecover.behaviour');
+const { shouldBehaveLikeERC721Full } = require('./ERC721/ERC721Full.behavior');
 
 const BigNumber = web3.BigNumber;
 
 require('chai')
-  .use(require('chai-as-promised'))
   .use(require('chai-bignumber')(BigNumber))
   .should();
 
 const WallOfChainToken = artifacts.require('WallOfChainTokenMock.sol');
-
-const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
 contract('WallOfChainToken', function (accounts) {
   const name = 'WallOfChainToken';
@@ -105,7 +105,7 @@ contract('WallOfChainToken', function (accounts) {
 
       describe('if token id not exists', function () {
         it('reverts', async function () {
-          await assertRevert(this.token.getWall(999));
+          await shouldFail.reverting(this.token.getWall(999));
         });
       });
     });
@@ -118,7 +118,7 @@ contract('WallOfChainToken', function (accounts) {
 
       describe('if token id not exists', function () {
         it('reverts', async function () {
-          await assertRevert(this.token.getValue(999));
+          await shouldFail.reverting(this.token.getValue(999));
         });
       });
     });
@@ -144,7 +144,7 @@ contract('WallOfChainToken', function (accounts) {
 
     describe('if beneficiary is the zero address', function () {
       it('reverts', async function () {
-        await assertRevert(
+        await shouldFail.reverting(
           this.token.newToken(
             ZERO_ADDRESS,
             this.structure.value,
@@ -160,7 +160,7 @@ contract('WallOfChainToken', function (accounts) {
 
     describe('if caller has not minter permission', function () {
       it('reverts', async function () {
-        await assertRevert(
+        await shouldFail.reverting(
           this.token.newToken(
             beneficiary,
             this.structure.value,
@@ -376,7 +376,7 @@ contract('WallOfChainToken', function (accounts) {
 
       describe('if token id not exists', function () {
         it('reverts', async function () {
-          await assertRevert(this.token.getWall(999));
+          await shouldFail.reverting(this.token.getWall(999));
         });
       });
     });
@@ -402,7 +402,7 @@ contract('WallOfChainToken', function (accounts) {
 
     describe('if token id not exists', function () {
       it('reverts', async function () {
-        await assertRevert(
+        await shouldFail.reverting(
           this.token.editToken(
             999,
             this.newStructure.value,
@@ -418,7 +418,7 @@ contract('WallOfChainToken', function (accounts) {
 
     describe('if caller has not minter permission', function () {
       it('reverts', async function () {
-        await assertRevert(
+        await shouldFail.reverting(
           this.token.editToken(
             tokenId,
             this.newStructure.value,
@@ -470,7 +470,7 @@ contract('WallOfChainToken', function (accounts) {
 
         describe('if token id not exists', function () {
           it('reverts', async function () {
-            await assertRevert(this.token.getValue(999));
+            await shouldFail.reverting(this.token.getValue(999));
           });
         });
       });
@@ -533,7 +533,7 @@ contract('WallOfChainToken', function (accounts) {
 
         describe('if token id not exists', function () {
           it('reverts', async function () {
-            await assertRevert(this.token.getValue(999));
+            await shouldFail.reverting(this.token.getValue(999));
           });
         });
       });
@@ -597,11 +597,19 @@ contract('WallOfChainToken', function (accounts) {
     });
   });
 
-  context('like an ERC721RBACMintableToken', function () {
+  context('testing ERC721 behaviors', function () {
     beforeEach(async function () {
       await this.token.addMinter(minter, { from: creator });
     });
 
-    shouldBehaveLikeRBACMintableERC721Token(accounts, creator, minter, name, symbol);
+    shouldBehaveLikeERC721Full(creator, minter, accounts, name, symbol);
+  });
+
+  context('like a TokenRecover', function () {
+    beforeEach(async function () {
+      this.instance = this.token;
+    });
+
+    shouldBehaveLikeTokenRecover([creator, anotherAccount]);
   });
 });

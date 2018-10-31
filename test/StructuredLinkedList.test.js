@@ -1,9 +1,6 @@
-const { ether } = require('./helpers/ether');
-
 const BigNumber = web3.BigNumber;
 
 const should = require('chai')
-  .use(require('chai-as-promised'))
   .use(require('chai-bignumber')(BigNumber))
   .should();
 
@@ -13,25 +10,16 @@ const INVALID_TOKEN_ID = 111;
 const PREV = false;
 const NEXT = true;
 
-const OrderedLinkedList = artifacts.require('OrderedLinkedListMock.sol');
-const WallOfChainToken = artifacts.require('WallOfChainToken.sol');
+const StructuredLinkedList = artifacts.require('StructuredLinkedListMock.sol');
 
-contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
-  const name = 'WallOfChainToken';
-  const symbol = 'WOC';
-
-  const tokenDetails = {
-    value: ether(0.1),
-    firstName: 'Vittorio',
-    lastName: 'Minacori',
-    pattern: new BigNumber(1),
-    icon: new BigNumber(1),
-  };
+contract('StructuredLinkedList', function ([owner]) {
+  const value = new BigNumber(1);
 
   beforeEach(async function () {
-    this.list = await OrderedLinkedList.new({ from: owner });
-    this.token = await WallOfChainToken.new(name, symbol, { from: owner });
-    await this.token.addMinter(minter);
+    const name = 'WallOfChainToken';
+    const symbol = 'WOC';
+
+    this.list = await StructuredLinkedList.new(name, symbol, { from: owner });
   });
 
   context('when list is empty', function () {
@@ -64,17 +52,8 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
 
     context('adding a node', function () {
       beforeEach(async function () {
-        await this.token.newToken(
-          beneficiary,
-          tokenDetails.value,
-          tokenDetails.firstName,
-          tokenDetails.lastName,
-          tokenDetails.pattern,
-          tokenDetails.icon,
-          { from: minter }
-        );
-
-        tokenId = await this.token.progressiveId();
+        await this.list.createStructure(value);
+        tokenId = await this.list.progressiveId();
         await this.list.insertAfter(HEAD, tokenId);
       });
 
@@ -126,17 +105,9 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
 
       describe('insertAfter of not existent node', function () {
         it('should fail', async function () {
-          await this.token.newToken(
-            beneficiary,
-            tokenDetails.value,
-            tokenDetails.firstName,
-            tokenDetails.lastName,
-            tokenDetails.pattern,
-            tokenDetails.icon,
-            { from: minter }
-          );
+          await this.list.createStructure(value);
 
-          const newTokenId = await this.token.progressiveId();
+          const newTokenId = await this.list.progressiveId();
           const { logs } = await this.list.insertAfter(INVALID_TOKEN_ID, newTokenId);
           const event = logs.find(e => e.event === 'LogNotice');
           should.exist(event);
@@ -151,17 +122,9 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
 
       describe('insertBefore of not existent node', function () {
         it('should fail', async function () {
-          await this.token.newToken(
-            beneficiary,
-            tokenDetails.value,
-            tokenDetails.firstName,
-            tokenDetails.lastName,
-            tokenDetails.pattern,
-            tokenDetails.icon,
-            { from: minter }
-          );
+          await this.list.createStructure(value);
 
-          const newTokenId = await this.token.progressiveId();
+          const newTokenId = await this.list.progressiveId();
           const { logs } = await this.list.insertBefore(INVALID_TOKEN_ID, newTokenId);
           const event = logs.find(e => e.event === 'LogNotice');
           should.exist(event);
@@ -193,48 +156,9 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
       });
     });
 
-    context('adding more nodes (not ordered)', function () {
+    context('adding more nodes (not sorted)', function () {
       let firstTokenId;
       let secondTokenId;
-
-      beforeEach(async function () {
-        await this.token.newToken(
-          beneficiary,
-          tokenDetails.value,
-          tokenDetails.firstName,
-          tokenDetails.lastName,
-          tokenDetails.pattern,
-          tokenDetails.icon,
-          { from: minter }
-        );
-
-        tokenId = await this.token.progressiveId();
-        await this.list.insertAfter(HEAD, tokenId);
-
-        await this.token.newToken(
-          beneficiary,
-          tokenDetails.value,
-          tokenDetails.firstName,
-          tokenDetails.lastName,
-          tokenDetails.pattern,
-          tokenDetails.icon,
-          { from: minter }
-        );
-
-        firstTokenId = await this.token.progressiveId();
-
-        await this.token.newToken(
-          beneficiary,
-          tokenDetails.value,
-          tokenDetails.firstName,
-          tokenDetails.lastName,
-          tokenDetails.pattern,
-          tokenDetails.icon,
-          { from: minter }
-        );
-
-        secondTokenId = await this.token.progressiveId();
-      });
 
       describe('adding after (2 times)', function () {
         let node;
@@ -242,8 +166,18 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
         let secondNode;
 
         beforeEach(async function () {
+          await this.list.createStructure(value);
+          tokenId = await this.list.progressiveId();
+          await this.list.insertAfter(HEAD, tokenId);
+
+          await this.list.createStructure(value);
+          firstTokenId = await this.list.progressiveId();
           await this.list.insertAfter(tokenId, firstTokenId);
+
+          await this.list.createStructure(value);
+          secondTokenId = await this.list.progressiveId();
           await this.list.insertAfter(firstTokenId, secondTokenId);
+
           node = await this.list.getNode(tokenId);
           firstNode = await this.list.getNode(firstTokenId);
           secondNode = await this.list.getNode(secondTokenId);
@@ -514,17 +448,8 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
           let thirdNode;
 
           beforeEach(async function () {
-            await this.token.newToken(
-              beneficiary,
-              tokenDetails.value,
-              tokenDetails.firstName,
-              tokenDetails.lastName,
-              tokenDetails.pattern,
-              tokenDetails.icon,
-              { from: minter }
-            );
-
-            thirdTokenId = await this.token.progressiveId();
+            await this.list.createStructure(value);
+            thirdTokenId = await this.list.progressiveId();
           });
 
           describe('push to HEAD', function () {
@@ -581,8 +506,18 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
         let secondNode;
 
         beforeEach(async function () {
+          await this.list.createStructure(value);
+          tokenId = await this.list.progressiveId();
+          await this.list.insertAfter(HEAD, tokenId);
+
+          await this.list.createStructure(value);
+          firstTokenId = await this.list.progressiveId();
           await this.list.insertBefore(tokenId, firstTokenId);
+
+          await this.list.createStructure(value);
+          secondTokenId = await this.list.progressiveId();
           await this.list.insertBefore(firstTokenId, secondTokenId);
+
           node = await this.list.getNode(tokenId);
           firstNode = await this.list.getNode(firstTokenId);
           secondNode = await this.list.getNode(secondTokenId);
@@ -676,51 +611,24 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
       });
     });
 
-    context('adding more nodes (ordered)', function () {
+    context('adding more nodes (sorted)', function () {
       let firstTokenId;
       let secondTokenId;
 
-      const firstTokenValue = tokenDetails.value.sub(1);
-      const secondTokenValue = tokenDetails.value.add(1);
+      const firstTokenValue = value.sub(1);
+      const secondTokenValue = value.add(1);
 
       beforeEach(async function () {
-        await this.token.newToken(
-          beneficiary,
-          tokenDetails.value,
-          tokenDetails.firstName,
-          tokenDetails.lastName,
-          tokenDetails.pattern,
-          tokenDetails.icon,
-          { from: minter }
-        );
-
-        tokenId = await this.token.progressiveId();
-        const position = await this.list.getSortedSpot(this.token.address, tokenId);
+        await this.list.createStructure(value);
+        tokenId = await this.list.progressiveId();
+        const position = await this.list.getSortedSpot(this.list.address, tokenId);
         await this.list.insertAfter(position, tokenId);
 
-        await this.token.newToken(
-          beneficiary,
-          firstTokenValue,
-          tokenDetails.firstName,
-          tokenDetails.lastName,
-          tokenDetails.pattern,
-          tokenDetails.icon,
-          { from: minter }
-        );
+        await this.list.createStructure(firstTokenValue);
+        firstTokenId = await this.list.progressiveId();
 
-        firstTokenId = await this.token.progressiveId();
-
-        await this.token.newToken(
-          beneficiary,
-          secondTokenValue,
-          tokenDetails.firstName,
-          tokenDetails.lastName,
-          tokenDetails.pattern,
-          tokenDetails.icon,
-          { from: minter }
-        );
-
-        secondTokenId = await this.token.progressiveId();
+        await this.list.createStructure(secondTokenValue);
+        secondTokenId = await this.list.progressiveId();
       });
 
       describe('adding nodes (2 times)', function () {
@@ -729,10 +637,10 @@ contract('OrderedLinkedList', function ([owner, minter, beneficiary]) {
         let secondNode;
 
         beforeEach(async function () {
-          let position = await this.list.getSortedSpot(this.token.address, firstTokenValue);
+          let position = await this.list.getSortedSpot(this.list.address, firstTokenValue);
           await this.list.insertAfter(position, firstTokenId);
 
-          position = await this.list.getSortedSpot(this.token.address, secondTokenValue);
+          position = await this.list.getSortedSpot(this.list.address, secondTokenValue);
           await this.list.insertAfter(position, secondTokenId);
 
           node = await this.list.getNode(tokenId);
