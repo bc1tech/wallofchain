@@ -9,8 +9,6 @@ import "solidity-linked-list/contracts/StructuredLinkedList.sol";
 contract WallOfChainToken is ERC721Full, TokenRecover, MinterRole {
   using StructuredLinkedList for StructuredLinkedList.List;
 
-  event MintFinished();
-
   StructuredLinkedList.List list;
 
   struct WallStructure {
@@ -42,12 +40,9 @@ contract WallOfChainToken is ERC721Full, TokenRecover, MinterRole {
 
   /**
    * @dev Function to stop minting new tokens.
-   * @return True if the operation was successful.
    */
-  function finishMinting() public onlyOwner canGenerate returns (bool) {
+  function finishMinting() public onlyOwner canGenerate {
     mintingFinished = true;
-    emit MintFinished();
-    return true;
   }
 
   function newToken(

@@ -602,7 +602,21 @@ contract('WallOfChainToken', function (accounts) {
       await this.token.addMinter(minter, { from: creator });
     });
 
-    shouldBehaveLikeERC721Full(creator, minter, accounts, name, symbol);
+    describe('before finish minting', function () {
+      shouldBehaveLikeERC721Full(creator, minter, accounts, name, symbol);
+    });
+
+    describe('after finish minting', function () {
+      beforeEach(async function () {
+        await this.token.finishMinting({ from: creator });
+      });
+
+      it('revert minting', async function () {
+        await shouldFail.reverting(
+          this.token.mint(anotherAccount, 1, { from: minter })
+        );
+      });
+    });
   });
 
   context('like a TokenRecover', function () {

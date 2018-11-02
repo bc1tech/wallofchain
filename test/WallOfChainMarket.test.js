@@ -114,6 +114,20 @@ contract('WallOfChainMarket', function ([_, wallet, purchaser, beneficiary, anot
         this.crowdsale.send(value)
       );
     });
+
+    it('should reject after finish minting', async function () {
+      await this.token.finishMinting();
+      await shouldFail.reverting(
+        this.crowdsale.buyToken(
+          beneficiary,
+          tokenDetails.firstName,
+          tokenDetails.lastName,
+          tokenDetails.pattern,
+          tokenDetails.icon,
+          { value: value, from: purchaser }
+        )
+      );
+    });
   });
 
   describe('token purchase', function () {

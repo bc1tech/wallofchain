@@ -12,6 +12,12 @@ contract WallOfChainTokenMock is WallOfChainToken, ERC721Mintable, ERC721Metadat
   WallOfChainToken(_name, _symbol)
   { }
 
+  // solium-disable-next-line max-len
+  function mint(address to, uint256 tokenId) public canGenerate returns (bool) {
+    _mint(to, tokenId);
+    return true;
+  }
+
   function exists(uint256 tokenId) public view returns (bool) {
     return _exists(tokenId);
   }
