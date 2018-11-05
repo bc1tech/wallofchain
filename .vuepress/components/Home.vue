@@ -4,7 +4,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-6 col-md-6">
                     <h1 class="hero__title">Get a star.<br>Be the star.</h1>
-                    <p class="hero__copy">Become a part of the blockchain hall of fame.<br>Collect a star and let it shine. It will hang on our wall luminescent, bright and strong – there is your name on it.</p>
+                    <p class="hero__copy">Become a part of the Blockchain hall of fame.<br>Collect a star and let it shine. It will hang on our wall luminescent, bright and strong – there is your name on it.</p>
                     <router-link to="/become-a-star.html" class="btn">Become a star</router-link>
                 </div>
                 <div class="col-lg-6 col-md-6">

@@ -1,5 +1,3 @@
-import config from '../config';
-
 import TokenArtifact from '../abi/WallOfChainToken.json';
 import MarketArtifact from '../abi/WallOfChainMarket.json';
 
@@ -9,7 +7,7 @@ export default {
             legacy: false,
             web3: null,
             web3Provider: null,
-            etherscanLink: config.blockchain.etherscanLink,
+            etherscanLink: __ETHERSCAN_LINK__,
             metamask: {
                 installed: false,
                 netId: null,
@@ -19,8 +17,8 @@ export default {
                 market: null,
             },
             network: {
-                expectedId: config.blockchain.networkId,
-                expectedName: config.blockchain.networkName,
+                expectedId: __NETWORK_ID__,
+                expectedName: __NETWORK_NAME__,
             },
             waitTimeout: 0,
         };
@@ -53,14 +51,14 @@ export default {
                             console.log(err);
                         }
                         this.metamask.netId = netId;
-                        if (netId !== config.blockchain.networkId) {
+                        if (netId !== this.network.expectedId) {
                             await this.initWeb3(false);
                         }
                         resolve();
                     });
                 } else {
                     console.log('provided web3');
-                    this.web3Provider = new Web3.providers.HttpProvider(config.blockchain.web3Provider);
+                    this.web3Provider = new Web3.providers.HttpProvider(__WEB3_PROVIDER__);
                     this.web3 = new Web3(this.web3Provider);
 
                     resolve();
@@ -68,8 +66,8 @@ export default {
             });
         },
         initContracts () {
-            this.instances.token = this.web3.eth.contract(TokenArtifact.abi).at(config.blockchain.tokenAddress);
-            this.instances.market = this.web3.eth.contract(MarketArtifact.abi).at(config.blockchain.marketAddress);
+            this.instances.token = this.web3.eth.contract(TokenArtifact.abi).at(__TOKEN_ADDRESS__);
+            this.instances.market = this.web3.eth.contract(MarketArtifact.abi).at(__MARKET_ADDRESS__);
         },
         web3Ready() {
             // Placeholder function.
