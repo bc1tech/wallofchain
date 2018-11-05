@@ -4,7 +4,6 @@ import "../WallOfChainToken.sol";
 import "openzeppelin-solidity/contracts/token/ERC721/ERC721Mintable.sol";
 import "openzeppelin-solidity/contracts/token/ERC721/ERC721MetadataMintable.sol"; // solium-disable-line max-len
 
-
 contract WallOfChainTokenMock is WallOfChainToken, ERC721Mintable, ERC721MetadataMintable { // solium-disable-line max-len
 
   constructor(string _name, string _symbol)

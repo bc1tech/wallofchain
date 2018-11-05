@@ -1,9 +1,7 @@
 pragma solidity ^0.4.24;
 
 import "openzeppelin-solidity/contracts/math/SafeMath.sol";
-import "eth-token-recover/contracts/TokenRecover.sol";
 import "./WallOfChainToken.sol";
-
 
 contract WallOfChainMarket is TokenRecover {
   using SafeMath for uint256;
@@ -71,8 +69,8 @@ contract WallOfChainMarket is TokenRecover {
     uint256 _pattern,
     uint256 _icon
   )
-  public
-  payable
+    public
+    payable
   {
     uint256 weiAmount = msg.value;
 
@@ -110,8 +108,8 @@ contract WallOfChainMarket is TokenRecover {
     uint256 _pattern,
     uint256 _icon
   )
-  public
-  payable
+    public
+    payable
   {
     address tokenOwner = token.ownerOf(_tokenId);
     require(msg.sender == tokenOwner, "Sender must be token owner");
@@ -161,8 +159,8 @@ contract WallOfChainMarket is TokenRecover {
   function _preValidatePurchase(
     address _beneficiary
   )
-  internal
-  pure
+    internal
+    pure
   {
     require(
       _beneficiary != address(0),
@@ -181,8 +179,8 @@ contract WallOfChainMarket is TokenRecover {
     uint256 _pattern,
     uint256 _icon
   )
-  internal
-  returns (uint256)
+    internal
+    returns (uint256)
   {
     return token.newToken(
       _beneficiary,
@@ -205,8 +203,8 @@ contract WallOfChainMarket is TokenRecover {
     uint256 _pattern,
     uint256 _icon
   )
-  internal
-  returns (uint256)
+    internal
+    returns (uint256)
   {
     return token.editToken(
       _tokenId,

@@ -2,7 +2,6 @@ pragma solidity ^0.4.24;
 
 import "../WallOfChainToken.sol";
 
-
 contract StructuredLinkedListMock is WallOfChainToken {
   using StructuredLinkedList for StructuredLinkedList.List;
 
@@ -53,9 +52,9 @@ contract StructuredLinkedListMock is WallOfChainToken {
   function getNode(
     uint256 _node
   )
-  public
-  view
-  returns (bool, uint256, uint256)
+    public
+    view
+    returns (bool, uint256, uint256)
   {
     return list.getNode(_node);
   }
@@ -72,9 +71,9 @@ contract StructuredLinkedListMock is WallOfChainToken {
     address _structure,
     uint256 _value
   )
-  public
-  view
-  returns (uint256)
+    public
+    view
+    returns (uint256)
   {
     return list.getSortedSpot(_structure, _value);
   }

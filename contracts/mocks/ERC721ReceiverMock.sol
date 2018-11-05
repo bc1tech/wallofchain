@@ -2,7 +2,6 @@ pragma solidity ^0.4.24;
 
 import "openzeppelin-solidity/contracts/token/ERC721/IERC721Receiver.sol";
 
-
 contract ERC721ReceiverMock is IERC721Receiver {
   bytes4 private _retval;
   bool private _reverts;
@@ -26,8 +25,8 @@ contract ERC721ReceiverMock is IERC721Receiver {
     uint256 tokenId,
     bytes data
   )
-  public
-  returns(bytes4)
+    public
+    returns(bytes4)
   {
     require(!_reverts, "Forced revert");
     emit Received(
