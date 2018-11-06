@@ -176,7 +176,7 @@
                 margin-left: auto;
                 display: block;
             }
-            
+
             &--open {
                 display: block;
             }
@@ -218,7 +218,7 @@
             @include media-breakpoint-up(lg) {
                 padding: 0;
             }
-            
+
             &::before {
                 content: attr(title);
                 height: 0;
@@ -255,7 +255,7 @@
                     transform: translateY(0);
                 }
             }
-            
+
             &:hover {
                 font-weight: 700;
                 text-decoration: none;

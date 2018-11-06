@@ -1,7 +1,7 @@
 <template>
     <main class="container">
         <h1 class="text-center">Frequently Asked Questions</h1>
-        
+
         <div class="row">
             <div class="col-md-3">
                 <nav class="tab">
@@ -12,7 +12,7 @@
                             :class="{ 'tab__li--active': selectedFaq === index }">
                             <span>{{ faq.category }}</span>
                         </li>
-                    </ul>  
+                    </ul>
                 </nav>
             </div>
 
@@ -46,43 +46,43 @@
                     category: 'Starters',
                     list: [{
                         title: 'What is needed to aquire a star?',
-                        content: 'A computer with Firefox/Chrome\n' +
-                        'We suggest using these two browsers, as they ensure maximum compatibility.\n' +
-                        'Mobile navigation is also garanteed.\n' +
-                        'Navigation from multiple computers is also allowed.\n' +
-                        '\n' +
-                        '    A digital wallet\n' +
-                        '        To buy a star, you will need a digital wallet, specifically Metamask.\n' +
-                        '        As your digital wallet acts as a real one, you’ll need to put money in        it in order to do your first purchase.\n' +
-                        'WallOfChain does not have any control over your wallet, that belongs only to you. Please do not share with others your seeds words: they can restore your account in the case it’s deleted, but they can also garantee access to your entire account.\n' +
-                        'Your wallet is univocally identified by a wallet address. You can share it with other, and it’s used to convey assetts to your wallet.',
+                        content: 'A computer with Firefox/Chrome.\n' +
+                            'We suggest using these two browsers, as they ensure maximum compatibility.\n' +
+                            'Mobile navigation is also garanteed.\n' +
+                            'Navigation from multiple computers is also allowed.\n' +
+                            '\n' +
+                            '    A digital wallet\n' +
+                            '        To buy a star, you will need a digital wallet, specifically MetaMask.\n' +
+                            '        As your digital wallet acts as a real one, you’ll need to put money in        it in order to do your first purchase.\n' +
+                            'WallOfChain does not have any control over your wallet, that belongs only to you. Please do not share with others your seeds words: they can restore your account in the case it’s deleted, but they can also garantee access to your entire account.\n' +
+                            'Your wallet is univocally identified by a wallet address. You can share it with other, and it’s used to convey assets to your wallet.',
                     }, {
                         title: 'Ethereum',
                         content: 'Ethereum is a digital currency – its value, like any other currency, fluctuates with the market.\n' +
-                        'In order to convert your actual currency in Ethereum, you can use the Coinbase.\n' +
-                        'Some wallets allow the possibilty to directly aquire Ethereum currency, while others may require you to make a purchase from an exchange. After your purchase, you can transfer your Ethereum from the exchange wallet to your digital one.\n' +
-                        'Keep in mind it’s not the shortest process: you’ll need to verify your identity, which will probably take a day or two.\n' +
-                        'Worry not – your star awaits for you.',
+                            'In order to convert your actual currency in Ethereum, you can use the Coinbase.\n' +
+                            'Some wallets allow the possibilty to directly aquire Ethereum currency, while others may require you to make a purchase from an exchange. After your purchase, you can transfer your Ethereum from the exchange wallet to your digital one.\n' +
+                            'Keep in mind it’s not the shortest process: you’ll need to verify your identity, which will probably take a day or two.\n' +
+                            'Worry not – your star awaits for you.',
                     }],
                 }, {
                     category: 'Transactions',
                     list: [{
                         title: 'What is Etherscan?',
-                        content: 'Etherscan is an interface for the Ethereum Network. It has a memory of everything that’s happened on the blockchian. In this way, you can a 100% sure that your transactions were successful.'
+                        content: 'Etherscan is an interface for the Ethereum Network. It has a memory of everything that’s happened on the blockchain. In this way, you can a 100% sure that your transactions were successful.'
                     }, {
                         title: 'My transaction failed',
                         content: 'It is possible that the setting level of the gas limit was too low.'
                     }, {
                         title: 'My transaction failed, but my gas was charged',
-                        content: 'Gas is essencial to process requests on the blockchain. In this sense, even a failed transaction still rapresents a transaction.\n' +
-                        'This fee is payed to the Ethereum network and miners, and not to WallOfChain.'
+                        content: 'Gas is essential to process requests on the blockchain. In this sense, even a failed transaction still represents a transaction.\n' +
+                            'This fee is payed to the Ethereum network and miners, and not to WallOfChain.'
                     }, {
                         title: 'My transaction timed out',
                         content: 'It’s possible that the Ethereum network may be too busy to process the transaction. It usually happens when gas prices are too high, or there is a spike in network congestion.'
                     }, {
                         title: 'Ok, but what is gas?',
                         content: 'Gas is a short term used to describe the cost of a transaction or contract in Ethereum.\n' +
-                        'Each transaction takes a lot of computational power, and is splitted beneath multiple computers. This power is covered by gas.'
+                            'Each transaction takes a lot of computational power, and is splitted beneath multiple computers. This power is covered by gas.'
                     }],
                 }],
                 selectedFaq: 0,
@@ -157,7 +157,7 @@
 
     .accordion {
         position: relative;
-        
+
         & + & {
             &::after {
                 position: absolute;
@@ -182,7 +182,7 @@
             padding: 1.25em 0;
             font-weight: 700;
             margin: 0;
-            display: flex; 
+            display: flex;
             align-items: center;
             justify-content: space-between;
         }
@@ -215,7 +215,7 @@
             &::before {
                 margin: auto;
             }
-            
+
             &::after {
                 transform: rotate(90deg);
             }
@@ -242,7 +242,6 @@
             &:checked ~ .accordion__label .accordion__icon::before {
                 transform: rotate(-90deg);
             }
-            
         }
 
         &__content {
@@ -260,7 +259,6 @@
             margin-bottom: 1.25em;
             transform: translate(0 , 15% );
             transition: all .3s ease-in-out;
-            
         }
     }
 </style>

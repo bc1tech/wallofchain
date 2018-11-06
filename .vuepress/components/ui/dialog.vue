@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-        </div>
+    </div>
 </template>
 <script>
     export default {
@@ -90,7 +90,7 @@
             display: flex;
             align-items: center;
             min-height: calc(100% - (#{$modal-dialog-margin} * 2));
-            
+
 
             &--lg {
                 width: 100%;
