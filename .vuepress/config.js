@@ -5,6 +5,7 @@ module.exports = {
     ga: 'UA-128758422-1',
     head: [
         ['link', { rel: 'icon', href: '/favicon.ico' }],
+        ['meta', { name: 'google-site-verification', content: 'YsQAVRv3F4R_QM9YNQhkbQrYg2sLKh56ZxHxNbRJVkU' }],
         ['meta', { property: 'og:type', content: 'website' }],
         ['meta', { property: 'og:url', content: 'https://wallofchain.com' }],
         ['meta', { property: 'og:image', content: 'https://wallofchain.com/assets/images/wallofchain-og.png' }],
