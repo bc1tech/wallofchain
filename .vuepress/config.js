@@ -2,6 +2,7 @@ module.exports = {
     title: 'Wall of Chain',
     description: 'Become a part of the Blockchain hall of fame. Collect a star and let it shine. It will hang on our wall luminescent, bright and strong – there is your name on it.',
     dest: 'dist',
+    ga: 'UA-128758422-1',
     head: [
         ['link', { rel: 'icon', href: '/favicon.ico' }],
         ['meta', { property: 'og:type', content: 'website' }],
