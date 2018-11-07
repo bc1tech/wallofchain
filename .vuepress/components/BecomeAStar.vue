@@ -88,6 +88,9 @@
                             {{ errors.first('giftEth') }}
                         </p>
                     </div>
+                    <div class="col-lg-12">
+                        <small> Wall of Chain devolves part of its ETH raised to <a href="https://www.aidchain.co/charity/cool-earth" target="_blank"><u>Cool Earth</u></a> charity.</small>
+                    </div>
                 </div>
 
                 <header class="form-header">

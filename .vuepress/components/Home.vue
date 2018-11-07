@@ -3,9 +3,10 @@
         <div class="container hero">
             <div class="row align-items-center">
                 <div class="col-lg-6 col-md-6">
-                    <h1 class="hero__title">Get a star.<br>Be the star.</h1>
+                    <h1 class="hero__title">Get a star.<br>Be the star.<br>Help the planet.</h1>
                     <p class="hero__copy">Become a part of the Blockchain hall of fame.<br>Collect a star and let it shine. It will hang on our wall luminescent, bright and strong – there is your name on it.</p>
                     <router-link to="/become-a-star.html" class="btn">Become a star</router-link>
+                    <p class="hero__note">Wall of Chain makes you twice the star: for each token you create, you will be directly sustaining the <a href="https://www.aidchain.co/charity/cool-earth" target="_blank"><u>Cool Earth</u></a> charity. <br>How? Wall of Chain devolves part of its ETH raised.</p>
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <div class="wall wall-featured">
@@ -71,6 +72,13 @@
             letter-spacing: 0;
             line-height: 1.555;
             margin-bottom: 2.22em;
+        }
+
+        &__note {
+            font-size: 1rem;
+            letter-spacing: 0;
+            line-height: 1.555;
+            margin-top: 2.22em;
         }
     }
 
