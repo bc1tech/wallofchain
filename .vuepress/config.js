@@ -19,12 +19,12 @@ module.exports = {
 
         config.plugin('injections').tap(pluginArgs => pluginArgs.map(definitions => ({
             ...definitions,
-            '__TOKEN_ADDRESS__': JSON.stringify(isProd ? '0xB3c13400eEdB64E7935753474a4F83F17FdA0F5c' : '0xB3c13400eEdB64E7935753474a4F83F17FdA0F5c'),
-            '__MARKET_ADDRESS__': JSON.stringify(isProd ? '0xfD9b4aF19dD5b8460df20cC56E21FfC5CAfDe750' : '0xfD9b4aF19dD5b8460df20cC56E21FfC5CAfDe750'),
-            '__WEB3_PROVIDER__': JSON.stringify(isProd ? 'https://rinkeby.infura.io' : 'https://rinkeby.infura.io'),
-            '__ETHERSCAN_LINK__': JSON.stringify(isProd ? 'https://rinkeby.etherscan.io' : 'https://rinkeby.etherscan.io'),
-            '__NETWORK_ID__': JSON.stringify(isProd ? '4' : '4'),
-            '__NETWORK_NAME__': JSON.stringify(isProd ? 'Rinkeby Test Network' : 'Rinkeby Test Network'),
+            '__TOKEN_ADDRESS__': JSON.stringify(isProd ? '0xF9D9702D031407F425a4412682fDc56b07d05262' : '0xB3c13400eEdB64E7935753474a4F83F17FdA0F5c'),
+            '__MARKET_ADDRESS__': JSON.stringify(isProd ? '0x0A780c376B881048D59a4F5dCcEb1f01F1DffbaB' : '0xfD9b4aF19dD5b8460df20cC56E21FfC5CAfDe750'),
+            '__WEB3_PROVIDER__': JSON.stringify(isProd ? 'https://mainnet.infura.io' : 'https://rinkeby.infura.io'),
+            '__ETHERSCAN_LINK__': JSON.stringify(isProd ? 'https://etherscan.io' : 'https://rinkeby.etherscan.io'),
+            '__NETWORK_ID__': JSON.stringify(isProd ? '1' : '4'),
+            '__NETWORK_NAME__': JSON.stringify(isProd ? 'Main Ethereum Network' : 'Rinkeby Test Network'),
         })));
     },
 };

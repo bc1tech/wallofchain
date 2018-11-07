@@ -1,7 +1,12 @@
 <template>
     <main class="container">
-        <form class="form loading-parent row" @submit.prevent="submit">
-            <ui-loading v-if="loading" overlay></ui-loading>
+        <div v-if="trxLink" class="jumbotron text-center">
+            <h1 class="display-4">Generating Star...</h1>
+            <p class="lead">Please wait until generation is completed.</p>
+            <ui-loading v-if="loading"></ui-loading>
+            <a  target="_blank" :href="trxLink" class="btn">View transaction</a>
+        </div>
+        <form v-else class="form loading-parent row" @submit.prevent="submit">
             <div class="col-lg-7 loading-hide" :class="{ 'loading-hide--active': loading }">
                 <header class="form-header">
                     <h2 class="form-header__title">Buy your star</h2>
