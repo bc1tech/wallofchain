@@ -57,7 +57,7 @@
             this.$refs.starContent.vanillaTilt.destroy();
         },
         filters: {
-            number(num, maxDecimals = 4, minDecimals = 0) {
+            number(num, maxDecimals = 5, minDecimals = 0) {
                 const value = parseFloat(num);
                 return value.toLocaleString('en', {
                     maximumFractionDigits: maxDecimals,
