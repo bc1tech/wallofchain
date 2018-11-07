@@ -3,7 +3,7 @@
         <hr class="footer__divisor">
         <h3 class="footer__brand">WallOfChain.com</h3>
         <p class="footer__copy">Copyright (c) 2018 WALLOFCHAIN</p>
-        <span class="footer__credits">Proudly made by <a href="https://www.paneedesign.com/" target="_blank">Pane&Design</a></span>
+        <span class="footer__credits">Proudly made by <a href="https://www.paneedesign.com/" target="_blank">Pane&Design</a> | <a href="https://github.com/paneedesign/wallofchain" target="_blank"><i class="fab fa-github"></i></a></span>
     </footer>
 </template>
 <script>
