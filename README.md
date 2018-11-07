@@ -2,17 +2,22 @@
 
 [![Build Status](https://travis-ci.org/paneedesign/wallofchain.svg?branch=master)](https://travis-ci.org/paneedesign/wallofchain)
 [![Coverage Status](https://coveralls.io/repos/github/paneedesign/wallofchain/badge.svg?branch=master)](https://coveralls.io/github/paneedesign/wallofchain?branch=master)
- 
 
-Became a star into the Blockchain.
+Become a part of the Blockchain hall of fame. Collect a star and let it shine.
 
-Buy a spot in the Wall of Chain.
+WallOfChain is a ERC721 Collectible Token on Ethereum Blockchain.
 
-Website: [wallofchain.com](https://wallofchain.com/)
+It is made by the same technologies currently used by the Ethereum technology.
 
+When you acquire a star, it is uniquely owned by you. It carries your name, and cannot be replicated. You can let it shine brighter and let it grow while using our platform.
+
+## DAPP Source
+
+View it live at [wallofchain.com](https://wallofchain.com/).
+
+Discover DApp source [here](https://github.com/paneedesign/wallofchain/tree/site).  
 
 ## Installation
-
 
 Install truffle.
 
@@ -20,19 +25,13 @@ Install truffle.
 npm install -g truffle      // Version 4.1.14+ required.
 ```
 
-
-
 ## Install dependencies
-
 
 ```bash
 npm install
 ```
 
-
-
 ## Linter
-
 
 Use Solium
 
@@ -52,10 +51,7 @@ Use both and fix
 npm run lint:fix
 ```
 
-
-
 ## Compile and test the contracts.
- 
 
 Open the Truffle console
 
@@ -75,10 +71,7 @@ Test
 test
 ```
 
-
-
 ## Run server
-
 
 Run the `liteserver` development server.
 
@@ -86,10 +79,7 @@ Run the `liteserver` development server.
 npm run dev
 ```
 
-
-
 ## Optional
-
 
 Install the [truffle-flattener](https://github.com/alcuadrado/truffle-flattener)
 
@@ -97,27 +87,13 @@ Install the [truffle-flattener](https://github.com/alcuadrado/truffle-flattener)
 npm install -g truffle-flattener
 ```
  
- 
 Usage 
 
 ```bash
-truffle-flattener contracts/Migrations.sol >> dist/Migrations.sol
+truffle-flattener contracts/WallOfChainToken.sol >> dist/WallOfChainToken.dist.sol
+truffle-flattener contracts/WallOfChainMarket.sol >> dist/WallOfChainMarket.dist.sol
 ```
- 
 
+## License
 
-## DAPP
- 
-[DAPP Source](https://github.com/paneedesign/wallofchain/tree/site)
- 
-
- 
-## Links
-
-Solidity [Doc](https://solidity.readthedocs.io) [Github](https://solidity.readthedocs.io)
-
-OpenZeppelin [Doc](https://openzeppelin.org/api/docs/open-zeppelin.html) [Github](https://github.com/OpenZeppelin)
-
-Truffle [Doc](http://truffleframework.com/docs) [Github](https://github.com/trufflesuite/truffle)
-
-Web3.js [Doc 0.20.6](https://github.com/ethereum/wiki/wiki/JavaScript-API) [Doc 1.0](http://web3js.readthedocs.io/en/1.0) [Github](https://github.com/ethereum/web3.js)
+Code released under the [MIT License](https://github.com/paneedesign/wallofchain/blob/master/LICENSE).
