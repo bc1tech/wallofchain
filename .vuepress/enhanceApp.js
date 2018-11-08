@@ -3,7 +3,7 @@
 import VeeValidate from 'vee-validate';
 
 export default ({ Vue, router }) => {
-    if (process.env.NODE_ENV === 'production' && __GOOGLE_ANALYTICS__) {
+    if (typeof window !== 'undefined' && __GOOGLE_ANALYTICS__) {
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r;
             i[r] = i[r] || function () {
