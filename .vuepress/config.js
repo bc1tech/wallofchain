@@ -2,7 +2,6 @@ module.exports = {
     title: 'Wall of Chain',
     description: 'Become a part of the Blockchain hall of fame. Collect a star and let it shine. It will hang on our wall luminescent, bright and strong – there is your name on it.',
     dest: 'dist',
-    ga: 'UA-128758422-1',
     head: [
         ['link', { rel: 'icon', href: '/favicon.ico' }],
         ['meta', { name: 'google-site-verification', content: 'YsQAVRv3F4R_QM9YNQhkbQrYg2sLKh56ZxHxNbRJVkU' }],
@@ -19,6 +18,7 @@ module.exports = {
 
         config.plugin('injections').tap(pluginArgs => pluginArgs.map(definitions => ({
             ...definitions,
+            '__GOOGLE_ANALYTICS__': JSON.stringify('UA-128758422-1'),
             '__TOKEN_ADDRESS__': JSON.stringify(isProd ? '0xF9D9702D031407F425a4412682fDc56b07d05262' : '0xB3c13400eEdB64E7935753474a4F83F17FdA0F5c'),
             '__MARKET_ADDRESS__': JSON.stringify(isProd ? '0x0A780c376B881048D59a4F5dCcEb1f01F1DffbaB' : '0xfD9b4aF19dD5b8460df20cC56E21FfC5CAfDe750'),
             '__WEB3_PROVIDER__': JSON.stringify(isProd ? 'https://mainnet.infura.io' : 'https://rinkeby.infura.io'),

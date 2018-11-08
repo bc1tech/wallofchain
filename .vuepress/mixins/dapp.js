@@ -1,3 +1,5 @@
+/* global __ETHERSCAN_LINK__, __NETWORK_ID__, __NETWORK_NAME__, __WEB3_PROVIDER__, __TOKEN_ADDRESS__, __MARKET_ADDRESS__, ethereum */
+
 import TokenArtifact from '../abi/WallOfChainToken.json';
 import MarketArtifact from '../abi/WallOfChainMarket.json';
 
