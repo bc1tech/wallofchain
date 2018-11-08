@@ -54,6 +54,7 @@
         },
         methods: {
             web3Ready() {
+                this.loading = true;
                 this.instances.token.totalSupply((err, totalSupply) => {
                     this.totalSupply = parseInt(totalSupply.valueOf());
 
@@ -119,7 +120,7 @@
             }
         },
         mounted() {
-            this.loading = true;
+            this.start(false);
         },
     };
 </script>

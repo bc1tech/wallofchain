@@ -186,6 +186,9 @@
                 icons: Array(10).fill(undefined).map((v, i) => i),
             };
         },
+        mounted () {
+            this.start(true);
+        },
         methods: {
             submit() {
                 if (!this.metamask.installed) {

@@ -23,15 +23,15 @@ export default {
             waitTimeout: 0,
         };
     },
-    async mounted () {
-        await this.initWeb3(true);
-        this.initContracts();
-        this.web3Ready();
-    },
     beforeDestroy() {
         clearTimeout(this.waitTimeout);
     },
     methods: {
+        async start (checkWeb3) {
+            await this.initWeb3(checkWeb3);
+            this.initContracts();
+            this.web3Ready();
+        },
         initWeb3 (checkWeb3) {
             return new Promise((resolve) => {
                 if (checkWeb3 && (typeof ethereum !== 'undefined' || typeof web3 !== 'undefined')) {
