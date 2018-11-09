@@ -89,7 +89,7 @@
                         </p>
                     </div>
                     <div class="col-lg-12">
-                        <small> Wall of Chain devolves part of its ETH raised to <a href="https://www.aidchain.co/charity/cool-earth" target="_blank"><u>Cool Earth</u></a> charity.</small>
+                        <div class="text-box"> Wall of Chain devolves part of its ETH raised to <a href="https://www.aidchain.co/charity/cool-earth" target="_blank"><u>Cool Earth</u></a> charity.</div>
                     </div>
                 </div>
 
@@ -386,6 +386,14 @@
 
         .btn {
             width: 100%;
+        }
+
+        .text-box {
+            position: relative;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+            background-image: linear-gradient(44deg, #5E2563 0%, #65799B 100%);
+            padding: 1em;
+            margin: 1em auto;
         }
     }
 
