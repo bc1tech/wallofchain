@@ -1,75 +1,79 @@
 <template>
-    <div class="dropdown" :class="`dropdown--${type} ${ open ? 'dropdown--open' : ''} ${ disabled ? 'dropdown--disabled' : ''}`">
-        <span @click="toggleDropdown" :title="`Select your ` + type" class="dropdown__el">
-            {{ selectedOption !== '' ? `${type.substr(0,1).toUpperCase()}${type.substr(1)} ${selectedOption + 1}` : toggle }}
-        </span>
-        <ul class="dropdown__menu">
-            <li class="dropdown__child"
-                :class="{'dropdown__child--selected': selectedOption === option}"
-                v-for="(option, index) in options"
-                :key="index"
-                @click="selectOption(option)">
-                <span class="dropdown__option" :class="optionClass(option)"></span>
-            </li>
-        </ul>
-    </div>
+  <div class="dropdown"
+      :class="`dropdown--${type} ${ open ? 'dropdown--open' : ''} ${ disabled ? 'dropdown--disabled' : ''}`">
+    <span :title="`Select your ` + type"
+        class="dropdown__el"
+        @click="toggleDropdown">
+      {{ selectedOption !== '' ? `${type.substr(0,1).toUpperCase()}${type.substr(1)} ${selectedOption + 1}` : toggle }}
+    </span>
+    <ul class="dropdown__menu">
+      <li v-for="(option, index) in options"
+          :key="index"
+          class="dropdown__child"
+          :class="{'dropdown__child--selected': selectedOption === option}"
+          @click="selectOption(option)">
+        <span class="dropdown__option"
+            :class="optionClass(option)"></span>
+      </li>
+    </ul>
+  </div>
 </template>
 <script>
-    export default {
-        props: {
-            toggle: {
-                type: String,
-                default: 'Open',
-            },
-            type: {
-                type: String,
-                required: true,
-            },
-            options: {
-                type: Array,
-                required: true,
-            },
-            value: {
-                type: [String, Number],
-                required: true,
-            },
-            disabled: {
-                type: Boolean,
-            },
-        },
-        data() {
-            return {
-                open: false,
-                selectedOption: this.value || '',
-            };
-        },
-        watch: {
-            disabled(disabled) {
-                if (disabled) {
-                    this.open = false;
-                }
-            },
-        },
-        methods: {
-            toggleDropdown() {
-                if (!this.disabled) {
-                    this.open = !this.open;
-                }
-            },
-            selectOption(option) {
-                this.selectedOption = option;
-                this.$emit('input', option);
-                this.toggleDropdown();
-            },
-            optionClass(option) {
-                if (this.type === 'gradient') {
-                    return `gradient-style gradient-style-${option}`;
-                }
+  export default {
+    props: {
+      toggle: {
+        type: String,
+        default: 'Open',
+      },
+      type: {
+        type: String,
+        required: true,
+      },
+      options: {
+        type: Array,
+        required: true,
+      },
+      value: {
+        type: [String, Number],
+        required: true,
+      },
+      disabled: {
+        type: Boolean,
+      },
+    },
+    data() {
+      return {
+        open: false,
+        selectedOption: this.value || '',
+      };
+    },
+    watch: {
+      disabled(disabled) {
+        if (disabled) {
+          this.open = false;
+        }
+      },
+    },
+    methods: {
+      toggleDropdown() {
+        if (!this.disabled) {
+          this.open = !this.open;
+        }
+      },
+      selectOption(option) {
+        this.selectedOption = option;
+        this.$emit('input', option);
+        this.toggleDropdown();
+      },
+      optionClass(option) {
+        if (this.type === 'gradient') {
+          return `gradient-style gradient-style-${option}`;
+        }
 
-                return `icon-${option}`;
-            },
-        },
-    };
+        return `icon-${option}`;
+      },
+    },
+  };
 </script>
 <style lang="scss">
     .dropdown {
@@ -114,9 +118,9 @@
             position: relative;
             padding: 1rem;
             border: 1px solid rgba(255,255,255,0.40);
-            border-radius: 12px;
+            border-radius: 0.25rem;
             font-size: .875rem;
-            color: rgba(255,255,255,0.80);
+            color: rgba(255, 255, 255, 0.6);
             letter-spacing: 1px;
             line-height: 1.2857;
             font-weight: 600;
@@ -147,10 +151,10 @@
             position: absolute;
             left: -9999px;
             width: 100%;
-            z-index: 1;
+            z-index: 5;
             background: rgba(255,255,255,0.20);
             border: 1px solid rgba(255,255,255,0.40);
-            border-radius: 12px;
+            border-radius: 0.25rem;
             list-style: none;
             padding: .25rem;
             margin: .325rem 0 0;
@@ -230,8 +234,9 @@
             }
 
             #{$root}__option {
-                padding: 0.75em;
+                padding: 0;
                 border: 1px solid white;
+                background: #fff;
 
                 &:after {
                     content: '';
