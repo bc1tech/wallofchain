@@ -6,6 +6,8 @@
                 <ui-star v-for="(item, index) in wall"
                          :key="item.id"
                          :index="index"
+                         :tokenID="item.id"
+                         :tokenOwner="item.tokenOwner"
                          :amount="item.amount"
                          :currency="item.currency"
                          :icon="item.icon"

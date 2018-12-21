@@ -1,6 +1,7 @@
 <template>
     <div class="star"
          ref="star"
+         @click="toggleModal()"
          :class="`star--style-${!parseFloat(amount) ? '0' : styleType} ${itemClass(index)}`">
         <div class="star__content" ref="starContent">
             <span v-if="!!parseFloat(amount)"
@@ -8,6 +9,19 @@
             <h2 class="star__title">{{ title }}</h2>
             <div class="star__amount">{{ amount | number }} {{ currency }}</div>
         </div>
+
+        <ui-dialog :ref="'detail-id-' + tokenID">
+            <span v-if="!!parseFloat(amount)" class="star__icon" :class="`icon-${icon}`"></span>
+            <h2 class="star__title">{{ title }}</h2>
+            <div class="star__amount">{{ amount | number }} {{ currency }}</div>
+            <div>Token ID</div>
+            <div>{{ tokenID }}</div>
+            <div>Owner</div>
+            <div>{{ tokenOwner }}</div>
+            <template slot="footer">
+                <a :href="this.etherscanLink" target="_blank" class="btn btn-secondary">View on Etherscan.com</a>
+            </template>
+        </ui-dialog>
     </div>
 </template>
 <script>
@@ -25,7 +39,7 @@
     }];
 
     export default {
-        props: ['amount', 'currency', 'icon', 'styleType', 'title', 'etherscanLink', 'index', 'small'],
+        props: ['tokenID', 'tokenOwner', 'amount', 'currency', 'icon', 'styleType', 'title', 'etherscanLink', 'index', 'small'],
         methods: {
             itemClass(index) {
                 let itemClass = 'star--';
@@ -43,6 +57,9 @@
                 }
 
                 return itemClass;
+            },
+            toggleModal() {
+                this.$refs[`detail-id-${this.tokenID}`].open()
             },
         },
         mounted() {

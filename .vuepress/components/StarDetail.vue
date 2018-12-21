@@ -4,7 +4,9 @@
         <transition name="fade" mode="out-in">
             <ui-loading v-if="loading"></ui-loading>
             <div v-else>
-                <ui-star :amount="item.amount"
+                <ui-star :tokenID="item.id"
+                         :tokenOwner="item.tokenOwner"
+                         :amount="item.amount"
                          :currency="item.currency"
                          :icon="item.icon"
                          :styleType="item.styleType"
