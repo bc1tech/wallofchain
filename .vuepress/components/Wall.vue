@@ -2,10 +2,11 @@
   <main>
     <div class="container-lg hero">
       <h1 class="hero__title">
-        Get a star. Be the star. Help the planet.
+        Get a star. Be the star.<br>
+        Help the planet.
       </h1>
       <p class="hero__copy">
-        Become a part of the Blockchain hall of fame. Collect a star and let it shine.
+        Become a part of the Blockchain hall of fame. Collect a star and let it shine.<br>
         It will hang on our wall luminescent, bright and strong – there is your name on it.
       </p>
     </div>

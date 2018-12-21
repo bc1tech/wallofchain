@@ -22,7 +22,7 @@
           :class="{ 'loading-hide--active': loading }">
         <header class="form-header">
           <h2 class="form-header__title">
-            Buy your star
+            Get your star
           </h2>
         </header>
 
