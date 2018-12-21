@@ -40,6 +40,7 @@
 </template>
 <script>
     export default {
+        name: 'PageFaq',
         data() {
             return {
                 faqs: [{

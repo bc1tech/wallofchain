@@ -41,6 +41,7 @@
     const Wall = () => import('../theme/Wall.vue');
 
     export default {
+        name: 'PageHome',
         components: {
             Wall,
         },

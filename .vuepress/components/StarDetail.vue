@@ -19,6 +19,7 @@
     import dapp from '../mixins/dapp';
 
     export default {
+        name: 'PageStarDetail',
         mixins: [
             dapp
         ],

@@ -1,13 +1,26 @@
 <template>
-    <footer class="container footer">
-        <hr class="footer__divisor">
-        <h3 class="footer__brand">WallOfChain.com</h3>
-        <p class="footer__copy">Copyright (c) 2018 WALLOFCHAIN</p>
-        <span class="footer__credits">Proudly made by <a href="https://www.paneedesign.com/" target="_blank">Pane&Design</a> | <a href="https://github.com/paneedesign/wallofchain" target="_blank"><img width="16" :src="$withBase('/assets/images/github-logo.svg')"/></a></span>
-    </footer>
+  <footer class="container footer">
+    <hr class="footer__divisor">
+    <h3 class="footer__brand">
+      <strong>Wall</strong>Of<strong>Chain</strong>
+    </h3>
+    <p class="footer__copy">
+      Copyright (c) 2018 WALLOFCHAIN
+    </p>
+    <span class="footer__credits">
+      Proudly made by <a href="https://www.paneedesign.com/"
+          target="_blank">
+        Pane&Design
+      </a> | <a href="https://github.com/paneedesign/wallofchain"
+          target="_blank">
+        <img width="16"
+            :src="$withBase('/assets/images/github-logo.svg')">
+      </a>
+    </span>
+  </footer>
 </template>
 <script>
-    export default {};
+  export default {};
 </script>
 <style lang="scss">
     @import "../scss/variables";
@@ -37,12 +50,17 @@
         }
 
         &__brand {
-            font-size: 0.875rem;
-            font-weight: 800;
-            letter-spacing: 0.15em;
-            line-height: 1.714;
+            font-size: 1rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            line-height: 1.3125;
             text-transform: uppercase;
             margin: 0;
+            color: $primary;
+
+            strong {
+                font-weight: 900;
+            }
         }
 
         &__copy {

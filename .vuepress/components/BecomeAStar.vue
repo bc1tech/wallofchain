@@ -164,6 +164,7 @@
     import dapp from '../mixins/dapp';
 
     export default {
+        name: 'PageBecomeAStar',
         mixins: [
             dapp
         ],

@@ -37,7 +37,9 @@
     </main>
 </template>
 <script>
-    export default {};
+    export default {
+      name: 'PageProject',
+    };
 </script>
 <style lang="scss">
     @import "../scss/variables";
