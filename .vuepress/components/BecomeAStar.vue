@@ -172,6 +172,7 @@
                 loading: true,
                 trxHash: '',
                 trxLink: '',
+                starLink: '',
                 formData: {
                     firstName: '',
                     lastName: '',
@@ -244,6 +245,8 @@
                                                 (err, event) => {
                                                     if (!err) {
                                                         console.log(event);
+
+                                                        this.starLink = this.$withBase(`star.html?id=${parseInt(event.args.tokenId.valueOf())}`);
                                                         this.loading = false;
                                                         this.toggleModal('okay');
                                                     } else {
