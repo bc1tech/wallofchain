@@ -8,7 +8,7 @@
       <p class="lead">
         Please wait until generation is completed.
       </p>
-      <UiLoading v-if="loading"></UiLoading>
+      <ui-loading v-if="loading"></ui-loading>
       <a target="_blank"
           :href="trxLink"
           class="btn">
@@ -193,7 +193,7 @@
       Now your star is on our WallOfChain!!
       <template slot="footer">
         <RouterLink to="/"
-            class="btn btn-secondary"
+            class="btn btn--outline d-block"
             @click="toggleModal('okay', true)">
           Go back home
         </RouterLink>
@@ -204,18 +204,15 @@
       <template slot="title">
         Become a star
       </template>
-      You’ll need a safe place to store your Wall of Chain! The perfect place is in a secure wallet like MetaMask. This will also act as your login to the game (no extra password needed).
+      You’ll need a safe place to store your Wall of Chain!
+      The perfect place is in a secure wallet like MetaMask.
+      This will also act as your login to the game (no extra password needed).
       <template slot="footer">
         <a href="https://metamask.io/"
             target="_blank"
-            class="btn btn-secondary">
+            class="btn btn--outline d-block">
           INSTALL METAMASK
         </a>
-        <button type="button"
-            class="btn btn--unstyled"
-            @click="toggleModal('metamask', true)">
-          Close
-        </button>
       </template>
     </ui-dialog>
   </main>

@@ -71,16 +71,12 @@
         background-color: $body-bg;
     }
 
-    &--thin {
-        border-width: 1px;
-    }
-
     &--outline {
-        background-image: linear-gradient(103deg, transparent 50%, #4090ef, #9c9a42);
-        background-size: 300% 100%;
+        border: 1px solid $secondary;
+        color: $secondary;
 
         &:hover, &.active {
-            background-position-x: 100%;
+
         }
     }
 
