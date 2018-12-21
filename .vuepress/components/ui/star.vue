@@ -25,7 +25,7 @@
     }];
 
     export default {
-        props: ['amount', 'currency', 'icon', 'styleType', 'title', 'index', 'small'],
+        props: ['amount', 'currency', 'icon', 'styleType', 'title', 'etherscanLink', 'index', 'small'],
         methods: {
             itemClass(index) {
                 let itemClass = 'star--';

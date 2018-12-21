@@ -11,6 +11,7 @@
                          :icon="item.icon"
                          :styleType="item.styleType"
                          :title="item.title"
+                         :etherscanLink="item.etherscanLink"
                          class="wall__item" />
             </transition-group>
             <div class="text-center" v-if="loadMore && !loadingMore && wall.length < totalSupply">
@@ -102,6 +103,7 @@
                                     currency: 'ETH',
                                     styleType: rawStar[4].valueOf(),
                                     icon: rawStar[5].valueOf(),
+                                    etherscanLink: this.etherscanLink + "/token/" + this.instances.token.address + "?a=" + this.lastId
                                 };
 
                                 this.wall.push(wallItem);

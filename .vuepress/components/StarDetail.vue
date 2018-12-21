@@ -9,6 +9,7 @@
                          :icon="item.icon"
                          :styleType="item.styleType"
                          :title="item.title"
+                         :etherscanLink="item.etherscanLink"
                          class="wall__item m-auto" />
             </div>
         </transition>
@@ -54,6 +55,7 @@
                             currency: 'ETH',
                             styleType: rawStar[4].valueOf(),
                             icon: rawStar[5].valueOf(),
+                            etherscanLink: this.etherscanLink + "/token/" + this.instances.token.address + "?a=" + parseInt(tokenID.valueOf())
                         };
 
                         this.loading = false;
