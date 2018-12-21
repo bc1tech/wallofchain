@@ -4,17 +4,11 @@
     width: 100%;
     height: 100%;
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: 72%;
     background-position: center center;
 }
 
-.icon-ped {
-    &:before {
-        background-image: url(../svg/ped.svg);
-    }
-}
-
-$list: gym, drink, food, car, basketball, setting, bowling, dog, ribbon, trumpet;
+$list: butterfly, cat, dog, dolphin, elephant, fish, gorilla, horse, kiwi, turtle;
 
 @for $i from 1 through length($list) {
     $item: nth($list, $i);

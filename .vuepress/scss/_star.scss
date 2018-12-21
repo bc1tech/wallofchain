@@ -137,7 +137,7 @@ $styles: (
             background-image: url(../images/star.png);
             background-repeat: no-repeat;
             background-position: center;
-            background-size: 100%;
+            background-size: 98%;
 
             @media
             (-webkit-min-device-pixel-ratio: 2),
@@ -153,6 +153,8 @@ $styles: (
         width: 25%;
         max-width: 5em;
         margin-bottom: 0.8em;
+        border-radius: 100%;
+        background-color: #fff;
         
         &:after {
             content: '';

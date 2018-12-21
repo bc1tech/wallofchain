@@ -3,7 +3,8 @@
          ref="star"
          :class="`star--style-${!parseFloat(amount) ? '0' : styleType} ${itemClass(index)}`">
         <div class="star__content" ref="starContent">
-            <span class="star__icon" :class="`icon-${!parseFloat(amount) ? 'ped' : icon}`"></span>
+            <span v-if="!!parseFloat(amount)"
+                  class="star__icon" :class="`icon-${icon}`"></span>
             <h2 class="star__title">{{ title }}</h2>
             <div class="star__amount">{{ amount | number }} {{ currency }}</div>
         </div>

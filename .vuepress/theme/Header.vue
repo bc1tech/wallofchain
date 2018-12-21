@@ -1,65 +1,70 @@
 <template>
-    <header class="navbar container">
-        <button ref="toggler"
-                class="navbar__toggler btn btn--outline btn--thin"
-                :class="navOpen ? 'navbar__toggler--active' : ''"
-                @click="toggleNavbar">
-            <span class="navbar__toggler-icon"></span>
-        </button>
+  <header class="navbar container-lg">
+    <button ref="toggler"
+        class="navbar__toggler btn btn--outline btn--thin"
+        :class="navOpen ? 'navbar__toggler--active' : ''"
+        @click="toggleNavbar">
+      <span class="navbar__toggler-icon"></span>
+    </button>
 
-        <router-link class="navbar__brand" to="/">
-            WallOfChain.com
-        </router-link>
+    <RouterLink class="navbar__brand"
+        to="/">
+      WallOfChain.com
+    </RouterLink>
 
-        <ul class="navbar__nav" :class="navOpen ? 'navbar__nav--open' : ''">
-            <li class="navbar__item">
-                <router-link class="navbar__link" title="Home" to="/">
-                    Home
-                </router-link>
-            </li>
-            <li class="navbar__item">
-                <router-link class="navbar__link" title="The Project" to="/project.html">
-                    The Project
-                </router-link>
-            </li>
-            <li class="navbar__item">
-                <router-link class="navbar__link" title="The Wall" to="/wall.html">
-                    The Wall
-                </router-link>
-            </li>
-            <li class="navbar__item">
-                <router-link class="navbar__link" title="FAQ" to="/faq.html">
-                    FAQ
-                </router-link>
-            </li>
-            <li class="navbar__item">
-                <router-link class="btn btn--outline btn--thin" title="Become a Star" to="/become-a-star.html">
-                    Become a Star
-                </router-link>
-            </li>
-        </ul>
-    </header>
+    <ul class="navbar__nav"
+        :class="navOpen ? 'navbar__nav--open' : ''">
+      <li class="navbar__item">
+        <RouterLink class="navbar__link"
+            title="Home"
+            to="/">
+          Home
+        </RouterLink>
+      </li>
+      <li class="navbar__item">
+        <RouterLink class="navbar__link"
+            title="The Project"
+            to="/project.html">
+          The Project
+        </RouterLink>
+      </li>
+      <li class="navbar__item">
+        <RouterLink class="navbar__link"
+            title="FAQ"
+            to="/faq.html">
+          FAQ
+        </RouterLink>
+      </li>
+      <li class="navbar__item">
+        <RouterLink class="btn btn--outline btn--thin"
+            title="Become a Star"
+            to="/become-a-star.html">
+          Become a Star
+        </RouterLink>
+      </li>
+    </ul>
+  </header>
 </template>
 <script>
-    export default {
-        data() {
-            return {
-                navOpen: false,
-            };
-        },
-        methods: {
-            toggleNavbar() {
-                this.navOpen = !this.navOpen;
-            },
-        },
-        watch: {
-            '$route'() {
-                if (this.navOpen) {
-                    this.navOpen = false;
-                }
-            }
-        },
-    };
+  export default {
+    data() {
+      return {
+        navOpen: false,
+      };
+    },
+    watch: {
+      $route() {
+        if (this.navOpen) {
+          this.navOpen = false;
+        }
+      },
+    },
+    methods: {
+      toggleNavbar() {
+        this.navOpen = !this.navOpen;
+      },
+    },
+  };
 </script>
 <style lang="scss">
     @import "../scss/variables";
