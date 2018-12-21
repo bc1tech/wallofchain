@@ -63,7 +63,7 @@
         &__title {
             font-size: 2rem;
             line-height: 1.25;
-            font-weight: 700;
+            font-weight: 600;
             letter-spacing: 0.0625em;
             margin-bottom: 0.625em;
         }

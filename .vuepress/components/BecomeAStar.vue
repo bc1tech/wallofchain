@@ -323,7 +323,7 @@
             line-height: 1.555;
 
             strong {
-                font-weight: 700;
+                font-weight: 600;
             }
 
             &.small {
@@ -335,7 +335,7 @@
         &__link {
             color: #7E9FFF;
             text-decoration: underline;
-            font-weight: 700;
+            font-weight: 600;
         }
     }
 
@@ -351,7 +351,7 @@
             font-size: .875rem;
             line-height: 1.2857;
             margin-bottom: 1.4285em;
-            font-weight: 700;
+            font-weight: 800;
             transition: border-color .15s ease-in-out;
 
             &:focus {

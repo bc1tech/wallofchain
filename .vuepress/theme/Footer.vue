@@ -8,9 +8,9 @@
       Copyright (c) 2018 WALLOFCHAIN
     </p>
     <span class="footer__credits">
-      Proudly made by <a href="https://www.paneedesign.com/"
+      Proudly made by <a href="https://bc1.tech"
           target="_blank">
-        Pane&Design
+        BC1
       </a> | <a href="https://github.com/paneedesign/wallofchain"
           target="_blank">
         <img width="16"

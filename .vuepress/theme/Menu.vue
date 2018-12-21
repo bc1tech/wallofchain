@@ -1,7 +1,7 @@
 <template>
   <div class="main-menu container">
     <div class="row">
-      <div class="col-lg-8">
+      <div class="col-lg-6">
         <ul class="main-menu__nav">
           <li class="main-menu__item">
             <RouterLink class="main-menu__link"
@@ -25,22 +25,61 @@
             </RouterLink>
           </li>
         </ul>
+
+        <ul class="credits">
+          <li class="credits__item">
+            Proudly made by <a href="https://bc1.tech"
+                target="_blank">
+              BC1
+            </a>
+          </li>
+          <li class="credits__item">
+            See on <a href="https://github.com/paneedesign/wallofchain"
+                target="_blank">
+              GitHub <img width="16"
+                  :src="$withBase('/assets/images/github-logo.svg')">
+            </a>
+          </li>
+        </ul>
       </div>
-      <div class="col-lg-4">
-        <div>
-          <p>
+      <div class="offset-lg-1 col-lg-5">
+        <div class="info-block">
+          <a href="https://etherscan.io/"
+              target="_blank">
+            <img :src="$withBase('/assets/images/etherscan.png')"
+                :srcset="`${$withBase('/assets/images/etherscan.png')} 1x,
+              ${$withBase('/assets/images/etherscan@2x.png')} 2x`"
+                class="info-block__image"
+                alt="Etherscan">
+          </a>
+          <p class="info-block__copy">
             Vestibulum id ligula porta felis euismod semper.
-            Integer posuere erat a ante Etherscan dapibus posuere velit aliquet.
+            Integer posuere erat a ante
+            <a href="https://etherscan.io/"
+                target="_blank">
+              Etherscan
+            </a>
+            dapibus posuere velit aliquet.
             Maecenas sed diam eget risus varius blandit sit amet non magna.
             Integer posuere erat a ante venenatis.
           </p>
         </div>
-        <div>
-          <p>
-            Vestibulum id ligula porta felis euismod semper.
-            Integer posuere erat a ante Etherscan dapibus posuere velit aliquet.
-            Maecenas sed diam eget risus varius blandit sit amet non magna.
-            Integer posuere erat a ante venenatis.
+        <div class="info-block">
+          <a href="https://www.coolearth.org/"
+              target="_blank">
+            <img :src="$withBase('/assets/images/coolearth.png')"
+                :srcset="`${$withBase('/assets/images/coolearth.png')} 1x,
+              ${$withBase('/assets/images/coolearth@2x.png')} 2x`"
+                class="info-block__image"
+                alt="Etherscan">
+          </a>
+          <p class="info-block__copy">
+            WallOfChain makes you twice the star: for each token you create,
+            you will be directly sustaining the <a href="https://www.coolearth.org"
+                target="_blank">
+              Cool Earth
+            </a> charity.
+            How? WallOfChain devolves part of its ETH raised to charity's cause.
           </p>
         </div>
       </div>
@@ -51,16 +90,104 @@
   export default {};
 </script>
 <style lang="scss">
-    @import "../scss/variables";
-    @import "~bootstrap/scss/functions";
-    @import "~bootstrap/scss/variables";
-    @import "~bootstrap/scss/mixins";
+  @import "../scss/variables";
+  @import "~bootstrap/scss/functions";
+  @import "~bootstrap/scss/variables";
+  @import "~bootstrap/scss/mixins";
 
-    .main-menu {
-        &__nav {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
+  .main-menu {
+    margin-top: 4rem;
+    padding-bottom: 3.125em;
+
+    @include media-breakpoint-up(md) {
+      padding-bottom: 6.25em;
     }
+
+    &__nav {
+      list-style: none;
+      margin: 0 0 3rem;
+      padding: 0;
+
+      @include media-breakpoint-up(lg) {
+        margin-bottom: 4em;
+      }
+    }
+
+    &__item {
+      & + & {
+        margin-top: 2em;
+      }
+    }
+
+    &__link {
+      display: inline-block;
+      font-size: 56px;
+      font-weight: 600;
+      line-height: 1.3035;
+      color: #fff;
+      transition: color .15s ease-in, transform .15s ease-in;
+
+      &:hover {
+        color: $primary;
+        text-decoration: none;
+        transform: translateX(1rem);
+      }
+
+      &.router-link-exact-active {
+        color: $primary;
+      }
+    }
+  }
+
+  .credits {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    &__item {
+      font-size: 1rem;
+      line-height: 1.3125;
+
+      & + & {
+        margin-top: 2em;
+      }
+
+      a {
+        color: #fff;
+
+        &:hover {
+          color: $primary;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .info-block {
+    & + & {
+      margin-top: 3em;
+
+      @include media-breakpoint-up(lg) {
+        margin-top: 5em;
+      }
+    }
+
+    &__image {
+      margin-bottom: 2em;
+    }
+
+    &__copy {
+      font-size: 1rem;
+      line-height: 1.5;
+
+      a {
+        color: #fff;
+        text-decoration: underline;
+
+        &:hover {
+          color: $primary;
+        }
+      }
+    }
+  }
 </style>

@@ -47,6 +47,7 @@
     justify-content: space-between;
     padding-top: 1.25em;
     padding-bottom: 2.5em;
+    margin-bottom: 1.5em;
 
     @include media-breakpoint-up(lg) {
       padding-top: 2.5em;
@@ -139,116 +140,6 @@
             background-color: $primary;
           }
         }
-      }
-    }
-
-    &__menu {
-      position: fixed;
-      z-index: 2;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: linear-gradient(143deg, #2D215E, #0A0E2C);
-      min-height: 100vh;
-      opacity: 0;
-      visibility: hidden;
-
-      &--open {
-        opacity: 1;
-        visibility: visible;
-      }
-    }
-
-    &__nav {
-      list-style: none;
-      margin: 1.25em 0 0;
-      padding: 0;
-      text-align: left;
-    }
-
-    &__item {
-      display: block;
-      margin: 0 0 1em;
-      text-align: center;
-
-      @include media-breakpoint-up(md) {
-        text-align: left;
-        display: inline-block;
-        margin: 0 1em;
-
-        &:first-child {
-          margin-left: 0;
-        }
-
-        &:last-child {
-          margin-right: 0;
-        }
-      }
-
-      @include media-breakpoint-up(lg) {
-        margin: 0 1.25em;
-      }
-    }
-
-    &__link {
-      display: inline-block;
-      padding: 0 2em;
-      text-transform: uppercase;
-      font-size: 0.875rem;
-      line-height: 1.285;
-      letter-spacing: 0.214em;
-      color: #fff;
-
-      @include media-breakpoint-up(lg) {
-        padding: 0;
-      }
-
-      &::before {
-        content: attr(title);
-        height: 0;
-        display: block;
-        font-weight: 700;
-        overflow: hidden;
-        visibility: hidden;
-      }
-
-      &::after {
-        content: '';
-        display: block;
-        position: relative;
-        top: 0.428em;
-        width: 20%;
-        margin: 0 auto;
-        height: 2px;
-        background-image: linear-gradient(94deg, #4090ef, #9c9a42);
-        opacity: 0;
-        transform: translateY(-4px);
-        transition: .15s ease-in-out;
-
-        @include media-breakpoint-up(md) {
-          top: 0.928em;
-        }
-      }
-
-      &.router-link-exact-active {
-        font-weight: 700;
-
-        &::after {
-          opacity: 1;
-          width: 60%;
-          transform: translateY(0);
-        }
-      }
-
-      &:hover {
-        font-weight: 700;
-        text-decoration: none;
-        color: #fff;
-      }
-
-      &:focus {
-        outline: none;
       }
     }
   }

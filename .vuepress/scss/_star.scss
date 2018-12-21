@@ -146,7 +146,7 @@ $styles: (
             }
         }
     }
-    
+
     &__icon {
         position: relative;
         display: inline-block;
@@ -155,7 +155,7 @@ $styles: (
         margin-bottom: 0.8em;
         border-radius: 100%;
         background-color: #fff;
-        
+
         &:after {
             content: '';
             display: block;
@@ -171,7 +171,7 @@ $styles: (
     }
 
     &__title {
-        font-weight: 700;
+        font-weight: 600;
         line-height: 1.02;
         font-size: inherit;
         margin-bottom: 0.5em;
@@ -179,7 +179,7 @@ $styles: (
     }
 
     &__amount {
-        font-weight: 700;
+        font-weight: 600;
         font-size: 80%;
         letter-spacing: 0;
         line-height: 1.02;
