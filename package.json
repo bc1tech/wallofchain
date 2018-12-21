@@ -19,8 +19,14 @@
   },
   "homepage": "https://github.com/paneedesign/wallofchain#readme",
   "devDependencies": {
+    "babel-eslint": "^8.2.6",
+    "eslint": "^5.10.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-vue": "^5.0.0",
     "node-sass": "^4.9.2",
     "sass-loader": "^7.0.3",
+    "vue-eslint-parser": "^4.0.3",
     "vuepress": "^0.14.4"
   },
   "dependencies": {
