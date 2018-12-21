@@ -12,13 +12,10 @@
             When you acquire a star, it is uniquely owned by you.
             It carries your name, and cannot be replicated. You can let it shine brighter and
             let it grow while using our platform.<br><br>
-            Vestibulum id ligula porta felis euismod semper.
-            Integer posuere erat a ante <a href="https://etherscan.io/"
-                target="_blank">
-              Etherscan
-            </a> dapibus posuere velit aliquet.
-            Maecenas sed diam eget risus varius blandit sit amet non magna.
-            Integer posuere erat a ante venenatis.
+            Each transaction is stored on the blockchain and you can view and check it through
+            <a href="https://etherscan.io/" target="_blank">Etherscan</a>, which is one of the interfaces for the Ethereum network.
+            It has a memory of everything that’s happened on the blockchain.
+            In this way, you can be 100% sure that your transactions were successful.
           </p>
           <a href="https://etherscan.io/"
               target="_blank">

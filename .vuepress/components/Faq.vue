@@ -69,7 +69,7 @@
                     category: 'Transactions',
                     list: [{
                         title: 'What is Etherscan?',
-                        content: 'Etherscan is an interface for the Ethereum Network. It has a memory of everything that’s happened on the blockchain. In this way, you can a 100% sure that your transactions were successful.'
+                        content: 'Etherscan is an interface for the Ethereum Network. It has a memory of everything that’s happened on the blockchain. In this way, you can be 100% sure that your transactions were successful.'
                     }, {
                         title: 'My transaction failed',
                         content: 'It is possible that the setting level of the gas limit was too low.'
