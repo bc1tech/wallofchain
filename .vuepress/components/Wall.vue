@@ -25,24 +25,29 @@
   };
 </script>
 <style lang="scss">
-    @import "../scss/variables";
-    @import "~bootstrap/scss/functions";
-    @import "~bootstrap/scss/variables";
-    @import "~bootstrap/scss/mixins";
+  @import "../scss/variables";
+  @import "~bootstrap/scss/functions";
+  @import "~bootstrap/scss/variables";
+  @import "~bootstrap/scss/mixins";
 
-    .hero {
-        text-align: center;
-        margin-bottom: 3.75em;
+  .hero {
+    text-align: center;
+    margin-bottom: 3.75em;
 
-        &__title {
-            font-size: 3.5rem;
-            font-weight: 600;
-            line-height: 1.303;
-        }
+    &__title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      line-height: 1.303;
 
-        &__copy {
-            font-size: 1.125rem;
-            margin: 0;
-        }
+      @include media-breakpoint-up(lg) {
+        font-size: 3.5rem;
+        font-weight: 600;
+      }
     }
+
+    &__copy {
+      font-size: 1.125rem;
+      margin: 0;
+    }
+  }
 </style>

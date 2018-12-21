@@ -112,10 +112,10 @@
   @import "~bootstrap/scss/mixins";
 
   .main-menu {
-    margin-top: 4rem;
     padding-bottom: 3.125em;
 
     @include media-breakpoint-up(md) {
+      margin-top: 4rem;
       padding-bottom: 6.25em;
     }
 
@@ -137,11 +137,16 @@
 
     &__link {
       display: inline-block;
-      font-size: 56px;
-      font-weight: 600;
+      font-size: 2.5rem;
+      font-weight: 700;
       line-height: 1.3035;
       color: #fff;
       transition: color .15s ease-in, transform .15s ease-in;
+
+      @include media-breakpoint-up(lg) {
+        font-size: 3.5rem;
+        font-weight: 600;
+      }
 
       &:hover {
         color: $primary;
@@ -167,11 +172,22 @@
     }
 
     &__item {
+      display: inline-block;
       font-size: 1rem;
       line-height: 1.3125;
+      margin-left: 1.25em;
+      margin-right: 1.25em;
+
+      @include media-breakpoint-up(lg) {
+        margin-left: 0;
+        margin-right: 0;
+        display: block;
+      }
 
       & + & {
-        margin-top: 2em;
+        @include media-breakpoint-up(lg) {
+          margin-top: 2em;
+        }
       }
 
       a {

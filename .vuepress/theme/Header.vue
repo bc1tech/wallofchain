@@ -84,8 +84,8 @@
       z-index: 3;
       margin: 0;
       border: 0;
-      padding: 0.625em 1.5em;
-      width: 4.5em;
+      padding: 0.625em 1em;
+      width: 3.5em;
       height: 2.4375em;
       background: none;
       cursor: pointer;
