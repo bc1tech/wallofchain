@@ -26,7 +26,7 @@
           </li>
         </ul>
 
-        <ul class="credits">
+        <ul class="credits d-none d-lg-block">
           <li class="credits__item">
             Proudly made by <a href="https://bc1.tech"
                 target="_blank">
@@ -36,9 +36,9 @@
           <li class="credits__item">
             See on <a href="https://github.com/paneedesign/wallofchain"
                 target="_blank">
-              GitHub <img width="16"
-                  :src="$withBase('/assets/images/github-logo.svg')">
-            </a>
+              GitHub
+            </a> <img width="16"
+                :src="$withBase('/assets/images/github-logo.svg')">
           </li>
         </ul>
       </div>
@@ -82,6 +82,22 @@
             How? WallOfChain devolves part of its ETH raised to charity's cause.
           </p>
         </div>
+
+        <ul class="credits d-lg-none">
+          <li class="credits__item">
+            Proudly made by <a href="https://bc1.tech"
+                target="_blank">
+              BC1
+            </a>
+          </li>
+          <li class="credits__item">
+            See on <a href="https://github.com/paneedesign/wallofchain"
+                target="_blank">
+              GitHub
+            </a> <img width="16"
+                :src="$withBase('/assets/images/github-logo.svg')">
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -140,9 +156,15 @@
   }
 
   .credits {
-    margin: 0;
+    margin: 3em 0 0;
     padding: 0;
     list-style: none;
+    text-align: center;
+
+    @include media-breakpoint-up(lg) {
+      text-align: left;
+      margin-top: 0;
+    }
 
     &__item {
       font-size: 1rem;
@@ -154,6 +176,7 @@
 
       a {
         color: #fff;
+        font-weight: 600;
 
         &:hover {
           color: $primary;
