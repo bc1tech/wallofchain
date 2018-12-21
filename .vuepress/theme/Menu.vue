@@ -3,6 +3,13 @@
     <div class="row">
       <div class="col-lg-6">
         <ul class="main-menu__nav">
+          <li class="main-menu__item d-md-none">
+            <RouterLink class="main-menu__link"
+                title="Become a Star"
+                to="/become-a-star.html">
+              Become a Star
+            </RouterLink>
+          </li>
           <li class="main-menu__item">
             <RouterLink class="main-menu__link"
                 title="The Wall"
