@@ -3,6 +3,13 @@
     <div class="row">
       <div class="col-lg-6">
         <ul class="main-menu__nav">
+          <li class="main-menu__item d-md-none">
+            <RouterLink class="main-menu__link"
+                title="Become a Star"
+                to="/become-a-star.html">
+              Become a Star
+            </RouterLink>
+          </li>
           <li class="main-menu__item">
             <RouterLink class="main-menu__link"
                 title="The Wall"
@@ -26,7 +33,7 @@
           </li>
         </ul>
 
-        <ul class="credits">
+        <ul class="credits d-none d-lg-block">
           <li class="credits__item">
             Proudly made by <a href="https://bc1.tech"
                 target="_blank">
@@ -36,9 +43,9 @@
           <li class="credits__item">
             See on <a href="https://github.com/paneedesign/wallofchain"
                 target="_blank">
-              GitHub <img width="16"
-                  :src="$withBase('/assets/images/github-logo.svg')">
-            </a>
+              GitHub
+            </a> <img width="16"
+                :src="$withBase('/assets/images/github-logo.svg')">
           </li>
         </ul>
       </div>
@@ -82,6 +89,22 @@
             How? WallOfChain devolves part of its ETH raised to charity's cause.
           </p>
         </div>
+
+        <ul class="credits d-lg-none">
+          <li class="credits__item">
+            Proudly made by <a href="https://bc1.tech"
+                target="_blank">
+              BC1
+            </a>
+          </li>
+          <li class="credits__item">
+            See on <a href="https://github.com/paneedesign/wallofchain"
+                target="_blank">
+              GitHub
+            </a> <img width="16"
+                :src="$withBase('/assets/images/github-logo.svg')">
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -96,10 +119,10 @@
   @import "~bootstrap/scss/mixins";
 
   .main-menu {
-    margin-top: 4rem;
     padding-bottom: 3.125em;
 
     @include media-breakpoint-up(md) {
+      margin-top: 4rem;
       padding-bottom: 6.25em;
     }
 
@@ -121,11 +144,16 @@
 
     &__link {
       display: inline-block;
-      font-size: 56px;
-      font-weight: 600;
+      font-size: 2.5rem;
+      font-weight: 700;
       line-height: 1.3035;
       color: #fff;
       transition: color .15s ease-in, transform .15s ease-in;
+
+      @include media-breakpoint-up(lg) {
+        font-size: 3.5rem;
+        font-weight: 600;
+      }
 
       &:hover {
         color: $primary;
@@ -140,20 +168,38 @@
   }
 
   .credits {
-    margin: 0;
+    margin: 3em 0 0;
     padding: 0;
     list-style: none;
+    text-align: center;
+
+    @include media-breakpoint-up(lg) {
+      text-align: left;
+      margin-top: 0;
+    }
 
     &__item {
+      display: inline-block;
       font-size: 1rem;
       line-height: 1.3125;
+      margin-left: 1.25em;
+      margin-right: 1.25em;
+
+      @include media-breakpoint-up(lg) {
+        margin-left: 0;
+        margin-right: 0;
+        display: block;
+      }
 
       & + & {
-        margin-top: 2em;
+        @include media-breakpoint-up(lg) {
+          margin-top: 2em;
+        }
       }
 
       a {
         color: #fff;
+        font-weight: 600;
 
         &:hover {
           color: $primary;

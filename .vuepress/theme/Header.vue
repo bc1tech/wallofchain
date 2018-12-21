@@ -1,7 +1,7 @@
 <template>
   <header class="navbar container-lg">
     <button ref="toggler"
-        class="navbar__toggler"
+        class="navbar__toggler d-none d-md-inline-block"
         :class="menuOpen ? 'navbar__toggler--active' : ''"
         @click="toggleNavbar">
       <span class="navbar__toggler-icon"></span>
@@ -12,7 +12,13 @@
       <strong>Wall</strong>Of<strong>Chain</strong>
     </RouterLink>
 
-    <RouterLink class="btn"
+    <button ref="toggler"
+        class="navbar__toggler d-md-none"
+        :class="menuOpen ? 'navbar__toggler--active' : ''"
+        @click="toggleNavbar">
+      <span class="navbar__toggler-icon"></span>
+    </button>
+    <RouterLink class="btn d-none d-md-inline-block"
         title="Become a Star"
         to="/become-a-star.html">
       Become a Star
@@ -76,13 +82,17 @@
       $root: &;
       position: relative;
       z-index: 3;
-      margin-right: 1.25em;
+      margin: 0;
       border: 0;
-      padding: 0.625em 1.5em;
-      width: 4.5em;
+      padding: 0.625em 1em;
+      width: 3.5em;
       height: 2.4375em;
       background: none;
       cursor: pointer;
+
+      @include media-breakpoint-up(md) {
+        margin-right: 1.25em;
+      }
 
       &:focus {
         outline: none;
