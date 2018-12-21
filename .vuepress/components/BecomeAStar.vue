@@ -385,7 +385,7 @@
 
   &:first-child {
     margin-top: 0;
-    margin-bottom: 2.5em;
+    margin-bottom: 2em;
   }
 
   &__title {
