@@ -35,7 +35,7 @@
 
         <ul class="credits d-none d-lg-block">
           <li class="credits__item">
-            Proudly made by <a href="https://bc1.tech"
+            Proudly made by <a href="https://www.bc1.tech"
                 target="_blank">
               BC1
             </a>
@@ -45,6 +45,7 @@
                 target="_blank">
               GitHub
             </a> <img width="16"
+                alt="GitHub"
                 :src="$withBase('/assets/images/github-logo.svg')">
           </li>
         </ul>
@@ -61,7 +62,10 @@
           </a>
           <p class="info-block__copy">
             Each transaction is stored on the blockchain and you can view and check it through
-            <a href="https://etherscan.io/" target="_blank">Etherscan</a>, which is one of the interfaces for the Ethereum network.
+            <a href="https://etherscan.io/"
+                target="_blank">
+              Etherscan
+            </a>, which is one of the interfaces for the Ethereum network.
             It has a memory of everything that’s happened on the blockchain.
             In this way, you can be 100% sure that your transactions were successful.
           </p>
@@ -97,6 +101,7 @@
                 target="_blank">
               GitHub
             </a> <img width="16"
+                alt="GitHub"
                 :src="$withBase('/assets/images/github-logo.svg')">
           </li>
         </ul>
