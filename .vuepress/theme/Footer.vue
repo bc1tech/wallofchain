@@ -9,7 +9,7 @@
     </p>
     <span class="footer__credits">
       <span>
-        Proudly made by <a href="https://bc1.tech"
+        Proudly made by <a href="https://www.bc1.tech"
             target="_blank">
           BC1
         </a>
