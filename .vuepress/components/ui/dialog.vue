@@ -1,17 +1,17 @@
 <template>
   <div class="modal fade"
       :class="{'show' : isOpen }"
+       :aria-hidden="isOpen ? 'true' : 'false'"
       tabindex="-1"
-      role="dialog"
-      :aria-hidden="isOpen ? 'true' : 'false'">
+      role="dialog">
     <div class="modal__dialog"
         role="document">
       <div class="modal__content">
         <button v-if="showClosed"
-                class="modal__close"
-                type="button"
-                title="Close"
-                @click="close">
+            class="modal__close"
+            type="button"
+            title="Close"
+            @click.stop="close">
           x
         </button>
         <div class="modal__body">
@@ -100,6 +100,7 @@
       border: 0;
       padding: 0.5em;
       color: #fff;
+      background-color: #fff;
       background-image: url(../../svg/close.svg);
       background-size: 60%;
       background-repeat: no-repeat;
@@ -107,6 +108,12 @@
       cursor: pointer;
       text-indent: -10000%;
       overflow: hidden;
+    }
+
+    &__divisor {
+      border-color: rgba(44, 33, 93, 0.1);
+      border-bottom: 0;
+      margin: 1.5rem -2.5rem;
     }
 
     &__title {
@@ -130,7 +137,7 @@
       align-items: center;
       min-height: calc(100% - (#{$modal-dialog-margin} * 2));
 
-      width: 100%;
+      width: 90%;
       max-width: 440px;
 
       .modal.fade & {
@@ -154,7 +161,7 @@
       pointer-events: auto;
       box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
       background-color: #fff;
-      border: solid 4px #ffffff;
+      border: 0;
       padding: 1.75rem;
       border-radius: 0.25em;
       background-clip: padding-box;
@@ -162,7 +169,7 @@
       color: $secondary;
 
       @include media-breakpoint-up('md') {
-        padding: 5rem 3.75rem;
+        padding: 2.5rem;
       }
     }
 
