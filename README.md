@@ -22,7 +22,7 @@ Discover DApp source [here](https://github.com/bc1tech/wallofchain/tree/site).
 Install truffle.
 
 ```bash
-npm install -g truffle      // Version 4.1.14+ required.
+npm install -g truffle      // Version 4.1.14 required.
 ```
 
 ## Install dependencies
@@ -90,8 +90,8 @@ npm install -g truffle-flattener
 Usage 
 
 ```bash
-truffle-flattener contracts/WallOfChainToken.sol >> dist/WallOfChainToken.dist.sol
-truffle-flattener contracts/WallOfChainMarket.sol >> dist/WallOfChainMarket.dist.sol
+truffle-flattener contracts/WallOfChainToken.sol > dist/WallOfChainToken.dist.sol
+truffle-flattener contracts/WallOfChainMarket.sol > dist/WallOfChainMarket.dist.sol
 ```
 
 ## License
