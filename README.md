@@ -51,24 +51,30 @@ Use both and fix
 npm run lint:fix
 ```
 
-## Compile and test the contracts.
+## Usage
 
-Open the Truffle console
+### Compile
 
 ```bash
-truffle develop
+npm run compile
 ```
 
-Compile 
+### Test 
 
 ```bash
-compile 
+npm run test 
 ```
 
-Test
+### Code Coverage
 
 ```bash
-test
+npm run coverage
+```
+
+### Profiling
+
+```bash
+npm run profile
 ```
 
 ## Run server
