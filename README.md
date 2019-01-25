@@ -1,7 +1,7 @@
 # WallOfChain
 
-[![Build Status](https://travis-ci.org/paneedesign/wallofchain.svg?branch=master)](https://travis-ci.org/paneedesign/wallofchain)
-[![Coverage Status](https://coveralls.io/repos/github/paneedesign/wallofchain/badge.svg?branch=master)](https://coveralls.io/github/paneedesign/wallofchain?branch=master)
+[![Build Status](https://travis-ci.org/bc1tech/wallofchain.svg?branch=master)](https://travis-ci.org/bc1tech/wallofchain)
+[![Coverage Status](https://coveralls.io/repos/github/bc1tech/wallofchain/badge.svg?branch=master)](https://coveralls.io/github/bc1tech/wallofchain?branch=master)
 
 Become a part of the Blockchain hall of fame. Collect a star and let it shine.
 
@@ -15,7 +15,7 @@ When you acquire a star, it is uniquely owned by you. It carries your name, and 
 
 View it live at [wallofchain.com](https://wallofchain.com/).
 
-Discover DApp source [here](https://github.com/paneedesign/wallofchain/tree/site).  
+Discover DApp source [here](https://github.com/bc1tech/wallofchain/tree/site).  
 
 ## Installation
 
@@ -96,4 +96,4 @@ truffle-flattener contracts/WallOfChainMarket.sol >> dist/WallOfChainMarket.dist
 
 ## License
 
-Code released under the [MIT License](https://github.com/paneedesign/wallofchain/blob/master/LICENSE).
+Code released under the [MIT License](https://github.com/bc1tech/wallofchain/blob/master/LICENSE).

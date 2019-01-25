@@ -9,16 +9,18 @@
   ],
   "scripts": {
     "dev": "lite-server",
-    "test": "scripts/test.sh",
     "lint:js": "eslint .",
     "lint:js:fix": "eslint . --fix",
     "lint:sol": "solium -d contracts",
     "lint:sol:fix": "solium -d contracts --fix",
     "lint": "npm run lint:js && npm run lint:sol",
     "lint:fix": "npm run lint:js:fix && npm run lint:sol:fix",
-    "console": "truffle console",
+    "console": "truffle develop",
+    "compile": "truffle compile --all",
+    "test": "scripts/test.sh",
     "coverage": "scripts/coverage.sh",
-    "version": "scripts/version.js"
+    "clean": "rm -rf coverage",
+    "profile": "npm run clean && npm run coverage && open coverage/index.html"
   },
   "keywords": [
     "solidity",
@@ -40,11 +42,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/paneedesign/wallofchain.git"
+    "url": "https://github.com/bc1tech/wallofchain.git"
   },
-  "homepage": "https://github.com/paneedesign/wallofchain/",
+  "homepage": "https://github.com/bc1tech/wallofchain/",
   "bugs": {
-    "url": "https://github.com/paneedesign/wallofchain/issues"
+    "url": "https://github.com/bc1tech/wallofchain/issues"
   },
   "license": "MIT",
   "devDependencies": {
