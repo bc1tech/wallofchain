@@ -16,7 +16,7 @@
       </span>
       <span>
         <img width="16"
-            :src="$withBase('/assets/images/github-logo.svg')"> <a href="https://github.com/paneedesign/wallofchain"
+            :src="$withBase('/assets/images/github-logo.svg')"> <a href="https://github.com/bc1tech/wallofchain"
             target="_blank">
           See on GitHub
         </a>

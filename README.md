@@ -13,7 +13,7 @@ npm install
 ## DEV server
 To launch the dev server run
 ```bash
-npm run start-watcher
+npm run dev
 ```
 DEV server address: http://127.0.0.1:8080/
 

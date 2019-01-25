@@ -41,7 +41,7 @@
             </a>
           </li>
           <li class="credits__item">
-            See on <a href="https://github.com/paneedesign/wallofchain"
+            See on <a href="https://github.com/bc1tech/wallofchain"
                 target="_blank">
               GitHub
             </a> <img width="16"
@@ -97,7 +97,7 @@
             </a>
           </li>
           <li class="credits__item">
-            See on <a href="https://github.com/paneedesign/wallofchain"
+            See on <a href="https://github.com/bc1tech/wallofchain"
                 target="_blank">
               GitHub
             </a> <img width="16"

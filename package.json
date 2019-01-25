@@ -4,20 +4,24 @@
   "description": "Become a star into the blockchain",
   "main": "index.js",
   "scripts": {
-    "start-watcher": "vuepress dev",
+    "dev": "vuepress dev",
     "build": "vuepress build",
     "deploy": "vuepress build && sh dev/deploy.sh"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/paneedesign/wallofchain.git"
+    "url": "git+https://github.com/bc1tech/wallofchain.git"
   },
-  "author": "Pane&Design <hello@paneedesign.com>",
+  "author": {
+    "name": "BC1 - Blockchain Pioneers",
+    "email": "hello@bc1.tech",
+    "url": "https://www.bc1.tech"
+  },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/paneedesign/wallofchain/issues"
+    "url": "https://github.com/bc1tech/wallofchain/issues"
   },
-  "homepage": "https://github.com/paneedesign/wallofchain#readme",
+  "homepage": "https://github.com/bc1tech/wallofchain#readme",
   "devDependencies": {
     "babel-eslint": "^10.0.1",
     "eslint": "^5.12.0",
