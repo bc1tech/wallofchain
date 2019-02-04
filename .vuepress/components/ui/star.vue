@@ -51,7 +51,7 @@
         <a :href="this.etherscanLink"
             target="_blank"
             class="btn btn--outline d-block">
-          View on Etherscan.com
+          View on Etherscan
         </a>
       </template>
     </ui-dialog>
